@@ -1,0 +1,1424 @@
+{
+  "isStruct": false,
+  "key": [
+    "guid"
+  ],
+  "semantic": "name| ( |code| )",
+  "name": "eventBasic",
+  "version": "31",
+  "caption": "Базовое мероприятие",
+  "ancestor": "basicObj",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "cacheDependencies": [
+    "resultEvent"
+  ],
+  "abstract": true,
+  "properties": [
+    {
+      "orderNumber": 20,
+      "name": "code",
+      "caption": "Код мероприятия",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": true,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": {
+        "if": [
+          "$basicObj", 
+          {"concat": ["$basicObj.project_code", "-", {"next": ["$basicObj.project_code"]}]},
+          {"substr": ["$guid", 1,5]}
+        ]
+      },
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "project_code",
+      "caption": "project_code [вычислимое, храним код проекта]",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": {"if": ["$basicObj", "$basicObj.project_code", "$code"]},
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 55,
+      "name": "infoTransfer",
+      "caption": "Коммуникации по мероприятию",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "infoTransfer",
+      "backRef": "event",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "formula_code",
+      "caption": "formula_code [вычислимое, храним код проекта]",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "$project_code"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 35,
+      "name": "project",
+      "caption": "project - вычислимый объект с Оператор проекта",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": {
+        "if": [
+          "$basicObj.project",
+          "$basicObj.project",
+          "$basicObj"
+        ]
+      },
+      "refClass": "project",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 55,
+      "name": "indicatorFinancical",
+      "caption": "Фин. показатели",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorFinancial",
+      "allowedSubclasses": [
+        "indicatorFinancial"
+      ],
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "status",
+          "operation": 1,
+          "value": [
+            "archive"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 35,
+      "name": "typeEvent",
+      "caption": "Тип мероприятия",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": {
+        "if": [
+          {
+            "in": [
+              "$basicObj.__class",
+              [
+                "project@pm-gov-ru",
+                "event@pm-gov-ru",
+                "eventBlock@pm-gov-ru",
+                "eventControl@pm-gov-ru",
+                "eventObject@pm-gov-ru",
+                "eventObjectBasic@pm-gov-ru",
+                "eventOnly@pm-gov-ru",
+                "eventOnlyAIP@pm-gov-ru",
+                "eventRisk@pm-gov-ru"
+              ]
+            ]
+          },
+          "Проектное",
+          {
+            "if": [
+              {
+                "eq": [
+                  "$basicObj.__class",
+                  "program@pm-gov-ru"
+                ]
+              },
+              "Мероприятие программы",
+              {
+                "if": [
+                  {
+                    "eq": [
+                      "$basicObj.__class",
+                      "proposal@pm-gov-ru"
+                    ]
+                  },
+                  "Мероприятие проектного предложения",
+                  {
+                    "if": [
+                      {
+                        "nempty": [
+                          "$briefcase"
+                        ]
+                      },
+                      "Мероприятие портфеля",
+                      {
+                        "if": [
+                          {
+                            "nempty": [
+                              "$programGos"
+                            ]
+                          },
+                          "Мероприятие гос. программы",
+                          "Не проектное"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 35,
+      "name": "vidEvent",
+      "caption": "Вид мероприятия",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": {
+        "if": [
+          {
+            "eq": [
+              "$__class",
+              "event@pm-gov-ru"
+            ]
+          },
+          "Мероприятие",
+          {
+            "if": [
+              {
+                "eq": [
+                  "$__class",
+                  "eventBlock@pm-gov-ru"
+                ]
+              },
+              "Блок мероприятий",
+              {
+                "if": [
+                  {
+                    "eq": [
+                      "$__class",
+                      "eventControl@pm-gov-ru"
+                    ]
+                  },
+                  "Контрольная точка",
+                  {
+                    "if": [
+                      {
+                        "eq": [
+                          "$__class",
+                          "eventObject@pm-gov-ru"
+                        ]
+                      },
+                      "Мероприятие по объекту включенного в АИП",
+                      {
+                        "if": [
+                          {
+                            "eq": [
+                              "$__class",
+                              "eventObjectBasic@pm-gov-ru"
+                            ]
+                          },
+                          "Мероприятие по объекту включенного в АИП",
+                          {
+                            "if": [
+                              {
+                                "eq": [
+                                  "$__class",
+                                  "eventOnly@pm-gov-ru"
+                                ]
+                              },
+                              "Этап/стадия объекта",
+                              {
+                                "if": [
+                                  {
+                                    "eq": [
+                                      "$__class",
+                                      "eventOnlyAIP@pm-gov-ru"
+                                    ]
+                                  },
+                                  "Этап/стадия объекта",
+                                  {
+                                    "if": [
+                                      {
+                                        "eq": [
+                                          "$__class",
+                                          "eventRisk@pm-gov-ru"
+                                        ]
+                                      },
+                                      "Мероприятие риска/возможности",
+                                      " "
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 70,
+      "name": "state",
+      "caption": "Состояние",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "new",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "crtInd",
+            "value": "Формирование показателей"
+          },
+          {
+            "key": "new",
+            "value": "Планирование"
+          },
+          {
+            "key": "work",
+            "value": "В работе"
+          },
+          {
+            "key": "result",
+            "value": "Создание отчета"
+          },
+          {
+            "key": "planningAdmin",
+            "value": "Утверждение администратором"
+          },
+          {
+            "key": "planningHead",
+            "value": "Утверждение руководителем"
+          },
+          {
+            "key": "planningCurator",
+            "value": "Утверждение куратором"
+          },
+          {
+            "key": "planningPO",
+            "value": "Утверждение проектным офисом"
+          },
+          {
+            "key": "inaccepted",
+            "value": "Утверждено"
+          },
+          {
+            "key": "fin",
+            "value": "Закрыто"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 70,
+      "name": "resultDescription",
+      "caption": "Характеристика результата",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 200,
+      "name": "curator",
+      "caption": "Куратор мероприятий",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 210,
+      "name": "head",
+      "caption": "Руководитель мероприятий",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 440,
+      "name": "coexecEvent",
+      "caption": "Соисполнители мероприятия/контрольной точки",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "employee",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [
+        {
+          "property": "organization_eval",
+          "mode": 0
+        }
+      ],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 445,
+      "name": "coexec_eval",
+      "caption": "",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "$ownOrg.name",
+          "\n",
+          {
+            "merge": [
+              "$coexecEvent",
+              "person_org_eval",
+              null,
+              1,
+              "\n"
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 410,
+      "name": "basicObj",
+      "caption": "Вышестоящий учетный объект",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "basicObj",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "project_code",
+            "operation": 0,
+            "value": [
+              "$project_code"
+            ],
+            "nestedConditions": []
+        },
+        {
+          "property": "archive",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 440,
+      "name": "basicObjs",
+      "caption": "Учетные задачи/поручения",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "eventBasic",
+      "allowedSubclasses": [
+        "event",
+        "eventControl",
+        "eventObjectBasic"
+      ],
+      "backRef": "basicObj",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "archive",
+              "operation": 1,
+              "value": [
+                true
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["fin"],
+              "nestedConditions": []
+            }
+          ]
+        }
+      ],
+      "selSorting": [
+        {
+          "property": "num",
+          "mode": 0
+        }
+      ],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 440,
+      "name": "coexecEventOrg",
+      "caption": "Организация соисполнитель",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "organization",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 440,
+      "name": "countObjs",
+      "caption": "Количество задач/поручений",
+      "type": 6,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "count": [
+          "$basicObjs"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 900,
+      "name": "progress",
+      "caption": "Процент выполнения [гант]",
+      "type": 7,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": 0,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula" : {
+        "if" : [ 
+          {
+            "and" : [ 
+              {
+                "nempty" : [ 
+                  "$basicObjs"
+                ]
+              }, 
+              {
+                "ne" : [ 
+                  {
+                    "avg" : [ 
+                      "$basicObjs", 
+                      "progress"
+                    ]
+                  }, 
+                  0
+                ]
+              }
+            ]
+          }, 
+          {
+            "avg" : [ 
+              "$basicObjs", 
+              "progress"
+            ]
+          }, 
+          "$progressInput"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 900,
+      "name": "progressInput",
+      "caption": "Процент выполнения для ввода",
+      "type": 6,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": 0,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 426,
+      "name": "numEvent",
+      "caption": "Порядковый номер мероприятия",
+      "type": 6,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": {
+        "next": [
+          "$numEvent"
+        ]
+      },
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 760,
+      "name": "resultEvent",
+      "caption": "Результаты",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "resultEvent",
+      "backRef": "eventBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 100,
+      "name": "dateCreateResult",
+      "caption": "Дата создания последнего отчета",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 620,
+      "name": "contracts",
+      "caption": "Контракты",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "contract",
+      "backRef": "basicObjActivity",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 750,
+      "name": "blocked",
+      "caption": "Связные задачи, которые блокируют текущую [гант]",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "eventBasic",
+      "allowedSubclasses": [
+        "eventBlock",
+        "event",
+        "eventControl",
+        "eventObjectBasic",
+        "eventObject",
+        "eventOnly",
+        "eventOnlyAIP"
+      ],
+      "backRef": "",
+      "backColl": "blocks",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "archive",
+              "operation": 1,
+              "value": [
+                true
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["fin"],
+              "nestedConditions": []
+            }
+          ]
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 760,
+      "name": "blocks",
+      "caption": "Связные задачи которые блокируются текущей [гант]",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "eventBasic",
+      "allowedSubclasses": [
+        "eventBlock",
+        "event",
+        "eventControl",
+        "eventObjectBasic",
+        "eventObject",
+        "eventOnly",
+        "eventOnlyAIP"
+      ],
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "archive",
+              "operation": 1,
+              "value": [
+                true
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["fin"],
+              "nestedConditions": []
+            }
+          ]
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 770,
+      "name": "taskWeakening",
+      "caption": "Ослабляет риск",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "risk",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 785,
+      "name": "taskResponse",
+      "caption": "Влияет на риск",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "risk",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 770,
+      "name": "opportunityWeakening",
+      "caption": "Ослабляет возможность",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "opportunity",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 901,
+      "name": "period",
+      "caption": "Период обновления",
+      "type": 6,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": 0,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": 0,
+            "value": "Без периода"
+          },
+          {
+            "key": 7,
+            "value": "Еженедельный"
+          },
+          {
+            "key": 30,
+            "value": "Ежемесячный"
+          },
+          {
+            "key": 90,
+            "value": "Ежеквартальный"
+          },
+          {
+            "key": 178,
+            "value": "Полугодичный"
+          },
+          {
+            "key": 356,
+            "value": "Годовой"
+          }
+      ]},
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 100,
+      "name": "dateRefresh",
+      "caption": "Дата (дата обновления мероприятия + период актуализации)",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "dateAdd": [
+          "$modifeDate", "$period"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 150,
+      "name": "docResult",
+      "caption": "Документ, подтверждающий выполнение (реквизиты)",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 70,
+      "name": "levelOfControl",
+      "caption": "Уровень контроля",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": "С - Президиум Совета при Губернаторе  по приоритетным проектам и программам; РП - Руководитель регионального проекта; ПК - Проектный комитет по основному направлению социально-экономического развития.",
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "boardPresidium",
+            "value": "С"
+          },
+          {
+            "key": "headProject",
+            "value": "РП"
+          },
+          {
+            "key": "projectCommittee",
+            "value": "ПК"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

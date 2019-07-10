@@ -1,0 +1,51 @@
+{
+  "code": "indicator.edit",
+  "orderNumber": 60,
+  "type": 1,
+  "title": "",
+  "caption": "Редактирование",
+  "classname": "indicatorBasic",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "owner.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "owner.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        }
+      ]
+    },
+    {
+      "property": "status",
+      "operation": 9,
+      "value": [
+        "correct",
+        "edit"
+      ],
+      "nestedConditions": []
+    },
+    {
+      "property": "archive",
+      "operation": 1,
+      "value": [true],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

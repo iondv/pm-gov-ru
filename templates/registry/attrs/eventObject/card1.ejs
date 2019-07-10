@@ -1,0 +1,530 @@
+<!-- templates\registry\attrs\eventObject\card1 -->
+<%
+let data = {
+  title: item.property('name').getDisplayValue(),
+  description: item.property('descript').getDisplayValue(),
+  dateStart: item.property('dateStart').getValue(),
+  dateEnd: item.property('dateEnd').getValue(),
+  head: item.property('head'),
+  costOrder: '',
+  changeOrder: '',
+  changeProgInd: '',
+  keyTask: ''
+
+};
+let params = {
+  url: `${module}/api/${item.getClassName()}/`
+};
+let prop = item.property('objectBasic');
+if (prop) {
+  params.objectUrl = `${module}/api/${prop.meta._refClass.getCanonicalName()}/${prop.getValue()}`;
+}
+%>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% script(`${module}/app-static/js/common.js`) -%>
+
+<div id="obj-card-1" class="obj-card loading"
+     data-params="<%= JSON.stringify(params) %>">
+
+    <div class="row mb20">
+      <div class="col-md-12">
+        <h1 class="obj-card-title"><%= data.title %></h1>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row mb0">
+                <% if (data.head && data.head.getValue()) { %>
+                <div class="col-lg-6 col-md-5 col-xs-4">
+                    <div class="avatar"
+                         data-url="<%= `${module}/api/${data.head.meta._refClass.getCanonicalName()}/${data.head.getValue()}` %>"></div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-xs-8">
+                    <h4 class="mb15">Ответственный</h4>
+                    <p>
+                        <a href="<%= `${module}/${node}/view/${item.getClassName()}.${item.getItemId()}/${data.head.getName()}/${data.head.meta.refClass}/${data.head.getValue()}?readonly=on&condensed=on` %>"
+                           class="modal-link">
+                            <%= data.head.getDisplayValue() %>
+                        </a>
+                    </p>
+                </div>
+                <% } else { %>
+                <div class="col-lg-6 col-md-5 col-xs-4">
+                    <div class="avatar"></div>
+                </div>
+                <div class="col-lg-6 col-md-7 col-xs-8">
+                    <h4 class="mb15">Ответственный</h4>
+                    <p><span class="not-set">нет данных</span></p>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="obj-card-block mb20">
+                <h4 class="text-uppercase">Цель проекта</h4>
+                <p><%= data.description %></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row obj-card-pictures" style="display: none">
+    </div>
+
+    <div class="obj-card-loader">
+        <span class="fa fa-refresh fa-spin"></span> Загрузка данных...
+    </div>
+
+    <div class="obj-card-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th colspan="2" class="text-center">Стоимость по распоряжению<br><%= data.costOrder %> млн. руб.
+                            </th>
+                            <th class="text-center">
+                                Срок реализации
+                                <div data-id="period">
+                                    <%= data.dateStart instanceof Date ? moment(data.dateStart).format('DD.MM.YY') : '' %>
+                                    -
+                                    <%= data.dateEnd instanceof Date ? moment(data.dateEnd).format('DD.MM.YY') : '' %>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center">
+                                Сметная стоимость
+                                <div data-id="estimCost" class="h3 mt5 mb5"></div>
+                                млн. руб.
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>СМР - <span data-id="estimCostCMP"></span> млн. руб.</li>
+                                    <li>Оборудование - <span data-id="estimCostFacility"></span> млн. руб.</li>
+                                    <li>Прочие - <span data-id="estimCostOther"></span> млн. руб.</li>
+                                </ul>
+                            </td>
+                            <td data-id="changeOrder" class="text-center"><%= data.changeOrder %></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th data-id="keyTask" colspan="3" class="bg-info"><%= data.keyTask %></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th data-id="finTitle" colspan="6" class="text-center">
+                              Финансирование в 2018 году
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <td rowspan="4" class="text-center align-middle">
+                            <span data-id="finanYear" class="h3"></span>
+                          </td>
+                          <td></td>
+                          <td data-id="fb">Федеральный</td>
+                          <td data-id="region">Краевой</td>
+                          <td data-id="mun">Муниципальный</td>
+                          <td data-id="extra">Внебюджетный</td>
+                        </tr>
+                        <tr>
+                            <td data-id="dp">Требуемое</td>
+                            <td data-id="dpFb" class="text-right bold"></td>
+                            <td data-id="dpRegion" class="text-right bold"></td>
+                            <td data-id="dpMun" class="text-right bold"></td>
+                            <td data-id="dpExtra" class="text-right bold"></td>
+                        </tr>
+                        <tr>
+                            <td data-id="kaip">Плановое</td>
+                            <td data-id="kaipFb" class="text-right bold"></td>
+                            <td data-id="kaipRegion" class="text-right bold"></td>
+                            <td data-id="kaipMun" class="text-right bold"></td>
+                            <td data-id="kaipExtra" class="text-right bold"></td>
+                        </tr>
+                        <tr>
+                            <td data-id="fact">Фактическое</td>
+                            <td data-id="factFb" class="text-right bold"></td>
+                            <td data-id="factRegion" class="text-right bold"></td>
+                            <td data-id="factMun" class="text-right bold"></td>
+                            <td data-id="factExtra" class="text-right bold"></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th data-id="fin" colspan="2" class="text-center"></th>
+                            <th data-id="finFb" class="text-right"></th>
+                            <th data-id="finRegion" class="text-right"></th>
+                            <th data-id="finMun" class="text-right"></th>
+                            <th data-id="finExtra" class="text-right"></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Цена контракта на выполнение</th>
+                            <th>Выполнено всего 2017 - 2018</th>
+                            <th colspan="2">Техническая готовность на 01.01.2018</th>
+                            <th>Необходимо выполнить для достижения техготовности</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>СМР</td>
+                            <td data-id="costContractSMR"  rowspan="1" class="text-right"></td>
+                            <td data-id="costOldContractSMR"  rowspan="1" class="text-right"></td>
+                            <td data-id="planPercentCell" rowspan="3" class="text-center">
+                              Плановая
+                              <span class="h4"><span data-id="planPercent"></span>%</span>
+                            </td>
+                            <td data-id="factPercentCell" rowspan="3" class="text-center">
+                              Фактическая
+                              <span class="h4">
+                              <span data-id="factPercent"></span>%
+                            </span>
+                            </td>
+                            <td rowspan="3" class="text-center">
+                            <span data-id="needWorkSuccess" class="h3"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Обор.</td>
+                            <td data-id="costContractFacility" class="text-right"></td>
+                            <td data-id="costOldContractFacility" class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Прочие</td>
+                            <td data-id="costContractOther" class="text-right"></td>
+                            <td data-id="costOldContractOther" class="text-right"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th colspan="2">Запланировано по графику на 2018</th>
+                            <th>Незакон<wbr>трак<wbr>то<wbr>вано</th>
+                            <th>Плановое задание на 2018</th>
+                            <th>Целевое задание на 2018</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>СМР</td>
+                            <td data-id="plannedCMP" class="text-right"></td>
+                            <td data-id="illegContrCMP" class="text-right"></td>
+                            <td data-id="planTaskCMP" class="text-right"></td>
+                            <td data-id="targetTaskCMP" class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Обор.</td>
+                            <td data-id="plannedFacility" class="text-right"></td>
+                            <td data-id="illegContrFacility" class="text-right"></td>
+                            <td data-id="planTaskFacility" class="text-right"></td>
+                            <td data-id="targetTaskFacility" class="text-right"></td>
+                        </tr>
+                        <tr>
+                            <td>Прочие</td>
+                            <td data-id="plannedOther" class="text-right"></td>
+                            <td data-id="illegContrOther" class="text-right"></td>
+                            <td data-id="planTaskOther" class="text-right"></td>
+                            <td data-id="targetTaskOther" class="text-right"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $(document.body).on('js:common:ready', function () {
+    var $card = $('#obj-card-1');
+    var params = $card.data('params');
+    var cardData = [], finData = [], finTotal = {}, workData = [], workTotal = {};
+    var res = {}, queue = [];
+
+    $card.on('click', '.modal-link', function (event) {
+      event.preventDefault();
+      imodal.load(this.href);
+    });
+
+    if (params.objectUrl) {
+      queue.push(function (cb) {
+        $.get(params.objectUrl).done(function (data) {
+          if (data.imageObj) {
+            createImage(data.imageObj);
+            createImage(data.imageObj);
+          }
+        }).always(cb);
+      });
+    }
+
+    $card.find('.avatar').each(function () {
+      var $avatar = $(this);
+      var url = $avatar.data('url');
+      if (url) {
+        queue.push(function (cb) {
+          $.get(url).done(function (data) {
+            var photo = data && data && data.person_ref && data.person_ref.foto;
+            if (photo) {
+              $avatar.css('background-image', 'url("' + photo.link + '")');
+            }
+          }).always(cb);
+        });
+      }
+    });
+
+    queue.push(function (cb) {
+      $.get('report/pm-gov-ru@projects/cardObject/cardObject/data', {
+        nameObject: '<%= data.title %>',
+        dateSelect: (new Date).toISOString()
+      }).done(function (data) {
+        cardData = data && data[0] ? data[0]._data : [];
+      }).always(cb);
+    });
+
+    queue.push(function (cb) {
+      $.get('report/pm-gov-ru@projects/cardFin/cardFin/data', {
+        nameObject: '<%= data.title %>'
+      }).done(function (data) {
+        data = data && data[0];
+        finData = (data && data._data) || [];
+        finTotal = (data && data._totals && data._totals[0] && data._totals[0].data) || {};
+      }).always(cb);
+    });
+
+    queue.push(function (cb) {
+      $.get('report/pm-gov-ru@projects/cardWork/cardWork/data', {
+        nameObject: '<%= data.title %>'
+      }).done(function (data) {
+        data = data && data[0];
+        workData = (data && data._data) || [];
+        workTotal = (data && data._totals && data._totals[0] && data._totals[0].data) || {};
+      }).always(cb);
+    });
+
+    queue.push(function (cb) {
+      $card.removeClass('loading');
+      resolve();
+      build();
+      hideEmptyDp();
+    });
+
+    asyncSeries(queue);
+
+    function createImage (data) {
+      var $row = $card.find('.obj-card-pictures').show();
+      var link = data.thumbnails && data.thumbnails.medium && data.thumbnails.medium.link || data.link;
+      $row.append('<div class="col-md-6"><img src="' + link
+        + '" alt="Фото" class="obj-card-picture img-responsive"></div>');
+    }
+
+    function resolve () {
+      var cardSMR = searchObject('СМР', cardData, 'measureType');
+      var cardFacility = searchObject('Обор.', cardData, 'measureType');
+      var cardOther = searchObject('Прочее', cardData, 'measureType');
+
+      res.plannedCMP = round(cardSMR && cardSMR.plan);
+      res.plannedFacility = round(cardFacility && cardFacility.plan);
+      res.plannedOther = round(cardOther && cardOther.plan);
+
+      res.planTaskCMP = res.plannedCMP;
+      res.planTaskFacility = res.plannedFacility;
+      res.planTaskOther = res.plannedOther;
+
+      res.targetTaskCMP = round(cardSMR && cardSMR.req);
+      res.targetTaskFacility = round(cardFacility && cardFacility.req);
+      res.targetTaskOther = round(cardOther && cardOther.req);
+
+      var factTaskCMP = round(cardSMR && cardSMR.fact);
+      var factTaskFacility = round(cardFacility && cardFacility.fact);
+      var factTaskOther = round(cardOther && cardOther.fact);
+
+      res.illegContrCMP = isNum(res.planTaskCMP, factTaskCMP) ? res.planTaskCMP - factTaskCMP : NaN;
+      res.illegContrFacility = isNum(res.planTaskFacility, factTaskFacility) ? res.planTaskFacility - factTaskFacility : NaN;
+      res.illegContrOther = isNum(res.planTaskOther, factTaskOther) ? res.planTaskOther - factTaskOther : NaN;
+
+      var workSMR = searchObject('СМР', workData, 'measureType');
+      var workFacility = searchObject('Обор.', workData, 'measureType');
+      var workOther = searchObject('Прочее', workData, 'measureType');
+
+      res.estimCostCMP = round(workSMR && workSMR.plan);
+      res.estimCostFacility = round(workFacility && workFacility.plan);
+      res.estimCostOther = round(workOther && workOther.plan);
+
+      res.estimCost = round(workTotal.plan);
+
+      res.costContractSMR = round(workSMR && workSMR.plan);
+      res.costContractFacility = round(workFacility && workFacility.plan);
+      res.costContractOther = round(workOther && workOther.plan);
+
+      res.costOldContractSMR = round(workSMR && workSMR.fact);
+      res.costOldContractFacility = round(workFacility && workFacility.fact);
+      res.costOldContractOther = round(workOther && workOther.fact);
+
+      var reqSMR = round(workSMR && workSMR.req);
+      var reqFacility = round(workFacility && workFacility.req);
+      var reqOther = round(workOther && workOther.req);
+
+      var factSMR = round(workSMR && workSMR.fact);
+      var factFacility = round(workFacility && workFacility.fact);
+      var factOther = round(workOther && workOther.fact);
+
+      var costContractSum = sum(res.costContractSMR, res.costContractFacility, res.costContractOther);
+      var reqSum = sum(reqSMR, reqFacility, reqOther);
+      var factSum = sum(factSMR, factFacility, factOther);
+
+      res.planPercent = percent(costContractSum, reqSum);
+      res.factPercent = percent(factSum, costContractSum);
+      res.needWorkSuccess = round(costContractSum - factSum);//reqSum
+
+      if (isNum(res.planPercent, res.factPercent)) {
+        get('factPercentCell').addClass(res.planPercent > res.factPercent ? 'bg-danger' : 'bg-success');
+      }
+
+      var cardFb = searchObject('Федеральный', cardData, 'budgetType');
+      var cardRegion = searchObject('Краевой', cardData, 'budgetType');
+      var cardMun = searchObject('Муниципальный', cardData, 'budgetType');
+      var cardExtra = searchObject('Внебюджетный', cardData, 'budgetType');
+
+      res.dpFb = round(cardFb && cardFb.req);
+      res.dpRegion = round(cardRegion && cardRegion.req);
+      res.dpMun = round(cardMun && cardMun.req);
+      res.dpExtra = round(cardExtra && cardExtra.req);
+
+      res.kaipFb = round(cardFb && cardFb.plan);
+      res.kaipRegion = round(cardRegion && cardRegion.plan);
+      res.kaipMun = round(cardMun && cardMun.plan);
+      res.kaipExtra = round(cardExtra && cardExtra.plan);
+
+      res.factFb = round(cardFb && cardFb.fact);
+      res.factRegion = round(cardRegion && cardRegion.fact);
+      res.factMun = round(cardMun && cardMun.fact);
+      res.factExtra = round(cardExtra && cardExtra.fact);
+
+      res.dpKb = sum(res.dpRegion, res.dpMun);
+      res.kaipKb = sum(res.kaipRegion, res.kaipMun);
+      res.factKb = sum(res.factRegion, res.factMun);
+
+      var reqFinTotal = round(finTotal.req);
+      var planFinTotal = round(finTotal.plan);
+      var factFinTotal = round(finTotal.fact);
+      var rateFinTotal = round(finTotal.rate);
+
+      res.finanYear = reqFinTotal;
+      res.finFb = (res.factFb - res.kaipFb);
+      res.finRegion = (res.factRegion - res.kaipRegion);
+      res.finMun = (res.factMun - res.kaipMun);
+      res.finExtra = (res.factExtra - res.kaipExtra);
+      res.finKb = sum(res.finRegion, res.finMun);
+
+      // isNum(reqFinTotal, planFinTotal) && planFinTotal < reqFinTotal
+      if ((isNum(res.finFb) && res.finFb < 0)
+        || (isNum(res.finRegion) && res.finRegion < 0)
+        || (isNum(res.finMun) && res.finMun < 0)
+        || (isNum(res.finExtra) && res.finExtra < 0)) {
+        get('fin').html('Дефицит').addClass('bg-danger');
+      }
+      fillBack('finFb');
+      fillBack('finRegion');
+      fillBack('finMun');
+      fillBack('finExtra');
+      fillBack('finKb');
+    }
+
+    function hideEmptyDp () {
+      if (!(res.dpFb || res.dpRegion || res.dpMun || res.dpExtra)) {
+        get('dp').closest('tr').hide();
+      }
+    }
+
+    function get (id) {
+      let $result = $card.find('[data-id="'+ id +'"]');
+      for (var i = 1; i < arguments.length; ++i) {
+        $result = $result.add($card.find('[data-id="'+ arguments[i] +'"]'));
+      }
+      return $result;
+    }
+
+    function build () {
+      for (var key in res) {
+        if (res.hasOwnProperty(key)) {
+          get(key).html(isNaN(res[key]) ? '-' : res[key]);
+        }
+      }
+    }
+
+    function isNum () {
+      for (var i = 0; i < arguments.length; ++i) {
+        if (isNaN(arguments[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function sum () {
+      var result;
+      for (var i = 0; i < arguments.length; ++i) {
+        if (!isNaN(arguments[i]) && arguments[i] !== undefined) {
+          result = result === undefined ? arguments[i] : (result + arguments[i]);
+        }
+      }
+      return result === undefined ? NaN : round(result);
+    }
+
+    function percent (a, b) {
+      return (isNaN(a) || isNaN(b) || b === 0) ? NaN : round(a * 100 / b, 10);
+    }
+
+    function round (value, base) {
+      base = base || 100;
+      return Math.round(parseFloat(value) * base) / base;
+    }
+
+    function fillBack (id) {
+      if (!isNaN(res[id])) {
+        if (res[id] < 0) {
+          get(id).addClass('bg-danger');
+          res[id] = -res[id];
+        } else {
+          get(id).addClass('bg-success');
+        }
+      }
+    }
+  });
+</script>

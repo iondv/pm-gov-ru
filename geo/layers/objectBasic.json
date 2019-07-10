@@ -1,0 +1,51 @@
+{
+  "code": "objectBasic",
+  "order": 0,
+  "caption": "Объекты",
+  "hint": "Расположение объектов на карте",
+  "data": [
+    {
+      "type": "Point",
+      "locationAttribute": "geodata",
+      "matchMode": "intersect",
+      "options": {
+        "clusterHasBalloon": true,
+        "clusterPreset": "islands#invertedDarkGreenClusterIcons",
+        "geoObjectHasBalloon": true,
+        "geoObjectOpenBalloonOnClick": true,
+        "geoObjectPreset": "islands#glyphIcon"
+      },
+      "params": {
+        "balloonContentLayoutClass": "<div class='map-ajax-balloon' data-url='geomap/render/pm-gov-ru/objectBasic/0/{{ properties.itemId }}?template=geo/balloon/objectBasic'><i class='fa fa-refresh fa-spin'></i></div>",
+        "clusterBalloonItemContentLayout": "<div class='map-ajax-balloon' data-url='geomap/render/pm-gov-ru/objectBasic/0/{{ properties.itemId }}?template=geo/balloon/objectBasic'><i class='fa fa-refresh fa-spin'></i></div>"
+      },
+      "query": {
+        "className": "objectBasic@pm-gov-ru",
+        "queryConditions": [
+          {
+            "property": "objectBasicSource._class",
+            "operation": 0,
+            "value": ["eventObject@pm-gov-ru"],
+            "nestedConditions": []
+          }
+        ],
+        "eagerLoading": {
+          "map": []
+        }
+      },
+      "handlers": {
+        "showBalloonOnHover": {
+          "delay": 900
+        }
+      }
+    }
+  ],
+  "filters": [
+    {
+      "type": "regions",
+      "osmIds": [
+        60189
+      ]
+    }
+  ]
+}

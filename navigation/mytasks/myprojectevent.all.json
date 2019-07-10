@@ -1,0 +1,312 @@
+{
+  "code": "myprojectevent.all",
+  "orderNumber": 10,
+  "type": 1,
+  "title": "",
+  "caption": "Все проекты",
+  "classname": "project",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": "Отображаются проекты, где текущий пользователь является участником или сотрудником организации. Красным цветом выделены не завершенные проекты у которых плановая дата завершения меньше текущей и заполнена фактическая дата завершения",
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "admin"
+              ]
+            },
+            {
+              "property": "status",
+              "operation": 0,
+              "value": [
+                "planningAdmin"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "administrator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "administrator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "curator"
+              ]
+            },
+            {
+              "property": "status",
+              "operation": 0,
+              "value": [
+                "planningCurator"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "curator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "manager"
+              ]
+            },
+            {
+              "property": "status",
+              "operation": 0,
+              "value": [
+                "planningHead"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "head.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "executor"
+              ]
+            },
+            {
+              "property": "status",
+              "operation": 0,
+              "value": [
+                "create"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "owner.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "$displayMode",
+                  "operation": 0,
+                  "value": [
+                    "all"
+                  ]
+                },
+                {
+                  "property": "$displayMode",
+                  "operation": 2,
+                  "value": []
+                }
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "curator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "head.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "owner.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "administrator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "administrator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "coordinator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "coordinator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "ownOrg.id",
+                  "operation": 0,
+                  "value": [
+                    "$organization"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "ownOrg.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "stakeholdersImplementation.organization.id",
+                  "operation": 0,
+                  "value": [
+                    "$organization"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "stakeholdersImplementation.organization.id",
+                  "operation": 9,
+                  "value": [
+                    "$substOrgs"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "property": "archive",
+      "operation": 1,
+      "value": [true],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

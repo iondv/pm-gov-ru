@@ -1,0 +1,189 @@
+{
+  "name": "changeReq",
+  "caption": "Согласование запросов на изменение проекта",
+  "wfClass": "changeReq",
+  "startState": "create",
+  "states": [
+    {
+      "name": "create",
+      "caption": "Создан",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "inAgreed",
+      "caption": "На согласовании",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "inWork",
+      "caption": "Доработка",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "agreed",
+      "caption": "Согласован",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "cancel",
+      "caption": "Отклонен",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "close",
+      "caption": "Закрыт",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "inAgreement",
+      "caption": "На согласование",
+      "startState": "create",
+      "finishState": "inAgreed",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inAgrement"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "name": "inRework",
+      "caption": "Вернуть на редактирование",
+      "startState": "inAgreed",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "rework"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "inAgrement"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "agreement",
+      "caption": "Согласовать",
+      "startState": "inAgreed",
+      "finishState": "agreed",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "agreed"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "inAgrement"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "amended",
+      "caption": "Внесены изменения",
+      "startState": "agreed",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "close"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "agreed"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "inAgreedInCancel",
+      "caption": "Отклонить",
+      "startState": "inAgreed",
+      "finishState": "cancel",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "cancel"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "inAgrement"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

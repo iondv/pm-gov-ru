@@ -1,0 +1,9 @@
+{
+  "code": "project_eventControlAllReport",
+  "caption": "Контрольные точки",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "eventControlAllReport",
+  "namespace": "pm-gov-ru",
+  "order": 0
+}

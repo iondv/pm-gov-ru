@@ -1,0 +1,38 @@
+{
+  "license": "Apache License 2.0", 
+  "engines": {
+    "ion": "3.0.8"
+  }, 
+  "name": "pm-gov-ru", 
+  "repository": {
+    "url": "https://github.com/iondv/pm-gov-ru.git", 
+    "type": "git"
+  }, 
+  "ionModulesDependencies": {
+    "geomap": "2.0.2", 
+    "rest": "1.0.4", 
+    "ionadmin": "3.0.2", 
+    "portal": "1.4.1", 
+    "dashboard": "1.1.8", 
+    "report": "2.0.3", 
+    "registry": "3.0.9"
+  }, 
+  "bugs": {
+    "url": "https://github.com/iondv/pm-gov-ru/issues"
+  }, 
+  "ionMetaDependencies": {
+    "viewlib": "0.12.4"
+  }, 
+  "version": "0.18.4", 
+  "dependencies": {
+    "xlsx": "^0.8.0", 
+    "proj4": "^2.4.4", 
+    "sanitize-filename": "latest", 
+    "csv-parser": "^1.11.0", 
+    "excel-data": "^2.0.1", 
+    "moment-range": "^3.1.1"
+  }, 
+  "devDependencies": {}, 
+  "homepage": "https://github.com/iondv/pm-gov-ru", 
+  "description": "IONDV. Project-management - is a web enterprise application based on IONDV. Framework. Project management system allows you to organize project activities"
+}

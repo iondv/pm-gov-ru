@@ -1,0 +1,9 @@
+{
+  "code": "project_finProgramGos",
+  "caption": "Сводный бюджет гос.программы",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "finProgramGos",
+  "namespace": "pm-gov-ru",
+  "order": 14
+}

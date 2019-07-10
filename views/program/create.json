@@ -1,0 +1,127 @@
+{
+  "tabs": [
+    {
+      "caption": "",
+      "fullFields": [
+        {
+          "caption": "Код программы",
+          "type": 1,
+          "property": "code",
+          "size": 2,
+          "maskName": null,
+          "mask": {
+            "regex": "[A-Za-z]{1,50}"
+          },
+          "mode": null,
+          "fields": [],
+          "hierarchyAttributes": null,
+          "columns": [],
+          "actions": null,
+          "commands": null,
+          "orderNumber": 40,
+          "required": true,
+          "visibility": null,
+          "enablement": null,
+          "obligation": null,
+          "readonly": false,
+          "selectionPaginated": true,
+          "validators": null,
+          "hint": null,
+          "historyDisplayMode": 0,
+          "tags": null
+        },
+        {
+          "caption": "Наименование программы",
+          "type": 1,
+          "property": "name",
+          "size": 2,
+          "maskName": null,
+          "mask": null,
+          "mode": null,
+          "fields": [],
+          "hierarchyAttributes": null,
+          "columns": [],
+          "actions": null,
+          "commands": null,
+          "orderNumber": 40,
+          "required": true,
+          "visibility": null,
+          "enablement": null,
+          "obligation": null,
+          "readonly": false,
+          "selectionPaginated": true,
+          "validators": null,
+          "hint": null,
+          "historyDisplayMode": 0,
+          "tags": null
+        },
+        {
+          "caption": "Описание программы",
+          "type": 7,
+          "property": "descript",
+          "size": 2,
+          "maskName": null,
+          "mask": null,
+          "mode": null,
+          "fields": [],
+          "hierarchyAttributes": null,
+          "columns": [],
+          "actions": null,
+          "commands": null,
+          "orderNumber": 40,
+          "required": false,
+          "visibility": null,
+          "enablement": null,
+          "obligation": null,
+          "readonly": false,
+          "selectionPaginated": true,
+          "validators": null,
+          "hint": null,
+          "historyDisplayMode": 0,
+          "tags": null
+        }
+      ],
+      "shortFields": []
+    }
+  ],
+  "actions": null,
+  "siblingFixBy": null,
+  "siblingNavigateBy": null,
+  "historyDisplayMode": 0,
+  "collectionFilters": null,
+  "version": "",
+  "overrideMode": 1,
+  "commands": [
+    {
+      "id": "SAVE",
+      "caption": "Сохранить",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "SAVEANDCLOSE",
+      "caption": "Сохранить и закрыть",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "DELETE",
+      "caption": "Удалить",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

@@ -1,0 +1,71 @@
+{
+  "columns": [
+    {
+      "sorted": true,
+      "caption": "Задача национального проекта",
+      "type": 1,
+      "property": "name",
+      "size": 2,
+      "maskName": null,
+      "mask": null,
+      "mode": null,
+      "fields": [],
+      "hierarchyAttributes": null,
+      "columns": [],
+      "actions": null,
+      "commands": null,
+      "orderNumber": 11,
+      "required": true,
+      "visibility": null,
+      "enablement": null,
+      "obligation": null,
+      "readonly": false,
+      "selectionPaginated": true,
+      "validators": null,
+      "hint": null,
+      "historyDisplayMode": 0,
+      "tags": null,
+      "selConditions": null,
+      "selSorting": null
+    }
+  ],
+  "actions": null,
+  "allowSearch": true,
+  "pageSize": null,
+  "useEditModels": true,
+  "version": "31",
+  "overrideMode": 1,
+  "commands": [
+    {
+      "id": "CREATE",
+      "caption": "Создать",
+      "visibilityCondition": "",
+      "enableCondition": "",
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "EDIT",
+      "caption": "Изменить",
+      "visibilityCondition": "",
+      "enableCondition": "",
+      "needSelectedItem": true,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "DELETE",
+      "caption": "Удалить",
+      "visibilityCondition": "",
+      "enableCondition": "",
+      "needSelectedItem": true,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": true
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

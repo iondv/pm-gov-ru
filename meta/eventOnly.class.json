@@ -1,0 +1,58 @@
+{
+  "isStruct": false,
+  "key": [
+    "guid"
+  ],
+  "semantic": "name| ( |code| )",
+  "name": "eventOnly",
+  "version": "31",
+  "caption": "Этапы и стадии объекта(мероприятия)",
+  "ancestor": "event",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 440,
+      "name": "basicObjs",
+      "caption": "Учетные задачи/поручения",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "eventOnly",
+      "allowedSubclasses": [
+        "eventOnly",
+        "eventControl"
+      ],
+      "backRef": "basicObj",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [
+        {
+          "property": "num",
+          "mode": 0
+        }
+      ],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

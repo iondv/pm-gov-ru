@@ -1,0 +1,1035 @@
+name: eventsBase
+caption: Отчеты по стандартным мероприятиям объектов
+sources:
+  - name: objectBasic
+    caption: >-
+      Данные об мероприятиях объектов
+#      - Выгружаем из класса eventObject
+    load:
+      - className: eventObject
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr: $name
+          - field: objectBasic
+            expr: $objectBasic.name
+          - field: indicatorBasicId
+            expr: $indicatorBasic.id
+    index:
+      - guid
+  - name: indicatorAll
+    caption: >-
+      Данные о показателях (кроме базовых)
+    load:
+      - className: indicatorDigital
+        results:
+          - field: guid
+            expr: $id
+#          Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorFinancial
+        results:
+          - field: guid
+            expr: $id
+#          Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorMedia
+        results:
+          - field: guid
+            expr: $id
+#          Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorText
+        results:
+          - field: guid
+            expr: $id
+#          Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+    index:
+      - guid
+  - name: indicatorAllEvent
+    caption: >-
+      Данные о базовых показателях
+#      - Выгружаем из класса indicatorBasic все
+    load:
+      - className: indicatorDigital
+        filter:
+          and:
+            - nempty:
+              - $indicatorValueBasic.dateStart
+            - nempty:
+              - $indicatorValueBasic.dateEnd
+        results:
+          - field: guid
+            expr: $id
+          - field: indicatorBasicName
+            expr: $name
+          - field: measureUnitId
+            expr: $measureUnit.kod
+          - field: indicatorBasicMeasureUnit
+            expr: $measureUnit.shortName
+          - field: periodTypeId
+            expr: $periodType
+          - field: indicatorBasicPeriodType
+            expr:
+              case:
+                - eq:
+                  - $periodType
+                  - year
+                - Ежегодный
+                - eq:
+                  - $periodType
+                  - halfyear
+                - Полугодие
+                - eq:
+                  - $periodType
+                  - quarter
+                - Квартал
+                - eq:
+                  - $periodType
+                  - month
+                - Ежемесячный
+                - eq:
+                  - $periodType
+                  - week
+                - Еженедельный
+                - eq:
+                  - $periodType
+                  - one
+                - Разовый
+                - ''
+          - field: yearEnd
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: yearStart
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: monthEnd
+            expr:
+              month:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: indicatorBasicDateStart
+            expr: $indicatorValueBasic.dateStart
+          - field: indicatorBasicDateEnd
+            expr: $indicatorValueBasic.dateEnd
+          - field: indicatorBasicValue
+            expr: $indicatorValueBasic.value
+          - field: indicatorBasicPlannedValue
+            expr: $indicatorValueBasic.plannedValue
+          - field: indicatorBasicDesiredValue
+            expr: $indicatorValueBasic.desiredValue
+      - className: indicatorMedia
+        filter:
+          and:
+            - nempty:
+              - $indicatorValueBasic.dateStart
+            - nempty:
+              - $indicatorValueBasic.dateEnd
+        results:
+          - field: guid
+            expr: $id
+          - field: indicatorBasicName
+            expr: $name
+          - field: measureUnitId
+            expr: $measureUnit.kod
+          - field: indicatorBasicMeasureUnit
+            expr: $measureUnit.shortName
+          - field: periodTypeId
+            expr: $periodType
+          - field: indicatorBasicPeriodType
+            expr:
+              case:
+                - eq:
+                  - $periodType
+                  - year
+                - Ежегодный
+                - eq:
+                  - $periodType
+                  - halfyear
+                - Полугодие
+                - eq:
+                  - $periodType
+                  - quarter
+                - Квартал
+                - eq:
+                  - $periodType
+                  - month
+                - Ежемесячный
+                - eq:
+                  - $periodType
+                  - week
+                - Еженедельный
+                - eq:
+                  - $periodType
+                  - one
+                - Разовый
+                - ''
+          - field: yearEnd
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: yearStart
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: monthEnd
+            expr:
+              month:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: indicatorBasicDateStart
+            expr: $indicatorValueBasic.dateStart
+          - field: indicatorBasicDateEnd
+            expr: $indicatorValueBasic.dateEnd
+          - field: indicatorBasicValue
+            expr: $indicatorValueBasic.value
+          - field: indicatorBasicPlannedValue
+            expr: $indicatorValueBasic.plannedValue
+          - field: indicatorBasicDesiredValue
+            expr: $indicatorValueBasic.desiredValue
+      - className: indicatorText
+        filter:
+          and:
+            - nempty:
+              - $indicatorValueBasic.dateStart
+            - nempty:
+              - $indicatorValueBasic.dateEnd
+        results:
+          - field: guid
+            expr: $id
+          - field: indicatorBasicName
+            expr: $name
+          - field: measureUnitId
+            expr: $measureUnit.kod
+          - field: indicatorBasicMeasureUnit
+            expr: $measureUnit.shortName
+          - field: periodTypeId
+            expr: $periodType
+          - field: indicatorBasicPeriodType
+            expr:
+              case:
+                - eq:
+                  - $periodType
+                  - year
+                - Ежегодный
+                - eq:
+                  - $periodType
+                  - halfyear
+                - Полугодие
+                - eq:
+                  - $periodType
+                  - quarter
+                - Квартал
+                - eq:
+                  - $periodType
+                  - month
+                - Ежемесячный
+                - eq:
+                  - $periodType
+                  - week
+                - Еженедельный
+                - eq:
+                  - $periodType
+                  - one
+                - Разовый
+                - ''
+          - field: yearEnd
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: yearStart
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: monthEnd
+            expr:
+              month:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: indicatorBasicDateStart
+            expr: $indicatorValueBasic.dateStart
+          - field: indicatorBasicDateEnd
+            expr: $indicatorValueBasic.dateEnd
+          - field: indicatorBasicValue
+            expr: $indicatorValueBasic.value
+          - field: indicatorBasicPlannedValue
+            expr: $indicatorValueBasic.plannedValue
+          - field: indicatorBasicDesiredValue
+            expr: $indicatorValueBasic.desiredValue
+      - className: indicatorFinancial
+        filter:
+          and:
+            - nempty:
+              - $indicatorValueBasic.dateStart
+            - nempty:
+              - $indicatorValueBasic.dateEnd
+        results:
+          - field: guid
+            expr: $id
+          - field: indicatorBasicName
+            expr: $name
+          - field: measureUnitId
+            expr: $measureUnit.kod
+          - field: indicatorBasicMeasureUnit
+            expr: $measureUnit.shortName
+#          - field: measureTypeId
+#            expr: $measureType.id
+#          - field: indicatorBasicMeasureType
+#            expr: $measureType.shortName
+          - field: periodTypeId
+            expr: $periodType
+          - field: indicatorBasicPeriodType
+            expr:
+              case:
+                - eq:
+                  - $periodType
+                  - year
+                - Ежегодный
+                - eq:
+                  - $periodType
+                  - halfyear
+                - Полугодие
+                - eq:
+                  - $periodType
+                  - quarter
+                - Квартал
+                - eq:
+                  - $periodType
+                  - month
+                - Ежемесячный
+                - eq:
+                  - $periodType
+                  - week
+                - Еженедельный
+                - eq:
+                  - $periodType
+                  - one
+                - Разовый
+                - ''
+          - field: yearEnd
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: yearStart
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: monthEnd
+            expr:
+              month:
+                - dateAdd:
+                  - $indicatorValueBasic.dateEnd
+                  - 10
+                  - h
+          - field: indicatorBasicDateStart
+            expr: $indicatorValueBasic.dateStart
+          - field: indicatorBasicDateEnd
+            expr: $indicatorValueBasic.dateEnd
+          - field: indicatorBasicValue
+            expr: $indicatorValueBasic.value
+          - field: indicatorBasicPlannedValue
+            expr: $indicatorValueBasic.plannedValue
+          - field: indicatorBasicDesiredValue
+            expr: $indicatorValueBasic.desiredValue
+          - field: indicatorBasicBudgetType
+            expr:
+              case:
+                - eq:
+                  - $budgetType
+                  - munic
+                - Муниципальный
+                - eq:
+                  - $budgetType
+                  - krai
+                - Краевой
+                - eq:
+                  - $budgetType
+                  - federal
+                - Федеральный
+                - eq:
+                  - $budgetType
+                  - vnebudjet
+                - Внебюджетный
+                - ''
+          - field: increasing
+            expr: $increasing
+          - field: budgetTypeId
+            expr: $budgetType
+          - field: indicatorBasicMeasureType
+            expr: $measureType.shortName
+          - field: measureTypeId
+            expr: $measureType.id
+    index:
+      - guid
+  - name: cardObjectSource
+    caption: >-
+      Данные об мероприятиях и показателях
+    load:
+      - source: objectBasic
+        joins:
+          - table: indicatorAllEvent
+            alias:  ie
+            left: indicatorBasicId
+            right: guid
+        filter:
+          and:
+            - nempty:
+              - $ie.indicatorBasicDateStart
+            - nempty:
+              - $ie.indicatorBasicDateEnd
+        results:
+          - field: guidObj
+            expr: $guid
+          - field: objectBasic
+            expr: $objectBasic
+          - field: indicatorBasicId
+            expr: $indicatorBasicId
+          - field: measureUnitId
+            expr: $ie.measureUnitId
+          - field: budgetTypeId
+            expr: $ie.budgetTypeId
+          - field: measureTypeId
+            expr: $ie.measureTypeId
+          - field: increasing
+            expr: $ie.increasing
+          - field: periodTypeId
+            expr: $ie.periodTypeId
+          - field: periodType
+            expr: $ie.indicatorBasicPeriodType
+          - field: nameObject
+            expr: $name
+          - field: nameIndicator
+            expr: $ie.indicatorBasicName
+          - field: yearStart
+            expr: $ie.yearStart
+          - field: yearEnd
+            expr: $ie.yearEnd
+#          - field: prevYearEnd
+#            expr:
+#              sub:
+#                - $ie.yearEnd
+#                - 1
+          - field: monthEnd
+            expr: $ie.monthEnd
+          - field: periodMonth
+            expr:
+              if:
+                - eq:
+                  - $ie.periodTypeId
+                  - month
+                - case:
+                  - eq:
+                    - $ie.monthEnd
+                    - 1
+                  - Январь
+                  - eq:
+                    - $ie.monthEnd
+                    - 2
+                  - Февраль
+                  - eq:
+                    - $ie.monthEnd
+                    - 3
+                  - Март
+                  - eq:
+                    - $ie.monthEnd
+                    - 4
+                  - Апрель
+                  - eq:
+                    - $ie.monthEnd
+                    - 5
+                  - Май
+                  - eq:
+                    - $ie.monthEnd
+                    - 6
+                  - Июнь
+                  - eq:
+                    - $ie.monthEnd
+                    - 7
+                  - Июль
+                  - eq:
+                    - $ie.monthEnd
+                    - 8
+                  - Август
+                  - eq:
+                    - $ie.monthEnd
+                    - 9
+                  - Сентябрь
+                  - eq:
+                    - $ie.monthEnd
+                    - 10
+                  - Октябрь
+                  - eq:
+                    - $ie.monthEnd
+                    - 11
+                  - Ноябрь
+                  - eq:
+                    - $ie.monthEnd
+                    - 12
+                  - Декабрь
+                  - ''
+                - null
+          - field: dateStart
+            expr: $ie.indicatorBasicDateStart
+          - field: dateEnd
+            expr: $ie.indicatorBasicDateEnd
+          - field: req
+            expr: $ie.indicatorBasicDesiredValue
+          - field: plan
+            expr: $ie.indicatorBasicPlannedValue
+          - field: fact
+            expr: $ie.indicatorBasicValue
+          - field: budgetType
+            expr: $ie.indicatorBasicBudgetType
+          - field: measureType
+            expr: $ie.indicatorBasicMeasureType
+          - field: unit
+            expr: $ie.indicatorBasicMeasureUnit
+    index:
+      - guidObj
+  - name: spendObjectSource
+    caption: >-
+      Данные о расходах
+    load:
+      - source: indicatorAll
+        joins:
+          - table: cardObjectSource
+            alias:  cos
+            left: guid
+            right: indicatorBasicId
+        filter:
+          and:
+            - nempty:
+              - $cos.measureTypeId
+            - eq:
+              - $cos.periodTypeId
+              - month
+        results:
+          - field: measureUnitId
+            expr: $cos.measureUnitId
+          - field: measureTypeId
+            expr: $cos.measureTypeId
+          - field: increasing
+            expr: $cos.increasing
+          - field: periodTypeId
+            expr: $cos.periodTypeId
+          - field: periodType
+            expr: $cos.periodType
+          - field: yearEnd
+            expr: $cos.yearEnd
+          - field: plan
+            expr:
+              sum:
+                - $cos.plan
+          - field: fact
+            expr:
+              sum:
+                - $cos.fact
+          - field: measureType
+            expr: $cos.measureType
+          - field: unit
+            expr: $cos.unit
+    index:
+      - measureTypeId
+reports:
+  - name: cardObject
+    caption: Финансовые показатели текущего года
+    sheets:
+      - name: cardObject
+        caption: >-
+          Финансовые показатели текущего года
+        type: aggregation
+        source: cardObjectSource
+        fetch:
+          nameObject: $nameObject
+          nameIndicator: $nameIndicator
+          start:
+            min:
+              - $dateStart
+          end:
+            max:
+              - $dateEnd
+          eventId: $guidObj
+          budgetType: $budgetType
+          budgetTypeId: $budgetTypeId
+          measureType: $measureType
+          measureTypeId: $measureTypeId
+          unit: $unit
+          measureUnitId: $measureUnitId
+          req:
+            sum:
+              - $req
+          plan:
+            sum:
+              - $plan
+          fact:
+            sum:
+              - $fact
+        filter:
+          and:
+            - lte:
+              - $dateStart
+              - ':dateSelect'
+            - gte:
+              - $dateEnd
+              - ':dateSelect'
+            - eq:
+              - $yearStart
+              - year:
+                - ':dateSelect'
+            - or:
+              - eq:
+                - $increasing
+                - true
+              - eq:
+                - $increasing
+                - false
+        sort:
+          nameObject: asc
+          nameIndicator: asc
+        params:
+          dateSelect:
+            caption: Значение показателей на дату
+            format: date
+        columns:
+          - field: nameObject
+            caption: Мероприятие
+            format: string
+          - field: nameIndicator
+            caption: Показатель
+            format: string
+          - field: period
+            caption: Период
+            format: string
+          - field: budgetType
+            caption: Тип бюджета
+            format: string
+          - field: measureType
+            caption: Вид расходов
+            format: string
+          - field: unit
+            caption: Единица изменения
+            format: string
+          - field: req
+            caption: Требуемое
+            format: number
+          - field: plan
+            caption: План
+            format: number
+          - field: fact
+            caption: Факт
+            format: number
+        groups:
+          fields:
+            - nameObject
+            - nameIndicator
+            - budjetType
+            - kindCost
+            - unit
+        process:
+          period:
+            concat:
+              - format:
+                - dateAdd:
+                  - $start
+                  - 10
+                  - h
+                - 'DD.MM.YYYY'
+              - ' - '
+              - format:
+                - dateAdd:
+                  - $end
+                  - 10
+                  - h
+                - 'DD.MM.YYYY'
+  - name: cardFin
+    caption: Финансирование по типам бюджетов
+    sheets:
+      - name: cardFin
+        caption: >-
+          Финансирование по типам бюджетов
+        type: aggregation
+        source: cardObjectSource
+        fetch:
+          nameObject: $nameObject
+          nameIndicator: $nameIndicator
+          eventId: $guidObj
+          budgetType: $budgetType
+          budgetTypeId: $budgetTypeId
+          unit: $unit
+          measureUnitId: $measureUnitId
+          req:
+            sum:
+              - $req
+          plan:
+            sum:
+              - $plan
+          fact:
+            sum:
+              - $fact
+        sort:
+          nameObject: asc
+          nameIndicator: asc
+        filter:
+          eq:
+            - $increasing
+            - true
+        columns:
+          - field: nameObject
+            caption: Мероприятие
+            format: string
+            filter: true
+          - field: nameIndicator
+            caption: Показатель
+            format: string
+          - field: budgetType
+            caption: Тип бюджета
+            format: string
+          - field: unit
+            caption: Единица изменения
+            format: string
+          - field: req
+            caption: Требуемое
+            format: number
+          - field: plan
+            caption: План
+            format: number
+          - field: fact
+            caption: Факт
+            format: number
+        groups:
+          fields:
+            - nameObject
+          totals:
+            - name: objSum
+              caption: Итог
+              query:
+                source: cardObjectSource
+                filter:
+                  eq:
+                    - $increasing
+                    - true
+                fetch:
+                  nameObject: $nameObject
+                  req:
+                    sum:
+                      - $req
+                  plan:
+                    sum:
+                      - $plan
+                  fact:
+                    sum:
+                      - $fact
+        process:
+          rate: >-
+            sub($req,$objSum.plan)
+  - name: cardWork
+    caption: Выполнение по типам затрат
+    sheets:
+      - name: cardWork
+        caption: >-
+          Выполнение по типам затрат
+        type: aggregation
+        source: cardObjectSource
+        fetch:
+          nameObject: $nameObject
+          nameIndicator: $nameIndicator
+          eventId: $guidObj
+          measureType: $measureType
+          measureTypeId: $measureTypeId
+          unit: $unit
+          measureUnitId: $measureUnitId
+          req:
+            sum:
+              - $req
+          plan:
+            sum:
+              - $plan
+          fact:
+            sum:
+              - $fact
+        filter:
+          eq:
+            - $increasing
+            - false
+        sort:
+          nameObject: asc
+          nameIndicator: asc
+        columns:
+          - field: nameObject
+            caption: Мероприятие
+            format: string
+            filter: true
+          - field: nameIndicator
+            caption: Показатель
+            format: string
+          - field: measureType
+            caption: Вид расходов
+            format: string
+          - field: unit
+            caption: Единица изменения
+            format: string
+          - field: req
+            caption: Требуемое
+            format: number
+          - field: plan
+            caption: План
+            format: number
+          - field: fact
+            caption: Факт
+            format: number
+        groups:
+          fields:
+            - nameObject
+          totals:
+            - name: objSum
+              caption: Итог
+              query:
+                source: cardObjectSource
+                filter:
+                  ne:
+                    - $increasing
+                    - true
+                fetch:
+                  nameObject: $nameObject
+                  req:
+                    sum:
+                      - $req
+                  plan:
+                    sum:
+                      - $plan
+                  fact:
+                    sum:
+                      - $fact
+        process:
+          rate: >-
+            sub($req,$objSum.plan)
+  - name: cardPivot
+    caption: Сводный по мероприятиям
+    sheets:
+      - name: cardPivot
+        caption: >-
+          Сводный по мероприятиям
+        needFilterSet: true
+        needFilterMessage: Выберите мероприятие
+        type: aggregation
+        source: cardObjectSource
+        fetch:
+          nameObject: $nameObject
+          nameIndicator: $nameIndicator
+          objectBasic: $objectBasic
+          period:
+            concat:
+              - format:
+                - dateAdd:
+                  - $dateStart
+                  - 10
+                  - h
+                - 'DD.MM.YYYY'
+              - ' - '
+              - format:
+                - dateAdd:
+                  - $dateEnd
+                  - 10
+                  - h
+                - 'DD.MM.YYYY'
+          eventId: $guidObj
+          budgetType: $budgetType
+          budgetTypeId: $budgetTypeId
+          measureType: $measureType
+          measureTypeId: $measureTypeId
+          unit: $unit
+          measureUnitId: $measureUnitId
+          plan:
+            sum:
+              - $plan
+          fact:
+            sum:
+              - $fact
+        filter:
+          or:
+            - eq:
+              - $increasing
+              - true
+            - eq:
+              - $increasing
+              - false
+        sort:
+          objectBasic: asc
+          nameObject: asc
+          nameIndicator: asc
+          period: asc
+        columns:
+          - field: objectBasic
+            caption: Объект
+            format: string
+          - field: nameObject
+            caption: Мероприятие
+            format: string
+            filter:
+              source: cardObjectSource
+              field: nameObject
+              sort:
+                nameObject: asc
+          - field: nameIndicator
+            caption: Показатель
+            format: string
+          - field: period
+            caption: Период
+            format: string
+          - field: budgetType
+            caption: Тип бюджета
+            format: string
+          - field: measureType
+            caption: Вид расходов
+            format: string
+          - field: unit
+            caption: Единица изменения
+            format: string
+          - field: plan
+            caption: План
+            format: number
+          - field: fact
+            caption: Факт
+            format: number
+        groups:
+          fields:
+            - objectBasic
+            - nameObject

@@ -1,0 +1,91 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\markView -->
+<%
+let value = prop.getValue();
+%>
+<div class="form-group <%= cssFromTags(field) %>">
+  <div class="col-sm-12">
+    <div class="attr-content">
+      <div class="attr-content-title">
+        <%= field.caption %>
+      </div>
+      <div id="<%- id %>" class="form-attr-project-chart"
+           data-value="<%= value %>"
+           data-title="<%= field.caption %>"></div>
+    </div>
+  </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% stylesheet(`${module}/app-vendor/highcharts/css/highcharts.css`) -%>
+<% script(`${module}/app-static/js/highcharts.js`) -%>
+
+<script>
+  $(document.body).on('highcharts:ready', function () {
+    $(document.getElementById('<%- id %>')).each(function () {
+      var $container = $(this);
+      var value = $container.data('value');
+      if (!(value instanceof Array)) {
+        console.error('Invalid JSON:', value);
+        value = [];
+      }
+      var colors = [1, 2, 3, 4, 5, 6];
+      value = value.map(function (item, index) {
+        return {
+          name: item.caption,
+          y: parseInt(item.value || 0),
+          colorIndex: colors[index]
+        };
+      });
+      Highcharts.chart(this, {
+        credits: false,
+        chart: {
+          spacing: [8,0,0,0],
+          type: 'column'
+        },
+        title: false,
+        xAxis: {
+          type: 'category',
+          labels: {
+            rotation: -35,
+            style: {
+              fontSize: '14px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        },
+        yAxis: {
+          min: 0,
+          maxPadding: 0,
+          tickPixelInterval: 50,
+          title: {
+            enabled: false,
+            text: ''
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        tooltip: {
+          pointFormat: '<b>{point.y:.1f}</b>',
+          headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>'
+        },
+        series: [{
+          name: 'markView',
+          data: value,
+          dataLabels: {
+            enabled: false,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+              fontSize: '14px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        }]
+      });
+    });
+  });
+</script>

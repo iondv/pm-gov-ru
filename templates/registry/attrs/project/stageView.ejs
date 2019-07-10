@@ -1,0 +1,152 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\stageView -->
+<%
+let stageCol = item.property('stageCol'), url = '', value;
+if (stageCol) {
+  value = stageCol.getValue();
+  url = `${module}/api/${stageCol.meta._refClass.getCanonicalName()}/${value}`;
+}
+%>
+<% if (value) { %>
+<div class="form-group <%=cssFromTags(field)%>" data-prop="<%= JSON.stringify(field) %>">
+    <label class="col-md-2 col-sm-3 control-label"><%= field.caption %></label>
+    <div class="col-md-10 col-sm-9">
+        <div id="<%- id %>" class="form-attr-project-stage-line form-control-static loading"
+             data-url="<%= url %>"
+             data-save-url="<%= url %>/do">
+            <div class="attr-loader">
+                <span class="fa fa-refresh fa-spin"></span>
+            </div>
+            <div class="attr-content">
+                <div class="band clearfix"></div>
+
+                <div class="attr-controls mt15">
+                    <div class="attr-loader">
+                        <span class="fa fa-refresh fa-spin mr5"></span> Выполнение перехода...
+                    </div>
+                    <div class="attr-controls attr-content">
+                        <button class="btn btn-default back">
+                            <span class="fa fa-arrow-left mr5"></span>
+                            Вернуться назад
+                        </button>
+                        <button class="btn btn-warning next">
+                            Перевести на следующий этап
+                            <span class="fa fa-arrow-right ml5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="error-block"></p>
+    </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+
+<script>
+  $(document.getElementById('<%- id %>')).each(function () {
+    var $container = $(this);
+    var $band = $container.find('.band');
+    var $controls = $container.find('.attr-controls');
+    var $back = $controls.find('.back');
+    var $next = $controls.find('.next');
+    var url = $container.data('url');
+    var saveUrl = $container.data('saveUrl');
+
+    $.get(url).done(function (data) {
+      var items = data.stageCol_ref && data.stageCol_ref.stages ? data.stageCol_ref.stages : [];
+      var active = data.actStage_ref;
+      if (active) {
+        for (var i = 0; i < items.length; ++i) {
+          items[i]._active = active._id === items[i]._id;
+        }
+      }
+      $container.removeClass('loading');
+      create(items);
+    });
+
+    $(window).resize(align);
+
+    $back.click(function () {
+      var $active = $band.children('.active');
+      execute(save(save($active.prev(), true)));
+    });
+
+    $next.click(function () {
+      var $active = $band.children('.active');
+      var $next = $active.length ? $active.next() : $band.children().first();
+      execute(save($next, true));
+    });
+
+    function execute () {
+      $controls.addClass('loading');
+      $.when(arguments).then(function () {
+        $controls.removeClass('loading');
+      });
+    }
+
+    function save ($item, state) {
+      if ($item.length) {
+        return $.post($item.data('url'), {
+          $action: 'SAVE',
+          actStage: $item.data('id')
+        }).done(function (data) {
+          $band.children('.active').removeClass('active');
+          $item.addClass('active');
+          toggleControls();
+        });
+      }
+    }
+
+    function toggleControls () {
+      var $items = $band.children();
+      var index = $items.filter('.active').index();
+      $back.toggle(index > 0);
+      $next.toggle($items.length > 1 && index + 1 < $items.length);
+    }
+
+    function create (items) {
+      if (!items.length) {
+        return $container.closest('.form-group').remove();
+      }
+      items.sort(function (a, b) {
+        return a.num - b.num;
+      });
+      var result = '';
+      for (var i = 0; i < items.length; ++i) {
+        result += createItem(items[i]);
+      }
+      $band.html(result);
+      align();
+      toggleControls();
+    }
+
+    function createItem (data) {
+      return '<div class="band-item ' + (data._active ? 'active' : '')
+        + '" title="' + data.__string
+        + '" data-url="' + (saveUrl + data._id +'/do')
+        + '" data-id="' + data._id
+        + '"><div class="band-item-content">'
+        + (data.sprStageAtr_ref ? data.sprStageAtr_ref.name : data.__string)
+        + '</div></div>';
+    }
+
+    function align () {
+      if (!$container.hasClass('loading')) {
+        var $items = $band.children();
+        $items.css('width', 'auto');
+        var total = 2;
+        $items.each(function () {
+          total += $(this).outerWidth();
+        });
+        var over = total - $band.width();
+        var delta = parseInt(over / $items.length + 1);
+        $items.each(function () {
+          $(this).width($(this).outerWidth() - delta);
+          over -= delta;
+        });
+        $items.last().width($items.last().width() - over - 1);
+      }
+    }
+  });
+</script>
+<% } %>

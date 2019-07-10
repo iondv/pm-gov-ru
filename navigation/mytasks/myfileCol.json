@@ -1,0 +1,15 @@
+{
+    "code": "myfileCol",
+    "orderNumber": 290,
+    "type": 1,
+    "title": "",
+    "caption": "Документы",
+    "classname": "fileCol",
+    "container": null,
+    "collection": null,
+    "url": null,
+    "hint": null,
+    "conditions": [],
+    "sorting": [],
+    "pathChains": []
+  }

@@ -1,0 +1,12 @@
+<%- partial('../specificPivot', {
+  sheet,
+  data,
+    options: {
+      totals: true,
+      grouped: true,
+        groupTotals: true,
+      preventDoubleCounting: 'nameProj',
+        untitledGroupTotals: false,
+        untitledGroupTitle: "Список проектов в портфеле",
+        untitledGroupPostfix: "Список программ в портфеле"
+    }}) %>

@@ -1,0 +1,1076 @@
+roles:
+    # TODO сверить списки классов в безопасности
+  - id: Users
+    name: Обычные пользователи
+    permissions:
+      "sys:::url:registry":
+        - use
+      "sys:::url:registry/pm-gov-ru@indicatorValue.all/*":
+        - use
+      "sys:::url:registry/pm-gov-ru@person/*":
+        - use
+      "sys:::url:gantt-chart/*":
+        - use
+      "sys:::url:portal/*":
+        - use
+      "sys:::url:geomap/*":
+        - use
+      "sys:::url:report/*":
+        - use
+      "sys:::url:dashboard/*":
+        - use
+      geonav:::objectBasic@pm-gov-ru:
+        - read
+      geolayer:::objectBasic@pm-gov-ru:
+        - read
+      # Навигация
+      n:::pm-gov-ru@myProjectDepart:
+        - read
+      n:::pm-gov-ru@myprojectevent:
+        - read
+      n:::pm-gov-ru@myprogram:
+        - read
+      n:::pm-gov-ru@mycontract:
+        - read
+      n:::pm-gov-ru@myfileCol:
+        - read
+      n:::pm-gov-ru@myconclusion:
+        - read
+      n:::pm-gov-ru@myProgramGos:
+        - read
+      n:::pm-gov-ru@myproposal:
+        - read
+      n:::pm-gov-ru@myproposal.all:
+        - read
+      n:::pm-gov-ru@myproposal.review:
+        - read
+      n:::pm-gov-ru@myproposal.mytask:
+        - read
+      n:::pm-gov-ru@myproposal.close:
+        - read
+      n:::pm-gov-ru@myprojectevent.responsibility:
+        - read
+      n:::pm-gov-ru@myprojectevent.parcipiant:
+        - read
+      n:::pm-gov-ru@myprojectevent.myevent:
+        - read
+      n:::pm-gov-ru@myprojectevent.myeventall:
+        - read
+      n:::pm-gov-ru@myprojectevent.all:
+        - read
+      n:::pm-gov-ru@myreportevent.all:
+        - read
+      n:::pm-gov-ru@myreportevent.curator:
+        - read
+      n:::pm-gov-ru@myreportevent:
+        - read
+      n:::pm-gov-ru@myprojectevent.requireAttention:
+        - read
+      n:::pm-gov-ru@myprojectevent.prognosis:
+        - read
+      n:::pm-gov-ru@myrisk:
+        - read
+      n:::pm-gov-ru@myObjectBasic:
+        - read
+      n:::pm-gov-ru@myBriefcase:
+        - read
+      n:::pm-gov-ru@indicator:
+        - read
+      n:::pm-gov-ru@indicator.all:
+        - read
+      n:::pm-gov-ru@indicator.edit:
+        - read
+      n:::pm-gov-ru@indicator.verify:
+        - read
+      n:::pm-gov-ru@indicator.budget:
+        - read
+      n:::pm-gov-ru@indicatorValue:
+        - read
+      n:::pm-gov-ru@indicatorValue.edit:
+        - read
+      n:::pm-gov-ru@indicatorValue.planned:
+        - read
+      n:::pm-gov-ru@indicatorValue.verify:
+        - read
+      n:::pm-gov-ru@indicatorValue.confirm:
+        - read
+      n:::pm-gov-ru@indicatorValue.orgFailed:
+        - read
+      n:::pm-gov-ru@indicatorValue.all:
+        - read
+      n:::pm-gov-ru@myinstructions:
+        - read
+      n:::pm-gov-ru@mymeeting:
+        - read
+      n:::pm-gov-ru@myquestions:
+        - read
+      n:::pm-gov-ru@mypurpose:
+        - read
+      n:::pm-gov-ru@tasks:
+        - read
+      n:::pm-gov-ru@person:
+        - read
+      n:::pm-gov-ru@knowledgeBase:
+        - read
+      n:::pm-gov-ru@substitution:
+        - read
+      # Классы
+      c:::conclusion@pm-gov-ru:
+        - read
+      c:::category@pm-gov-ru:
+        - read
+      c:::tags@pm-gov-ru:
+        - read
+      c:::usefulLinks@pm-gov-ru:
+        - read
+      c:::resultEvent@pm-gov-ru:
+        - read
+      c:::knowledgeBase@pm-gov-ru:
+        - read
+      c:::glossary@pm-gov-ru:
+        - read
+      c:::assignment@pm-gov-ru:
+        - read
+      c:::reportProject@pm-gov-ru:
+        - read
+      c:::assignmentBasic@pm-gov-ru:
+        - read
+      c:::basicObj@pm-gov-ru:
+        - read
+      #  - use 
+      c:::eventBasic@pm-gov-ru:
+        - read
+        - use
+      c:::event@pm-gov-ru:
+        - read
+        - use
+      c:::eventBlock@pm-gov-ru:
+        - read
+        - use
+      c:::eventControl@pm-gov-ru:
+        - read
+        - use
+      c:::eventRisk@pm-gov-ru:
+        - read
+        - use
+      c:::eventObject@pm-gov-ru:
+        - read
+      c:::eventObjectBasic@pm-gov-ru:
+        - read
+      c:::eventOnly@pm-gov-ru:
+        - read
+        - use
+      c:::branchOrg@pm-gov-ru:
+        - read
+      c:::briefcase@pm-gov-ru:
+        - read
+      c:::budget@pm-gov-ru:
+        - read
+      c:::budgetPoint@pm-gov-ru:
+        - read
+      c:::budgets@pm-gov-ru:
+        - read
+      c:::change@pm-gov-ru:
+        - read
+      c:::changeBudget@pm-gov-ru:
+        - read
+      c:::changeIndicators@pm-gov-ru:
+        - read
+      c:::changeOther@pm-gov-ru:
+        - read
+      c:::changeReq@pm-gov-ru:
+        - read
+      c:::changeResults@pm-gov-ru:
+        - read
+      c:::changeTerms@pm-gov-ru:
+        - read
+      c:::contract@pm-gov-ru:
+        - read
+      c:::contractStage@pm-gov-ru:
+        - read
+      c:::contractPay@pm-gov-ru:
+        - read
+      c:::direction@pm-gov-ru:
+        - read
+      c:::document@pm-gov-ru:
+        - read
+      c:::employee@pm-gov-ru:
+        - read
+      c:::occupationInTheProject@pm-gov-ru:
+        - read
+      c:::evaluation@pm-gov-ru:
+        - read
+      c:::fileCol@pm-gov-ru:
+        - read
+      c:::evaluationPerform@pm-gov-ru: # Отчеты исполнителя /registry/pm-gov-ru@evaluationPerform
+        - read
+        - use
+        - write
+      #c:::eventBasic@pm-gov-ru: # И все наследники - доступ через динамическую безопасность
+            #  - read
+      #c:::project@pm-gov-ru:  # Доступ через динамическую безопасность
+      #  - read
+      #c:::projDepart@pm-gov-ru: # Доступ через динамическую безопаснность
+      #  - read
+      c:::execution@pm-gov-ru:
+        - read
+      c:::projectNational@pm-gov-ru:
+        - read
+      c:::projectFederation@pm-gov-ru:
+        - read
+      c:::financing@pm-gov-ru: #2del?
+        - read
+      c:::financingValue@pm-gov-ru: #2del?
+        - read
+      c:::governmentPower@pm-gov-ru:
+        - read
+      c:::indicatorBasic@pm-gov-ru:
+        - read
+      c:::purposeIndicator@pm-gov-ru:
+        - read
+      c:::indicatorDigital@pm-gov-ru:
+        - read
+      c:::indicatorFinancial@pm-gov-ru:
+        - read
+      c:::indicatorMedia@pm-gov-ru:
+        - read
+      c:::indicatorText@pm-gov-ru:
+        - read
+      c:::indicatorLimBudget@pm-gov-ru:
+        - read
+      c:::indicatorBudget@pm-gov-ru:
+        - read
+      c:::indicatorsValue@pm-gov-ru: #2del ?
+        - read
+      c:::indicatorValueBasic@pm-gov-ru:
+        - read
+      c:::indicatorValueDigital@pm-gov-ru:
+        - read
+      c:::indicatorValueFinancial@pm-gov-ru:
+        - read
+      c:::indicatorValueMedia@pm-gov-ru:
+        - read
+      c:::indicatorValueText@pm-gov-ru:
+        - read
+      c:::infoTransfer@pm-gov-ru:
+        - read
+      c:::measureType@pm-gov-ru:
+        - read
+      c:::typeIndicator@pm-gov-ru:
+        - read
+      c:::measureUnit@pm-gov-ru:
+        - read
+      c:::meeting@pm-gov-ru:
+        - read
+      c:::risk@pm-gov-ru:
+        - read
+      c:::meetingBasic@pm-gov-ru:
+        - read
+      c:::objectBasic@pm-gov-ru:
+        - read
+      c:::okfs@pm-gov-ru:
+        - read
+      c:::okogu@pm-gov-ru:
+        - read
+      c:::okopf@pm-gov-ru:
+        - read
+      c:::organization@pm-gov-ru:
+        - read
+      c:::stakeholdersImplementation@pm-gov-ru:
+        - read
+      c:::participant@pm-gov-ru:
+        - read
+      c:::person@pm-gov-ru:
+        - read
+      c:::problematic@pm-gov-ru:
+        - read
+      c:::proposal@pm-gov-ru:
+        - read
+      c:::program@pm-gov-ru:
+        - read
+      c:::programGos@pm-gov-ru:
+        - read
+      c:::purpose@pm-gov-ru:
+        - read
+      c:::purposeStrategic@pm-gov-ru:
+        - read
+      c:::problemFed@pm-gov-ru:
+        - read
+      c:::problemReg@pm-gov-ru:
+        - read
+      c:::provider@pm-gov-ru:
+        - read
+      c:::question@pm-gov-ru:
+        - read
+      c:::resources@pm-gov-ru:
+        - read
+      c:::resReporting@pm-gov-ru:
+        - read
+      c:::result@pm-gov-ru:
+        - read
+      c:::opportunity@pm-gov-ru:
+        - read
+      c:::sprStage@pm-gov-ru:
+        - read
+      c:::stage@pm-gov-ru:
+        - read
+      c:::stages@pm-gov-ru:
+        - read
+      c:::task@pm-gov-ru:
+        - read
+      c:::vidProject@pm-gov-ru:
+        - read
+      c:::typeRisk@pm-gov-ru:
+        - read
+      c:::typeOpportunity@pm-gov-ru:
+        - read
+      c:::workCost@pm-gov-ru:
+        - read
+      c:::deputy@pm-gov-ru:
+        - read
+        - use
+        - write
+        - delete
+      c:::propBudgt@pm-gov-ru:
+        - read
+  - id: ProjectOffice
+    name: Проектный офис
+    permissions:
+      sys:::url:registry/pm-gov-ru@project/*:
+        - use
+      sys:::url:registry/pm-gov-ru@projectDepart/*:
+        - use
+      # Навигация
+      n:::pm-gov-ru@briefcase:
+        - read
+      n:::pm-gov-ru@controlEvent:
+        - read
+      n:::pm-gov-ru@evaluationPerform:
+        - read
+      n:::pm-gov-ru@eventBasic:
+        - read
+      n:::pm-gov-ru@objectBasic:
+        - read
+      n:::pm-gov-ru@project:
+        - read
+      n:::pm-gov-ru@projectDepart:
+        - read
+      n:::pm-gov-ru@risk:
+        - read
+      # Классы
+      c:::deputy@pm-gov-ru:
+        - read
+      c:::category@pm-gov-ru:
+        - read
+      c:::tags@pm-gov-ru:
+        - read
+      c:::usefulLinks@pm-gov-ru:
+        - read
+      c:::conclusion@pm-gov-ru:
+        - read
+      c:::resultEvent@pm-gov-ru:
+        - read
+      c:::knowledgeBase@pm-gov-ru:
+        - read
+      c:::glossary@pm-gov-ru:
+        - read
+      c:::problemFed@pm-gov-ru:
+        - read
+      c:::problemReg@pm-gov-ru:
+        - read
+      c:::assignment@pm-gov-ru:
+        - read
+      c:::reportProject@pm-gov-ru:
+        - read
+      c:::assignmentBasic@pm-gov-ru:
+        - read
+      c:::basicObj@pm-gov-ru:
+        - read
+      c:::branchOrg@pm-gov-ru:
+        - read
+      c:::briefcase@pm-gov-ru:
+        - read
+      c:::budget@pm-gov-ru:
+        - read
+      c:::budgetPoint@pm-gov-ru:
+        - read
+      c:::budgets@pm-gov-ru:
+        - read
+      c:::change@pm-gov-ru:
+        - read
+      c:::changeBudget@pm-gov-ru:
+        - read
+      c:::changeIndicators@pm-gov-ru:
+        - read
+      c:::changeOther@pm-gov-ru:
+        - read
+      c:::changeReq@pm-gov-ru:
+        - read
+      c:::changeResults@pm-gov-ru:
+        - read
+      c:::changeTerms@pm-gov-ru:
+        - read
+      c:::contract@pm-gov-ru:
+        - read
+      c:::direction@pm-gov-ru:
+        - read
+      c:::document@pm-gov-ru:
+        - read
+      c:::employee@pm-gov-ru:
+        - read
+      c:::occupationInTheProject@pm-gov-ru:
+        - read
+      c:::evaluation@pm-gov-ru:
+        - read
+      c:::evaluationPerform@pm-gov-ru:
+        - read
+      c:::eventBlock@pm-gov-ru:
+        - read
+      c:::eventControl@pm-gov-ru:
+        - read
+      c:::eventRisk@pm-gov-ru:
+        - read      
+      c:::event@pm-gov-ru:
+        - read
+      c:::eventObject@pm-gov-ru:
+        - read
+      c:::eventObjectBasic@pm-gov-ru:
+        - read
+      c:::eventOnly@pm-gov-ru:
+        - read
+      c:::project@pm-gov-ru:
+        - read
+      c:::projectNational@pm-gov-ru:
+        - read
+      c:::projectFederation@pm-gov-ru:
+        - read
+      c:::projDepart@pm-gov-ru:
+        - read
+      c:::execution@pm-gov-ru:
+        - read
+      c:::governmentPower@pm-gov-ru:
+        - read
+      c:::indicatorBasic@pm-gov-ru:
+        - read
+      c:::purposeIndicator@pm-gov-ru:
+        - read
+      c:::indicatorDigital@pm-gov-ru:
+        - read
+      c:::indicatorFinancial@pm-gov-ru:
+        - read
+      c:::indicatorMedia@pm-gov-ru:
+        - read
+      c:::indicatorText@pm-gov-ru:
+        - read
+      c:::indicatorBudget@pm-gov-ru:
+        - read
+      c:::indicatorLimBudget@pm-gov-ru:
+        - read
+      c:::indicatorValueBasic@pm-gov-ru:
+        - read
+      c:::indicatorValueDigital@pm-gov-ru:
+        - read
+      c:::indicatorValueFinancial@pm-gov-ru:
+        - read
+      c:::indicatorValueMedia@pm-gov-ru:
+        - read
+      c:::indicatorValueText@pm-gov-ru:
+        - read
+      c:::measureType@pm-gov-ru:
+        - read
+      c:::typeIndicator@pm-gov-ru:
+        - read
+      c:::measureUnit@pm-gov-ru:
+        - read
+      c:::meeting@pm-gov-ru:
+        - read
+      c:::meetingBasic@pm-gov-ru:
+        - read
+      c:::objectBasic@pm-gov-ru:
+        - read
+      c:::okfs@pm-gov-ru:
+        - read
+      c:::okogu@pm-gov-ru:
+        - read
+      c:::okopf@pm-gov-ru:
+        - read
+      c:::organization@pm-gov-ru:
+        - read
+      c:::stakeholdersImplementation@pm-gov-ru:
+        - read
+      c:::participant@pm-gov-ru:
+        - read
+      c:::person@pm-gov-ru:
+        - read
+      c:::problematic@pm-gov-ru:
+        - read
+      c:::question@pm-gov-ru:
+        - read
+      c:::resources@pm-gov-ru:
+        - read
+      c:::resReporting@pm-gov-ru:
+        - read
+      c:::result@pm-gov-ru:
+        - read
+      c:::risk@pm-gov-ru:
+        - read
+      c:::opportunity@pm-gov-ru:
+        - read
+      c:::sprStage@pm-gov-ru:
+        - read
+      c:::stage@pm-gov-ru:
+        - read
+      c:::stages@pm-gov-ru:
+        - read
+      c:::task@pm-gov-ru:
+        - read
+      c:::vidProject@pm-gov-ru:
+        - read
+      c:::typeRisk@pm-gov-ru:
+        - read
+      c:::typeOpportunity@pm-gov-ru:
+        - read
+      c:::workCost@pm-gov-ru:
+        - read
+      c:::fileCol@pm-gov-ru:
+        - read
+      c:::propBudgt@pm-gov-ru:
+        - read
+  - id: Operators
+    name: Операторы проектов
+    permissions:
+      c:::conclusion@pm-gov-ru:
+        - use
+        - write
+      c:::category@pm-gov-ru:
+        - use
+        - write
+      c:::tags@pm-gov-ru:
+        - use
+        - write
+      c:::usefulLinks@pm-gov-ru:
+        - use
+        - write
+      c:::resultEvent@pm-gov-ru:
+        - use
+        - write
+      c:::knowledgeBase@pm-gov-ru:
+        - use
+        - write
+      c:::glossary@pm-gov-ru:
+        - use
+        - write
+      c:::assignment@pm-gov-ru:
+        - use
+        - write
+      c:::assignmentBasic@pm-gov-ru:
+        - use
+        - write
+      c:::reportProject@pm-gov-ru:
+        - use
+        - write
+      #c:::basicObj@pm-gov-ru:
+      #  - use
+      #  - write
+      c:::branchOrg@pm-gov-ru:
+        - use
+        - write
+      c:::briefcase@pm-gov-ru:
+        - use
+        - write
+      c:::budget@pm-gov-ru:
+        - use
+        - write
+      c:::budgetPoint@pm-gov-ru:
+        - use
+        - write
+      c:::budgets@pm-gov-ru:
+        - use
+        - write
+      c:::change@pm-gov-ru:
+        - use
+        - write
+      c:::changeReq@pm-gov-ru:
+        - use
+        - write
+      c:::contract@pm-gov-ru:
+        - use
+        - write
+      c:::contractStage@pm-gov-ru:
+        - use
+        - write
+      c:::contractPay@pm-gov-ru:
+        - use
+        - write
+      c:::direction@pm-gov-ru:
+        - use
+        - write
+      c:::document@pm-gov-ru:
+        - use
+        - write
+      c:::employee@pm-gov-ru:
+        - read
+        - use
+      c:::occupationInTheProject@pm-gov-ru:
+        - use
+        - write
+      c:::evaluation@pm-gov-ru:
+        - use
+        - write
+      c:::execution@pm-gov-ru:
+        - use
+        - write
+      c:::financing@pm-gov-ru:
+        - use
+        - write
+      c:::financingValue@pm-gov-ru:
+        - read
+      c:::indicators@pm-gov-ru:
+        - use
+      # - write
+      c:::indicatorBasic@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::purposeIndicator@pm-gov-ru:
+        - use
+      c:::indicatorDigital@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorFinancial@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorMedia@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorText@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorBudget@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorLimBudget@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorValueBasic@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorValueDigital@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorValueFinancial@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorValueMedia@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorValueText@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::indicatorsValue@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::infoTransfer@pm-gov-ru:
+        - use
+        - write
+      c:::measureUnit@pm-gov-ru:
+        - use
+      c:::measureType@pm-gov-ru:
+        - use
+        - write
+      c:::typeIndicator@pm-gov-ru:
+        - use
+        - write
+      c:::meeting@pm-gov-ru:
+        - use
+        - write
+      c:::meetingBasic@pm-gov-ru:
+        - use
+        - write
+      c:::objectBasic@pm-gov-ru:
+        - use
+        - write
+      c:::okfs@pm-gov-ru:
+        - use
+        - write
+      c:::okogu@pm-gov-ru:
+        - use
+        - write
+      c:::okopf@pm-gov-ru:
+        - use
+        - write
+      c:::organization@pm-gov-ru:
+        - use
+        - read
+      c:::stakeholdersImplementation@pm-gov-ru:
+        - use
+        - read
+      c:::participant@pm-gov-ru:
+        - use
+        - write
+      c:::person@pm-gov-ru:
+        - write
+      c:::question@pm-gov-ru:
+        - use
+        - write
+      c:::problematic@pm-gov-ru:
+        - use
+        - write
+      c:::proposal@pm-gov-ru:
+        - use
+        - write
+      c:::purpose@pm-gov-ru:
+        - use
+        - write
+      c:::purposeStrategic@pm-gov-ru:
+        - use
+        - write
+      c:::program@pm-gov-ru:
+        - use
+        - write # Разрешаем оператора запись, а обычным пользователям через динамику
+      c:::problemFed@pm-gov-ru:
+        - use
+        - write
+      c:::problemReg@pm-gov-ru:
+        - use
+        - write
+      c:::provider@pm-gov-ru:
+        - use
+        - write
+      c:::resources@pm-gov-ru:
+        - use
+        - write
+      c:::resReporting@pm-gov-ru:
+        - use
+        - write
+      c:::result@pm-gov-ru:
+        - use
+        - write
+      c:::risk@pm-gov-ru:
+        - use
+        - write
+      c:::opportunity@pm-gov-ru:
+        - use
+        - write
+      c:::sprStage@pm-gov-ru:
+        - use
+        - write
+      c:::stage@pm-gov-ru:
+        - use
+        - write
+      c:::stages@pm-gov-ru:
+        - use
+        - write
+      c:::vidProject@pm-gov-ru:
+        - use
+        - write
+      c:::typeRisk@pm-gov-ru:
+        - read
+      c:::typeOpportunity@pm-gov-ru:
+        - read
+      c:::value@pm-gov-ru:
+        - use
+        - write
+      c:::workCost@pm-gov-ru:
+        - use
+        - write
+      c:::changeBudget@pm-gov-ru:
+        - use
+        - write
+      c:::changeIndicators@pm-gov-ru:
+        - use
+        - write
+      c:::changeOther@pm-gov-ru:
+        - use
+        - write
+      c:::changeResults@pm-gov-ru:
+        - use
+        - write
+      c:::changeTerms@pm-gov-ru:
+        - use
+        - write
+      c:::evaluationPerform@pm-gov-ru:
+        - read
+        - use
+        - write # Отчеты исполнителя /registry/pm-gov-ru@evaluationPerform
+      c:::governmentPower@pm-gov-ru:
+        - use
+        - read
+      c:::reporting@pm-gov-ru:
+        - read
+        - write # Запись моих отчетов registry/pm-gov-ru@myreport.edit
+      c:::task@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::event@pm-gov-ru:
+        - use
+      c:::eventBlock@pm-gov-ru:
+        - use
+      c:::eventControl@pm-gov-ru:
+        - use
+      c:::eventRisk@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      #c:::eventBasic@pm-gov-ru: # Базовый класс не надо создавать
+      #  - use
+      #  - write # запись уже через динамику
+      c:::eventObject@pm-gov-ru:
+        - use
+      c:::eventObjectBasic@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::eventOnly@pm-gov-ru:
+        - use
+      c:::eventOnlyAIP@pm-gov-ru:
+        - use
+      #  - write # запись уже через динамику
+      c:::project@pm-gov-ru:
+        - read
+        - use
+#     #   - write # запись уже через динамику
+      c:::projDepart@pm-gov-ru:
+        - read
+        - use
+      #  - write # запись уже через динамику
+      c:::programGos@pm-gov-ru:
+        - use
+        - write
+      c:::projectNational@pm-gov-ru:
+        - read
+        - use
+        - write
+      c:::projectFederation@pm-gov-ru:
+        - read
+        - use
+        - write
+      c:::fileCol@pm-gov-ru:
+        - use
+        - write
+      c:::propBudgt@pm-gov-ru:
+        - use
+        - write
+  - id: Admins
+    name: Администраторы
+    permissions:
+      "*":
+        - full
+
+########################
+# Проекты
+########################
+  
+  # - id: ORGANIZATION_STAFF # Должны иметь права на чтение и редактирование организации и должности, если указана их организация
+  #   name: Сотрудники организации
+  #   permissions:
+  #     pm::organization:
+  #       - read
+  #       - write
+  #     pm::employee:
+  #       - read
+  #       - write
+  - id: PROJECT_BENEFITIAR # Должны иметь права на чтение проектов, если указана их организация
+    name: Интересанты проектов
+    permissions:
+      pm::project:
+        - read
+      pm::project-events:
+        - read
+  - id: PROJECT_MANAGER # Могут иметь права редактирования проектов
+    name: Руководители проектов
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+  - id: PROJECT_CURATOR # Могут иметь права редактирования проектов
+    name: Кураторы проектов
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+  - id: PROJECT_ADMIN # Администраторы проекта могут иметь права редактирования проектов
+    name: Администраторы проектов
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+  - id: PROJECT_ADMIN # Администраторы проекта могут иметь права редактирования проектов
+    name: Администраторы проектов
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+  - id: PROJECT_RESPONSIBLE # Могут иметь права редактирования проектов и мероприятий где они владельцы
+    name: Ответственные по проекту
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+# ПРОГРАММЫ
+#  - id: PROJECT_BENEFITIAR # Показываем все программы, т.к. они ещё и справочник.
+#    name: Интересанты проектов
+#    permissions:
+#      pm::program:
+#        - read
+  - id: PROGRAM_COORD # Координаторы программ могут иметь права редактирования проектов
+    name: Координаторы программ
+    permissions:
+      pm::program:
+        - read
+        - use
+        - write
+
+# Вроде не нужно выносить отдельно PROJECT_RESPONSIBLE_ORG
+  # - id: PROJECT_RESPONSIBLE_ORG  # TODO Операторы организации должны иметь права на редактирование проектов и мероприятий
+    # name: Ответственная организация
+    # permissions:
+    #   pm::project:
+    #     - read
+#        - use # TODO Надо дать права пользователям в группе Operator 
+#        - write # TODO Надо дать права пользователям в группе Operator 
+
+########################
+# Ведомственные проекты
+########################
+  - id: PROJ_DEPART_EMPLOYEE # TODO Должны иметь права на чтение ведомственных проектов и мероприятий
+    name: Сотрудники в ведомственных проектах
+    permissions:
+      pm::projDepart:
+        - read
+  - id: PROJ_DEPART_MANAGER  # TODO Руковоидители ведомственных проектов имеют права на запись проекта и мероприятий
+    name: Менеджеры ведомственных проектов
+    permissions:
+      pm::projDepart:
+        - read
+        - use
+        - write
+  - id: PROJ_DEPART_OPERATOR # TODO Операторы ведомственных проектов имеют права на запись проекта и мероприятий
+    name: Операторы ведомственных проектов
+    permissions:
+      pm::projDepart:
+        - read
+        - use
+        - write
+########################
+# Мероприятия  
+########################
+  - id: EVENT_RESPONSIBLE
+    name: Полный доступ к мероприятию (исполнители, соисполнители, руководитель и куратор мероприятия)
+    permissions:
+      pm::event:
+        - read
+        - use
+        - write
+  - id: EVENT_BENEFITIAR
+    name: Участник организации мероприятия
+    permissions:
+      pm::event:
+        - read
+
+########################
+# Индикаторы
+########################
+  - id: INDICATOR_OWNER
+    name: Оператор показателя
+    permissions:
+      pm::indicator:
+      #  - read # У всех есть чтение в статике
+        - use  # создание через статичные права оператора, но может быть нужна возможность связки в коллекциях
+        - write
+  - id: INDICATOR_HEAD
+    name: Нормокнтролер показателя
+    permissions:
+      pm::indicator:
+      #  - read # У всех есть чтение
+      # - use Не должен создавать, только читать и утверждать
+        - write
+  - id: INDICATOR_VALUEOWNER
+    name: Ответственный за ввод значения
+    permissions:
+      pm::indicator:
+        - read # У всех есть чтение
+      #  - write # только читать
+      #  - use # не нужно создавать, только читать
+  - id: INDICATOR_VALUEHEAD
+    name: Ответственный за утверждение значения
+    permissions:
+      pm::indicator:
+        - read # У всех есть чтение
+      #  - write # только читать
+      #  - use # не нужно создавать, только читать
+  - id: INDICATORVALUE_OWNER
+    name: Оператор показателя
+    permissions:
+      pm::indicatorValue:
+        - read # У всех есть чтение
+        - use # создание через статичные права, но может быть нужна возможность связки в коллекциях
+        - write # Переводит БП
+  - id: INDICATORVALUE_HEAD
+    name: Нормокнтролер значений показателя
+    permissions:
+      pm::indicatorValue:
+        - read # У всех есть чтение
+      # - use Не должен создавать, только читать
+      # - write # Только читает
+  - id: INDICATORVALUE_VALUEOWNER
+    name: Ответственный за ввод значения
+    permissions:
+      pm::indicatorValue:
+        - read # У всех есть чтение
+        - write # Вводит значения и БП
+      #  - use # не нужно создавать, только читать и записывать значения
+  - id: INDICATORVALUE_VALUEHEAD
+    name: Ответственный за утверждение значения
+    permissions:
+      pm::indicatorValue:
+        - read # У всех есть чтение
+        - write # меняет БП
+      #  - use # не нужно создавать, только читать
+  - id: INDICATORVALUE_CONFIRM
+    name: Сотрудники ответственной организации за верификацию значений
+    permissions:
+      pm::indicatorValue:
+        - read # У всех есть чтение
+        - write # меняет БП
+      #  - use # не нужно создавать, только читать
+  - id: PROJECT_VPO # Могут иметь права редактирования проектов и мероприятий где они владельцы
+    name: Сотрудники ВПО
+    permissions:
+      pm::project:
+        - read
+        - use
+        - write
+      pm::project-events:
+        - read
+        - use
+        - write
+  - id: PROJ_DEPART_VPO # TODO Сотрудники ВПО имеют права на запись проекта и мероприятий ведомственных проектов 
+    name: Сотрудники ВПО
+    permissions:
+      pm::projDepart:
+        - read
+        - use
+        - write

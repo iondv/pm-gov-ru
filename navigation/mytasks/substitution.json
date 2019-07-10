@@ -1,0 +1,37 @@
+{
+  "code": "substitution",
+  "orderNumber": 520,
+  "type": 1,
+  "title": "",
+  "caption": "Заместители/Замещения",
+  "classname": "deputy@pm-gov-ru",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "employee.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "deputy.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    } 
+  ],
+  "sorting": [],
+  "pathChains": []
+}

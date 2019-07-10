@@ -1,0 +1,100 @@
+{
+  "tabs": [
+    {
+      "caption": "",
+      "fullFields": [
+        {
+          "caption": "Код",
+          "type": 1,
+          "property": "id",
+          "size": 2,
+          "maskName": null,
+          "mask": null,
+          "mode": null,
+          "fields": [],
+          "hierarchyAttributes": null,
+          "columns": [],
+          "actions": null,
+          "commands": null,
+          "orderNumber": 10,
+          "required": true,
+          "visibility": null,
+          "enablement": null,
+          "obligation": null,
+          "readonly": false,
+          "selectionPaginated": true,
+          "validators": null,
+          "hint": null,
+          "historyDisplayMode": 0,
+          "tags": null
+        },
+        {
+          "caption": "Наименование",
+          "type": 1,
+          "property": "name",
+          "size": 2,
+          "maskName": null,
+          "mask": null,
+          "mode": null,
+          "fields": [],
+          "hierarchyAttributes": null,
+          "columns": [],
+          "actions": null,
+          "commands": null,
+          "orderNumber": 11,
+          "required": true,
+          "visibility": null,
+          "enablement": null,
+          "obligation": null,
+          "readonly": false,
+          "selectionPaginated": true,
+          "validators": null,
+          "hint": null,
+          "historyDisplayMode": 0,
+          "tags": null
+        }
+      ],
+      "shortFields": []
+    }
+  ],
+  "actions": null,
+  "siblingFixBy": null,
+  "siblingNavigateBy": null,
+  "historyDisplayMode": 0,
+  "collectionFilters": null,
+  "version": "31",
+  "overrideMode": 1,
+  "commands": [
+    {
+      "id": "SAVE",
+      "caption": "Сохранить",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "SAVEANDCLOSE",
+      "caption": "Сохранить и закрыть",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "DELETE",
+      "caption": "Удалить",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

@@ -1,0 +1,65 @@
+{
+  "code": "mymeeting",
+  "orderNumber": 200,
+  "type": 1,
+  "title": "",
+  "caption": "Совещания",
+  "classname": "meeting",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "owner.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "owner.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "participants.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "participants.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        }
+      ]
+    },
+    {
+      "property": "archive",
+      "operation": 1,
+      "value": [true],
+      "nestedConditions": []
+    },
+    {
+      "property": "date",
+      "operation": 6,
+      "value": [
+        "$$now"
+      ],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

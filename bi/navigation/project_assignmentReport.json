@@ -1,0 +1,9 @@
+{
+  "code": "project_assignmentReport",
+  "caption": "Выполненные поручения",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "assignmentReport",
+  "namespace": "pm-gov-ru",
+  "order": 0
+}

@@ -1,0 +1,815 @@
+{
+  "name": "project",
+  "caption": "Согласование изменений",
+  "wfClass": "project",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Создан",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "create",
+      "caption": "Планирование",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningVPO",
+      "caption": "Утверждение ведомственным проектным офисом",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningAdmin",
+      "caption": "Утверждение администратором",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningHead",
+      "caption": "Утверждение руководителем",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningCurator",
+      "caption": "Утверждение куратором",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningPO",
+      "caption": "Утверждение проектным офисом",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "inaccepted",
+      "caption": "Утвержден",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "rework",
+      "caption": "Доработка",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "close",
+      "caption": "Архив",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "newInCreate",
+      "caption": "В работу",
+      "startState": "new",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "createInVPO",
+      "caption": "Утвердить в ведомственном проектном офисе",
+      "startState": "create",
+      "finishState": "planningVPO",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningVPO"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "create"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "VPOinAdmin",
+      "caption": "Утвердить у администратора",
+      "startState": "planningVPO",
+      "finishState": "planningAdmin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningAdmin"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningVPO"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "ownOrg.vedomstveniyPO.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "ownOrg.vedomstveniyPO.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "planningVPOInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningVPO",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningVPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "createinAdmin",
+      "caption": "Утвердить у администратора",
+      "startState": "create",
+      "finishState": "planningAdmin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningAdmin"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "create"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "planningAdminInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningAdmin",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningAdmin"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "adminInHead",
+      "caption": "Утвердить у руководителя",
+      "startState": "planningAdmin",
+      "finishState": "planningHead",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningHead"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "administrator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "administrator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningAdmin"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "planningHeadInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningHead",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningHead"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "headInCurator",
+      "caption": "Утвердить у куратора",
+      "startState": "planningHead",
+      "finishState": "planningCurator",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningCurator"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningHead"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "planningCuratorInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningCurator",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorInPO",
+      "caption": "Утвердить в проектном офисе",
+      "startState": "planningCurator",
+      "finishState": "planningPO",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "planningPO"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "planningPOInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningPO",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": ["ProjectOffice"],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "POinAccepted",
+      "caption": "Утвердить",
+      "startState": "planningPO",
+      "finishState": "inaccepted",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": ["ProjectOffice"],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inaccepted"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "POinReport",
+      "caption": "Промежуточный отчет",
+      "startState": "planningPO",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": ["ProjectOffice"],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorinReport",
+      "caption": "Промежуточный отчет",
+      "startState": "planningCurator",
+      "finishState": "create",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "create"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "interdepartmental",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorinAccepted",
+      "caption": "Утвердить",
+      "startState": "planningCurator",
+      "finishState": "inaccepted",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inaccepted"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "interdepartmental",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "acceptedInRework",
+      "caption": "Вернуть на редактирование",
+      "startState": "inaccepted",
+      "finishState": "rework",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "rework"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "inaccepted"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "changeReq",
+          "operation": 10,
+          "value": null,
+          "nestedConditions": [
+            {
+              "property": "status",
+              "operation": 0,
+              "value": [
+                "agreed"
+              ],
+              "nestedConditions": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reworkInAccepted",
+      "caption": "Внести изменения",
+      "startState": "rework",
+      "finishState": "inaccepted",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inaccepted"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "rework"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "acceptedInClose",
+      "caption": "В архив",
+      "startState": "inaccepted",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "close"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "dateStart",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "property": "dateEnd",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "inaccepted"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

@@ -1,0 +1,544 @@
+<%
+let task = dashboard.getWidget('pm-gov-ru-task');
+let summary = dashboard.getWidget('pm-gov-ru-summary');
+let toggleParams = {};
+%>
+<link href="registry/app-vendor/highcharts/css/highcharts.css" rel="stylesheet">
+<script src="registry/app-static/js/highcharts.js"></script>
+
+<link href="dashboard/vendor/gridster-js/jquery.gridster.min.css" rel="stylesheet">
+<link href="dashboard/pm-gov-ru/layouts/gridster/gridster.css" rel="stylesheet">
+<link href="dashboard/pm-gov-ru/widgets/task/styles.css" rel="stylesheet">
+
+<script src="dashboard/vendor/gridster-js/jquery.gridster.min.js"></script>
+<script src="dashboard/vendor/gridster-js/jquery.gridster.with-extras.min.js"></script>
+<script src="dashboard/js/gridster-helper.js"></script>
+<script src="dashboard/pm-gov-ru/widgets/scripts.js"></script>
+
+<script>
+  window.ajaxQueue = $.when();
+</script>
+
+<div id="gridster" class="gridster dashboard-tasks"
+     data-app="<%= app %>"
+     data-layout="<%= layout %>">
+  <ul>
+
+    <li data-sizey="1" data-sizex="1" data-col="1" data-row="2">
+      <%- partial(task.view, {
+        widget: task,
+        params: {
+          id: 'reviewProposal',
+          title: 'Проектные предложения на утверждении',
+        },
+        redirect: 'registry/pm-gov-ru@myproposal.review',
+        url: 'registry/api/proposal@pm-gov-ru',
+        urlData: {
+          node: 'pm-gov-ru@myproposal.review',
+          filter: [
+            {
+              "property": null,
+              "operation": 1,
+              "value": null,
+              "nestedConditions": [
+            {
+              "property": null,
+              "operation": 0,
+              "value": null,
+              "nestedConditions": [
+              {
+                "property": "state",
+                "operation": 0,
+                "value": [
+                "new"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "owner.person.user",
+                "operation": 0,
+                "value": [
+                "$$uid"
+                ],
+                "nestedConditions": []
+              }
+              ]
+            },
+            {
+              "property": null,
+              "operation": 0,
+              "value": null,
+              "nestedConditions": [
+              {
+                "property": "state",
+                "operation": 0,
+                "value": [
+                "head"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "head.person.user",
+                "operation": 0,
+                "value": [
+                "$$uid"
+                ],
+                "nestedConditions": []
+              }
+              ]
+            },
+            {
+              "property": null,
+              "operation": 0,
+              "value": null,
+              "nestedConditions": [
+              {
+                "property": "state",
+                "operation": 0,
+                "value": [
+                "admin"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "administrator.person.user",
+                "operation": 0,
+                "value": [
+                "$$uid"
+                ],
+                "nestedConditions": []
+              }
+              ]
+            },
+            {
+              "property": null,
+              "operation": 0,
+              "value": null,
+              "nestedConditions": [
+              {
+                "property": "state",
+                "operation": 0,
+                "value": [
+                "curator"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "curator.person.user",
+                "operation": 0,
+                "value": [
+                "$$uid"
+                ],
+                "nestedConditions": []
+              }
+              ]
+            }
+              ]
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["accept"],
+              "nestedConditions": []
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["cancel"],
+              "nestedConditions": []
+            },
+            {
+              "property": "archive",
+              "operation": 1,
+              "value": [true],
+              "nestedConditions": []
+            }
+          ]
+        }
+      })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="2" data-row="1">
+        <%- partial(task.view, {
+          widget: task,
+          params: {
+            id: 'myEvent',
+            title: 'Мои мероприятия',
+          },
+          redirect: 'registry/pm-gov-ru@myprojectevent.myevent',
+          url: 'registry/api/eventBasic@pm-gov-ru',
+          urlData: {
+            node: 'pm-gov-ru@myprojectevent.myevent',
+            filter: [{
+              "property": null,
+              "operation": 1,
+              "value": null,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "coexecEvent.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            }, 
+            {
+                "property" : "archive",
+                "operation" : 1,
+                "value" : [
+                    true
+                ],
+                "nestedConditions" : []
+            }]
+          }
+        })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="2" data-row="2">
+        <%- partial(task.view, {
+          widget: task,
+          params: {
+            id: 'ownerProject',
+            title: 'Ответственность по проектам',
+          },
+          redirect: 'registry/pm-gov-ru@myprojectevent.responsibility',
+          url: 'registry/api/project@pm-gov-ru',
+          urlData: {
+            node: 'pm-gov-ru@myprojectevent.responsibility',
+            filter: [{
+              "property": null,
+              "operation": 1,
+              "value": null,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "administrator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            },
+            {
+              "property": "archive",
+              "operation": 1,
+              "value": [
+                true
+              ],
+              "nestedConditions": []
+            }]
+          }
+        })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="3" data-row="1">
+        <%- partial(task.view, {
+          widget: task,
+          params: {
+            id: 'departProject',
+            title: 'Ведомственные проекты',
+          },
+          redirect: 'registry/pm-gov-ru@myProjectDepart',
+          url: 'registry/api/projDepart@pm-gov-ru',
+          urlData: {
+            node: 'pm-gov-ru@myProjectDepart',
+            filter: [{
+              property: 'ownOrg.employee.person.user',
+              operation: 0,
+              value: ['$$uid']
+            },{
+              property: 'archive',
+              operation: 1,
+              value: [
+                true
+              ]
+            }]
+          }
+        })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="3" data-row="2">
+        <%- partial(summary.view, {
+          widget: summary,
+          params: {
+            id: 'summary',
+            title: 'Сводные данные'
+          },
+          sources: [{
+            caption: 'Ведомственные проекты',
+            colorIndex: 1,
+            url: 'registry/api/projDepart@pm-gov-ru',
+            urlData: {
+              node: 'pm-gov-ru@myProjectDepart',
+              filter: [{
+                property: 'ownOrg.employee.person.user',
+                operation: 0,
+                value: ['$$uid']
+              },{
+                property: 'archive',
+                operation: 1,
+                value: [
+                  true
+                ]
+              }]
+            }
+          },{
+            caption: 'Ответственность по проектам',
+            colorIndex: 3,
+            url: 'registry/api/project@pm-gov-ru',
+            urlData: {
+              node: 'pm-gov-ru@myprojectevent.responsibility',
+              filter: [{
+                "property": 'archive',
+                "operation": 1,
+                "value": [
+                  true
+                ]
+              }, {
+                "property": null,
+                "operation": 1,
+                "value": null,
+                "nestedConditions": [
+                  {
+                    "property": "curator.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "head.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "administrator.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "owner.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  }
+                ]
+              }]
+            }
+          }]
+        })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="3" data-row="1">
+        <%- partial(task.view, {
+          widget: task,
+          params: {
+            id: 'meeting',
+            title: 'Совещания',
+          },
+          redirect: 'registry/pm-gov-ru@mymeeting',
+          url: 'registry/api/meeting@pm-gov-ru',
+          urlData: {
+            node: 'pm-gov-ru@mymeeting',
+            filter: [{
+              "property": null,
+              "operation": 1,
+              "value": null,
+              "nestedConditions": [
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "participantsOccupation.participant.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            },
+            {
+              "property": "state",
+              "operation": 1,
+              "value": ["close"],
+              "nestedConditions": []
+            },
+            {
+              "property": "date",
+              "operation": 6,
+              "value": [
+                "$$now"
+              ],
+              "nestedConditions": []
+            }]
+          }
+        })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="2" data-row="1">
+      <%- partial(task.view, {
+        widget: task,
+        params: {
+          id: 'myQuestions',
+          title: 'Ответственность за проблемные вопросы',
+        },
+        redirect: 'registry/pm-gov-ru@myquestions',
+        url: 'registry/api/problematic@pm-gov-ru',
+        urlData: {
+          node: 'pm-gov-ru@myquestions',
+          filter: [{
+            "property": null,
+            "operation": 1,
+            "value": null,
+            "nestedConditions": [
+              {
+                "property": "owner.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "owner.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          }]
+        }
+      })%>
+    </li>
+
+    <li data-sizey="1" data-sizex="1" data-col="2" data-row="2">
+      <%- partial(task.view, {
+        widget: task,
+        params: {
+          id: 'deputy',
+          title: 'Замещения',
+        },
+        redirect: 'registry/pm-gov-ru@substitution',
+        url: 'registry/api/deputy@pm-gov-ru',
+        urlData: {
+          node: 'pm-gov-ru@substitution',
+          filter: [{
+            "property": "deputy.person.user",
+            "operation": 0,
+            "value": [
+              "$$uid"
+            ],
+            "nestedConditions": []
+          }]
+        }
+      })%>
+    </li>
+  </ul>
+  <div class="dashboard-widget-tool hidden">
+    <button type="button" class="btn btn-default widget-toggle mr10"
+            data-params="<%= JSON.stringify(toggleParams) %>">
+      Виджеты
+      <span class="caret"></span>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var $tools = $('.dashboard-layout-tool');
+    var $layouts = $tools.find('.dashboard-select-layout');
+    $layouts.change(function () {
+      Cookies.set('dashboard-layout', $layouts.val(), {
+        expires: 30,
+        path: ''
+      });
+      location.reload();
+    });
+    $('.dashboard-tools').append($tools);
+  })();
+</script>
+
+<script>
+  $(function () {
+    var $gridster = $('#gridster');
+    var $widgetToggle = $gridster.children('.dashboard-widget-tool').children();
+    $('.dashboard-tools').prepend($widgetToggle);
+    var helper = new GridsterHelper($gridster, {
+      widget_base_dimensions: ['auto', 195],
+      autogenerate_stylesheet: true,
+      min_cols: 1,
+      max_cols: 3,
+      widget_margins: [20, 20],
+      resize: {
+        enabled: true
+      }
+    }, $widgetToggle);
+  });
+</script>

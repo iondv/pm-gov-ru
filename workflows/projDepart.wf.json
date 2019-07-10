@@ -1,0 +1,223 @@
+{
+  "name": "projDepart",
+  "caption": "Ведомственные проекты",
+  "wfClass": "projDepart",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Создан",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "processing",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "working",
+      "caption": "В доработке",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "close",
+      "caption": "Закрыт",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "nowToProcessing",
+      "caption": "Перевести в работу",
+      "startState": "new",
+      "finishState": "processing",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "processing"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "head",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "processingToWorking",
+      "caption": "Внести изменения",
+      "startState": "processing",
+      "finishState": "working",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "working"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "head",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workingToProcessing",
+      "caption": "Перевести в работу",
+      "startState": "working",
+      "finishState": "processing",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "processing"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "head",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 1,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workingToClose",
+      "caption": "Завершить",
+      "startState": "working",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "close"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "head",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 1,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

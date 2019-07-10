@@ -1,0 +1,9 @@
+{
+  "code": "project_roadmap",
+  "caption": "План мероприятий",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "roadmap",
+  "namespace": "pm-gov-ru",
+  "order": 0
+}

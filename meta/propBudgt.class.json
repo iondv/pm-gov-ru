@@ -1,0 +1,134 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "value| - |budgetType",
+  "name": "propBudgt",
+  "version": "",
+  "caption": "Объем бюджета",
+  "ancestor": null,
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 10,
+      "name": "id",
+      "caption": "Идентификатор",
+      "type": 12,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": true,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 70,
+      "name": "budgetType",
+      "caption": "Источник бюджетных поступлений",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "munic",
+            "value": "Местные бюджеты"
+          },
+          {
+            "key": "krai",
+            "value": "Областной бюджет"
+          },
+          {
+            "key": "federal",
+            "value": "Федеральный бюджет"
+          },
+          {
+            "key": "vnebudgetFond",
+            "value": "Бюджеты государственных внебюджетных фондов"
+          },
+          {
+            "key": "vnebudget",
+            "value": "Внебюджетные источники"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 160,
+      "name": "value",
+      "caption": "Объем бюджета",
+      "type": 7,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

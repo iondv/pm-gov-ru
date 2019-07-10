@@ -1,0 +1,151 @@
+<%
+let mod = `/${module}/${portal}`;
+%>
+
+<div class="selector-container clearfix" style="display: none">
+
+  <div class="logo-selector selector">
+    <div class="selector-title"></div>
+    <div class="selector-menu">
+      <a href="/" class="selector-menu-item">
+        Система управления проектами
+      </a>
+      <a href="<%= module %>/index?p=sakh" class="selector-menu-item" data-id="sakh"
+         data-title="Инфографика проектов ">
+        Инфографика проектов 
+      </a>
+    </div>
+  </div>
+
+  <div class="view-selector selector inner-search clearfix" data-place="sakh" data-empty="Выберите представление">
+    <div class="selector-step prev monitor-head-btn" title="Предыдущий вид">
+      <span class="glyphicon glyphicon-menu-left"></span>
+    </div>
+    <div class="selector-title monitor-head-btn"></div>
+    <div class="selector-step next monitor-head-btn" title="Следующий вид">
+      <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
+    <div class="selector-menu">
+      <div class="selector-menu-head">
+        <div class="selector-menu-search">
+          <input type="text" class="form-control search-value" placeholder="Найти представление...">
+          <div class="alert alert-warning">
+            Не найдены представления...
+          </div>
+        </div>
+      </div>
+      <div class="selector-menu-body">
+        <div class="selector-menu-list">
+          <div class="selector-menu-item" data-id="info"
+               data-title="Информация по объектам"
+               data-text="Информация по объектам">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder03.jpg')"></div>
+            Информация по объектам
+          </div>
+          <div class="selector-menu-item" data-id="indicators"
+               data-title="Показатели проектов"
+               data-text="Показатели проектов">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder-indicators.jpg')"></div>
+            Показатели проектов
+          </div>
+          <div class="selector-menu-item" data-id="currentIndicators"
+               data-title="Текущие показатели проектов"
+               data-text="Текущие показатели проектов">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder-current-indicat.jpg')"></div>
+            Текущие показатели проектов
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-selector selector inner-search clearfix" data-place="kms" data-empty="Выберите представление">
+    <div class="selector-step prev monitor-head-btn" title="Предыдущий вид">
+      <span class="glyphicon glyphicon-menu-left"></span>
+    </div>
+    <div class="selector-title monitor-head-btn"></div>
+    <div class="selector-step next monitor-head-btn" title="Следующий вид">
+      <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
+    <div class="selector-menu">
+      <div class="selector-menu-head">
+        <div class="selector-menu-search">
+          <input type="text" class="search-value form-control" placeholder="Найти представление...">
+          <div class="alert alert-warning">
+            Не найдены представления...
+          </div>
+        </div>
+      </div>
+      <div class="selector-menu-body">
+        <div class="selector-menu-list">
+          <a href="<%= module %>/index?p=kms&v=info" class="selector-menu-item" data-id="info"
+             data-title="Информация по объектам"
+             data-text="Информация по объектам">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder03.jpg')"></div>
+            Информация по объектам
+          </a>
+          <a href="<%= module %>/index?p=kms&v=graph" class="selector-menu-item" data-id="graph"
+             data-title="График выполнения СМР"
+             data-text="График выполнения СМР по месяцам объектам">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder02.jpg')"></div>
+            График выполнения СМР по месяцам объектам
+          </a>
+          <a href="<%= module %>/index?p=kms&v=progress" class="selector-menu-item" data-id="progress"
+             data-title="Прогресс индикатор"
+             data-text="Прогресс индикатор">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder01.jpg')"></div>
+            Прогресс индикатор
+          </a>
+          <a href="<%= module %>/index?p=kms&v=progressSvod" class="selector-menu-item" data-id="progressSvod"
+             data-title="Сводный прогресс индикатор"
+             data-text="Сводный прогресс индикатор">
+            <div class="selector-item-image"
+                 style="background-image: url('<%= mod %>/images/placeholder04.jpg')"></div>
+            Сводный прогресс индикатор
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="object-selector selector clearfix" data-empty="Выберите объект">
+    <div class="selector-step prev monitor-head-btn" title="Предыдущий объект">
+      <span class="glyphicon glyphicon-menu-left"></span>
+    </div>
+    <div class="selector-title monitor-head-btn">
+    </div>
+    <div class="selector-step next monitor-head-btn" title="Следующий объект">
+      <span class="glyphicon glyphicon-menu-right"></span>
+    </div>
+    <div class="selector-menu">
+      <div class="selector-menu-head">
+        <div class="selector-menu-search">
+          <input type="text" class="form-control search-value" placeholder="Найти мероприятие по объекту...">
+          <div class="alert alert-warning selector-menu-not-found">
+            Не найдены мероприятия...
+          </div>
+        </div>
+      </div>
+      <div class="selector-menu-body">
+        <div class="selector-menu-list">
+        </div>
+        <div class="selector-menu-more">
+          Загрузить еще...
+        </div>
+        <div class="selector-menu-loader">
+          <span class="fa fa-refresh fa-spin"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="head-pane-tools clearfix">
+</div>

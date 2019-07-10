@@ -1,0 +1,52 @@
+<%
+let displayMode = sessVar('displayMode');
+%>
+<style>
+    .mode-selector button.btn {
+      background-color: #f9f9f9 !important;
+      color: #526070 !important;
+    }
+  </style>  
+<script>
+  $(function () {
+    var mode = '<%=displayMode || 'all'%>';
+    var modes = {
+      all: 'Все',
+      admin: 'Администратор',
+      curator: 'Куратор',
+      manager: 'Руководитель',
+      executor: 'Оператор'
+    }
+
+    var html = '<div class="top-menu-item more-menu-item dropdown mode-selector">' +
+      '<button class="btn" type="button" data-toggle="dropdown">' +
+      '<span class="year">' + modes[mode] + '</span> <i class="fa fa-angle-down"></i>' +
+      '</button><div class="dropdown-menu more-menu"><ul class="nav nav-list">';
+    for (var mn in modes) {
+      html = html + '<li><a href="void();" data-value="' + mn + '">' + modes[mn] + '</a></li>';
+    }
+
+    html = html + '</ul></div></div>';
+
+    $('#top-menu').prepend(html);
+    $(window).resize();
+    $('.mode-selector a').on('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var mode = $(this).data('value');
+
+      $.ajax({
+        url: '<%=module%>/session',
+        type: 'POST',
+        dataType: 'text',
+        data: {displayMode: mode},
+        success: function () {
+          window.location.reload();
+        },
+        error: function (xhreq, status, error) {
+          console.log(status, error);
+        }
+      });
+    });
+  });
+</script>

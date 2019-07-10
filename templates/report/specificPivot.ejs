@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base id="baseUrl" href="<%=baseUrl%>">
+    <link href="<%= module %>/vendor/font-awesome-min/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<%= module %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="<%= module %>/vendor/jquery/jquery.min.js"></script>
+</head>
+<body>
+<div id="loader" style="display:none;"><span class="fa fa-refresh fa-spin"></span></div>
+<table id="specificPivot">
+</table>
+
+<style>
+    #loader {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        background: rgba(128, 128, 128, 0.55);
+    }
+
+    #loader span {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 24pt;
+    }
+
+    table#specificPivot {
+        border-collapse: separate;
+        border-style: none;
+        border-spacing: 0px;
+    }
+    table#specificPivot caption {
+        text-align: center;
+        font-size: 10pt;
+        border-width: 1px;
+        border-style: solid;
+        border-color: silver;
+        font-weight: bold;
+    }
+
+    table#specificPivot thead {
+    }
+    table#specificPivot th, table#specificPivot td {
+        border-width: 1px;
+        border-left-width: 0px;
+        border-top-width: 0px;
+        border-style: solid;
+        border-color: silver;
+        padding: 5px;
+        min-width: 80px;
+    }
+    table#specificPivot th {
+        text-align: center;
+        font-size: 10pt;
+        background: #dcdcdc;
+    }
+    table#specificPivot td {
+        background-color: #efefef;
+        height: 30px;
+    }
+
+    table#specificPivot tr td:nth-child(1) {
+      min-width: 300px;
+      font-size: 9pt;
+    }
+
+    table#specificPivot tr.group-title {
+        font-weight: bold;
+    }
+    table#specificPivot tr.group-totals {
+        font-weight: bold;
+    }
+    table#specificPivot tr.totals th {
+        text-transform: uppercase;
+    }
+    table#specificPivot tr.totals {
+        font-weight: bold;
+    }
+    table#specificPivot tr.totals td {
+        background: #dcdcdc;
+    }
+</style>
+
+<script type="text/javascript">
+    var data = JSON.parse('<%- JSON.stringify(data) %>');
+    var sheet = JSON.parse('<%- JSON.stringify(sheet) %>');
+    var options = JSON.parse('<%- JSON.stringify(options) %>');
+    var loader = $('#loader');
+    var table = $('#specificPivot');
+    var processed = {};
+
+    loader.show();
+
+    var groups = [];
+    var columns = [];
+    var footer = null;
+    if (options.excludeToFooter) {
+        footer = {
+            title: null,
+            rows: [],
+            datas: [],
+            renderTotals: options.footerTotals
+        };
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        var d = data[i];
+        var g = null;
+
+        //Определяем группу
+        if (options.excludeToFooter) {
+            var toFooter = true;
+            for (var c in options.excludeToFooter) {
+                if (d[c] !== options.excludeToFooter[c]) {
+                    toFooter = false;
+                    break;
+                }
+            }
+            if (toFooter) {
+                g = footer;
+            }
+        }
+        if (!g) {
+            if (!options.grouped) {
+                if (!groups.length) {
+                    groups.push({
+                        title: null,
+                        rows: [],
+                        datas: [],
+                        renderTotals: options.untitledGroupTotals,
+                        postfix: options.untitledGroupPostfix
+                    });
+                }
+                g = groups[0];
+            } else {
+                var finded = {};
+                var insertTo = checkInMeasurements(d, groups, [sheet.rows[0]], sheet.sort, finded);
+                g = groups[finded.position];
+                if (!g) {
+                    g = {
+                        title: d[sheet.rows[0]] || options.untitledGroupTitle,
+                        rows: [],
+                        datas: [],
+                        renderTotals: d[sheet.rows[0]] ? options.groupTotals :  options.untitledGroupTotals,
+                        postfix: d[sheet.rows[0]] ? null :  options.untitledGroupPostfix,
+                    };
+                    g[sheet.rows[0]] = d[sheet.rows[0]];
+                    groups.splice(insertTo, 0, g);
+                }
+            }
+        }
+
+        //Распределяем данные по группам
+        g.datas.push(Object.assign({}, d));
+
+        //формируем columns
+        var insertTo = checkInMeasurements(d, columns, sheet.columns, sheet.sort);
+        if (typeof insertTo == 'number') {
+            var t = {};
+            for (var j = 0; j < sheet.columns.length; j++) {
+                t[sheet.columns[j]] = d[sheet.columns[j]];
+            }
+            columns.splice(insertTo, 0, t);
+        }
+
+        //формируем rows для группы
+        var sr = sheet.rows.slice(options.grouped ? 1 : 0);
+        insertTo = checkInMeasurements(d, g.rows, sr, sheet.sort);
+        if (typeof insertTo == 'number') {
+            var t = {};
+            for (var j = 0; j < sr.length; j++) {
+                t[sr[j]] = d[sr[j]];
+            }
+            g.rows.splice(insertTo, 0, t);
+        }
+    }
+
+    //Рендеринг
+    table.append(function () {
+      // var result = '<caption class="fixed">' + sheet.caption + '</caption>';
+      var result = '';
+      result += renderHeader(columns, sheet, options);
+
+      var totals = [];
+
+      var uniqueRecords = [];
+
+      for (var i = 0; i < groups.length; i++) {
+        result += '<tbody>';
+        result += renderGroup(groups[i], columns, sheet, options, uniqueRecords);
+        result += '</tbody>';
+      }
+
+
+      result += '<tfooter>';
+      if (options.totals) {
+        for (var j = 0; j < columns.length; j++) {
+          if (!totals[j]) {
+            totals[j] = {};
+          }
+          for (var m = 0; m < uniqueRecords[j].length; m++) {
+            for (var k = 0; k < sheet.data.length; k++) {
+              totals[j][sheet.data[k]] = aggregate(totals[j][sheet.data[k]], uniqueRecords[j][m][sheet.data[k]], sheet.aggregations[0]);
+            }
+          }
+        }
+
+        result += '<tr class="totals">';
+        result += renderTotals(totals, columns, sheet, options);
+        result += '</tr>';
+      }
+
+      if (footer) {
+        result += renderGroup(footer, columns, sheet, options, []);
+      }
+      result += '</footer>';
+
+      return result;
+    });
+
+    loader.hide();
+
+    function renderGroup(group, columns, sheet, options, uniqueRecords) {
+        var result = '';
+        var sheetRows = sheet.rows.slice(options.grouped ? 1 : 0);
+      var totals = [];
+        if (group.title) {
+            var cs = (columns.length * sheet.data.length) + sheetRows.length;
+          result += '<tr class="group-title"><td>' + group.title + '</td><td colspan="' + cs + '"></td></tr>';
+        }
+
+        for (var i = 0; i < group.rows.length; i++) {
+            result += '<tr>';
+
+            //Заголовки строк
+            for (var j = 0; j < sheetRows.length; j++) {
+              result += '<td>' + group.rows[i][sheetRows[j]] + '</td>';
+            }
+
+            //Область данных
+            for (var j = 0; j < columns.length; j++) {
+                var d = {};
+                for (var k = 0; k < group.datas.length; k++) {
+                    if (!group.datas[k]._aggregated) {
+                        var t = group.datas[k];
+                        for (var l = 0; l < sheetRows.length; l++) {
+                            if (t[sheetRows[l]] !== group.rows[i][sheetRows[l]]) {
+                                t = null;
+                                break;
+                            }
+                        }
+                        if (!t) {
+                            continue;
+                        }
+                        for (var l = 0; l < sheet.columns.length; l++) {
+                            if (t[sheet.columns[l]] !== columns[j][sheet.columns[l]]) {
+                                t = null;
+                                break;
+                            }
+                        }
+                        if (!t) {
+                            continue;
+                        }
+                        for (var l = 0; l < sheet.data.length; l++) {
+                            d[sheet.data[l]] = aggregate(d[sheet.data[l]], t[sheet.data[l]], sheet.aggregations[0]);
+                        }
+                      if (!options.preventDoubleCounting || !processed[t[options.preventDoubleCounting] + ' ' + j]) {
+                        if (!uniqueRecords[j]) {
+                          uniqueRecords[j] = [];
+                        }
+                        uniqueRecords[j].push(t);
+                      }
+                      if (options.preventDoubleCounting) {
+                        processed[t[options.preventDoubleCounting] + ' ' + j] = true;
+                      }
+                        t._aggregated = true;
+                    }
+                }
+
+                if (!totals[j]) {
+                  totals[j] = {};
+                }
+
+                for (var k = 0; k < sheet.data.length; k++) {
+                  totals[j][sheet.data[k]] = aggregate(totals[j][sheet.data[k]], d[sheet.data[k]], sheet.aggregations[0]);
+                  result += renderCell(d[sheet.data[k]], sheet);
+                }
+            }
+
+            result += '</tr>';
+        }
+
+        //Групповые итоги
+        if (group.renderTotals) {
+            result += '<tr class="group-totals fixed">';
+            result += renderTotals(totals, columns, sheet, options);
+            result += '</tr>';
+        }
+
+        if (group.postfix) {
+            var cs = (columns.length * sheet.data.length) + sheetRows.length;
+          result += '<tr class="group-title fixed"><td>' + group.postfix + '</td><td colspan="' + (cs - 1) + '"></td></tr>';
+        }
+
+        return result;
+    }
+
+    function renderCell (value, sheet) {
+        var v = value;
+        if (!v && sheet.formating && sheet.formating.replaceNulls) {
+            v = sheet.formating.replaceNulls;
+        }
+        return '<td>' + v + '</td>';
+    }
+
+    function renderTotals (totals, columns, sheet, options) {
+      var result = '<td class="fixed">Итог</td>';
+        for (var i = 0; i < columns.length; i++) {
+            for (var j = 0; j < sheet.data.length; j++) {
+                var v = totals[i] ? totals[i][sheet.data[j]] : null;
+                result += renderCell(v, sheet);
+            }
+        }
+        return result;
+    }
+
+    function renderHeader (columns, sheet, options) {
+        var result = '<thead>';
+
+        for (var i = 0; i < sheet.columns.length; i++) {
+            var cn = sheet.columns[i];
+            result += '<tr>';
+
+            //Пустой квадрат
+            if (i === 0) {
+                var cs = sheet.rows.length - (options.grouped ? 1 : 0);
+                var rs = sheet.columns.length + (1 % sheet.data.length);
+                result += '<th class="fixed" colspan="' + cs + '" rowspan="' + rs + '" ></th>';
+            }
+
+            //Объединенные заголовки колонок
+            var colspan = 1;
+            for (var j = 0; j < columns.length; j++) {
+              if (j < columns.length - 1
+                        && columns[j][cn] === columns[j + 1][cn]) {
+                    colspan++;
+                } else {
+                    result += '<th colspan="' + colspan * sheet.data.length + '">' + columns[j][cn] + '</th>';
+                    colspan = 1;
+                }
+
+            }
+
+            result += '</tr>';
+        }
+
+        //Колонки по аггрегированным данным
+        if (sheet.data.length > 1) {
+            result += '<tr>';
+            for (var i = 0; i < sheet.data.length * columns.length; i++) {
+                result += '<th>' + sheet.captions[sheet.data[i%sheet.data.length]] + '</th>';
+            }
+            result += '</tr>';
+        }
+
+        result += '</thead>';
+        return result;
+    }
+
+    function checkInMeasurements (dat, arr, meas, sortRules, finded) {
+        var insertTo = arr.length;
+        for (var i = 0; i < arr.length; i++) {
+            var t = 0;
+            for (var j = 0; j < meas.length; j++) {
+                var tt = compare(d[meas[j]], arr[i][meas[j]], sortRules[meas[j]]);
+                if (tt == 0) {
+                    continue;
+                } else {
+                    t = tt;
+                    break;
+                }
+            }
+            if (t < 0) {
+                insertTo = i;
+                break;
+            } else if (t == 0) {
+                insertTo = null;
+                if(finded) {
+                    finded.position = i;
+                }
+                break;
+            } else {
+                continue;
+            }
+        }
+        return insertTo;
+    }
+
+    function aggregate (main, value, aggregation) {
+        if (!main) {
+            main = 0;
+        }
+        switch (aggregation) {
+            case 'sum': return main + value;
+        }
+    }
+
+    function compare (a, b, conf) {
+        var _a = a || '';
+        var _b = b || '';
+        if (conf === 'desc') {
+            _a = b;
+            _b = a;
+        }
+
+        if (typeof a == 'string' || t) {
+
+        }
+
+      if (typeof _a === 'string' && typeof _b ==='string') {
+            return _a.localeCompare(_b);
+        }
+      if (_a < _b)
+        return -1;
+        if (_a > _b)
+            return 1;
+        return 0;
+    }
+</script>
+
+</body>
+</html>

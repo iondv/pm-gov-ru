@@ -1,0 +1,9 @@
+{
+  "code": "object_cardFin",
+  "caption": "Финансирование по типам бюджетов",
+  "parent": "object",
+  "mine": "pm-gov-ru@eventsBase",
+  "report": "cardFin",
+  "namespace": "pm-gov-ru",
+  "order": 2
+}

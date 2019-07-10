@@ -1,0 +1,60 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\factCost -->
+<%
+let budget = item.property('budget'), value, url;
+if (budget) {
+    value = budget.getValue();
+    url = `${module}/api/${budget.meta._refClass.getCanonicalName()}/${value}`;
+}
+%>
+<% if (value) { %>
+<div class="form-group <%= cssFromTags(field) %>" data-prop="<%= JSON.stringify(field) %>">
+  <label class="col-md-2 col-sm-3 control-label"><%= field.caption %></label>
+  <div class="col-md-10 col-sm-9">
+    <div id="<%- id %>" class="form-attr-project-card form-control-static loading"
+         data-url="<%- url %>">
+      <div class="attr-loader">
+        <span class="fa fa-refresh fa-spin"></span>
+      </div>
+      <div class="attr-content">
+        <div class="form-attr-project-card-title">
+          <span class="value"></span> млн. руб.
+        </div>
+        <div class="form-attr-project-card-text">
+          Стоимость выполненных работ <span class="value"></span> млн. руб.
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" style="width:0;"></div>
+        </div>
+      </div>
+    </div>
+    <p class="error-block"></p>
+  </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+
+<script>
+  $(document.getElementById('<%- id %>')).each(function () {
+    var $card = $(this);
+    $.get($card.data('url')).done(function (data) {
+      var factCost = data.factCost || 0;
+      var workCost = data.workCost || 0;
+      $card.find('.form-attr-project-card-title .value').html(factCost);
+      $card.find('.form-attr-project-card-text .value').html(workCost);
+      $card.removeClass('loading');
+      setTimeout(function () {
+        var $scale = $card.find('.progress-bar');
+        if (factCost) {
+          var percent = parseInt(workCost * 100 / factCost);
+          if (percent > 100) {
+            $scale.css('width', '100%').addClass('progress-bar-danger');
+          } else {
+            $scale.css('width', percent + '%').addClass('progress-bar-info');
+          }
+          $scale.html(percent + '%');
+        }
+      }, 100);
+    });
+  });
+</script>
+<% } %>

@@ -1,0 +1,15 @@
+{
+    "code": "myconclusion",
+    "orderNumber": 280,
+    "type": 1,
+    "title": "",
+    "caption": "Выводы",
+    "classname": "conclusion",
+    "container": null,
+    "collection": null,
+    "url": null,
+    "hint": null,
+    "conditions": [],
+    "sorting": [],
+    "pathChains": []
+  }

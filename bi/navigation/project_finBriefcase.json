@@ -1,0 +1,9 @@
+{
+  "code": "project_finBriefcase",
+  "caption": "Сводный бюджет портфеля",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "finBriefcase",
+  "namespace": "pm-gov-ru",
+  "order": 13
+}

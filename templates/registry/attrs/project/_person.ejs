@@ -1,0 +1,84 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\_person -->
+<%
+let ri = prop.evaluate();
+let value = prop.getValue();
+%>
+<div class="form-group <%= cssFromTags(field) %>">
+  <div class="col-sm-12">
+    <div class="attr-content">
+      <div class="form-attr-project-person">
+        <div class="avatar"></div>
+        <label><%- field.caption %>:</label>
+        <%if (ri || value) {%>
+        <%
+          let view = `${module}/${node}/view/${item.getClassName()}.${item.getItemId()}/${prop.getName()}/${prop.meta.refClass}/${value}?readonly=on&condensed=on`;
+        if (ri) {
+
+        } else {
+          let url = `${module}/api/${prop.meta._refClass.getCanonicalName()}/${value}`;
+        %>
+        <script>
+          $(function () {
+            $(document.getElementById('<%-id%>')).each(function () {
+              var $container = $(this);
+              <%if (!ri) {%>
+              chain(function () {
+                return $.get($container.data('<%-url%>')).done(function (data) {
+                  var ref = data.person_ref;
+                  if (!ref) {
+                    return setNoData();
+                  }
+                  if (ref.foto && ref.foto.link) {
+                    $container.parent().find('.avatar').css('background-image', 'url(' + ref.foto.link + ')');
+                  }
+                  $container.html('<a href="#">' + data.__string + '</a>');
+                }).fail(function () {
+                  setNoData();
+                });
+              });
+              <%} else {%>
+              $container.parent().find('.avatar').css('background-image', 'url(<%-ri.get('person.foto.link')%>)');
+              <%}%>
+              $container.on('click', 'a', function (event) {
+                event.preventDefault();
+                imodal.load('<%-view%>', function () {
+                });
+              });
+
+              function setNoData() {
+                $container.html('<span class="not-set">нет данных</span>');
+              }
+            });
+          });
+        </script>
+        <%
+        }
+        %>
+        <div id="<%-id%>" class="text">
+          <%if (ri) {%>
+          <a href="<%- view %>" class="modal-link"><%-prop.getDisplayValue(utils.dateCallback)%></a>
+          <script>
+            $(function () {
+              $(document.getElementById('<%-id%>')).each(function () {
+                $(this).children('a').click(function (event) {
+                  event.preventDefault();
+                  imodal.load(this.href);
+                });
+              });
+            });
+          </script>
+          <%} else {%>
+          <span class="fa fa-refresh fa-spin"></span>
+          <%}%>
+        </div>
+        <% } else { %>
+        <div class="text">
+          <span class="not-set">нет данных</span>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>

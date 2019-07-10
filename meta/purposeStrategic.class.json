@@ -1,0 +1,404 @@
+{
+    "isStruct": false,
+    "key": [
+      "id"
+    ],
+    "semantic": "name",
+    "name": "purposeStrategic",
+    "version": "",
+    "caption": "Стратегическая цель",
+    "ancestor": null,
+    "container": null,
+    "creationTracker": "",
+    "changeTracker": "",
+    "history": 0,
+    "journaling": true,
+    "compositeIndexes": null,
+    "properties": [
+      {
+        "orderNumber": 15,
+        "name": "id",
+        "caption": "Идентификатор",
+        "type": 12,
+        "size": 24,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": true,
+        "indexed": false,
+        "unique": true,
+        "autoassigned": true,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 40,
+        "name": "name",
+        "caption": "Наименование",
+        "type": 1,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 86,
+        "name": "purposeIndicator",
+        "caption": "Показатели цели",
+        "type": 14,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "purposeIndicator",
+        "backRef": "purpose",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 40,
+        "name": "progressStrategPurpose",
+        "caption": "Достижение цели",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "div": [
+            {
+              "sum": [
+                "$subPurpose",
+                "progressPurpose"
+              ]
+            },
+            {
+              "count": [
+                "$subPurpose"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "orderNumber": 40,
+        "name": "progressPurposeView",
+        "caption": "Достижение цели для отображения",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "if": [
+            {
+              "nempty": [
+                "$progressPurposeInput"
+              ]
+            },
+            "$progressPurposeInput",
+            "$progressPurpose"
+          ]
+        }
+      },
+      {
+        "orderNumber": 40,
+        "name": "progressPurpose",
+        "caption": "Достижение цели",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "if": [
+            {
+              "or": [
+                {
+                  "nempty": [
+                    "$purposeIndicator"
+                  ]
+                },
+                {
+                  "nempty": [
+                    "$subPurpose"
+                  ]
+                }
+              ]
+            },
+            {
+              "mul": [
+                {
+                  "add": [
+                    {
+                      "sum": [
+                        "$purposeIndicator",
+                        "partValuePurpose"
+                      ]
+                    },
+                    {
+                      "sum": [
+                        "$subPurpose",
+                        "partValuePurpose"
+                      ]
+                    }
+                  ]
+                },
+                100
+              ]
+            },
+            "$progressPurposeInput"
+          ]
+        }
+      },
+      {
+        "orderNumber": 40,
+        "name": "sumLevelIndicator",
+        "caption": "Сводный рейтинг [вычислимое]",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "div": [
+            {
+              "sum": [
+                "$purposeIndicator",
+                "level"
+              ]
+            },
+            {
+              "count": [
+                "$purposeIndicator"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "orderNumber": 40,
+        "name": "progressPurposeInput",
+        "caption": "Достижение цели для ввода",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 440,
+        "name": "countObjs",
+        "caption": "Количество целей/показателей",
+        "type": 6,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "add": [
+            {
+              "count": [
+                "$purposeIndicator"
+              ]
+            },
+            {
+              "count": [
+                "$subPurpose"
+              ]
+            }
+          ]
+        },
+        "cached": true
+      },
+      {
+        "orderNumber": 420,
+        "name": "subPurpose",
+        "caption": "Подцели",
+        "type": 14,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "purpose",
+        "backRef": "strategic",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [{
+          "property": "num",
+          "mode": 1
+        }],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      }
+    ],
+    "metaVersion": "2.0.61"
+  }

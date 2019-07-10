@@ -1,0 +1,92 @@
+{
+    "name": "contract",
+    "caption": "Заключение контракта",
+    "wfClass": "contract",
+    "startState": "new",
+    "states": [
+      {
+        "name": "new",
+        "caption": "Создан",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "exec",
+        "caption": "В исполнении",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "performed",
+        "caption": "Исполнен",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      }
+    ],
+    "transitions": [
+      {
+        "name": "conclusion",
+        "caption": "Заключен",
+        "startState": "new",
+        "finishState": "exec",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "stateContr",
+            "value": "exec"
+          },
+          {
+            "key": "archive",
+            "value": "true"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "stateContr",
+            "operation": 0,
+            "value": [
+              "new"
+            ],
+            "nestedConditions": []
+          }
+        ]
+      },
+      {
+        "name": "execution",
+        "caption": "Исполнен",
+        "startState": "exec",
+        "finishState": "performed",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "stateContr",
+            "value": "performed"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "stateContr",
+            "operation": 0,
+            "value": [
+              "exec"
+            ],
+            "nestedConditions": []
+          }
+        ]
+      }
+    ],
+    "metaVersion": "2.0.61"
+  }

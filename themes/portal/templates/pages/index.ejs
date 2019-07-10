@@ -1,0 +1,34 @@
+<%
+let mod = `/${module}/${portal}`;
+%>
+<% layout('../layout/content') -%>
+
+<div class="monitor-wrapper loading">
+  <div class="monitor">
+    <div class="monitor-head">
+        <%- partial('../parts/head') %>
+    </div>
+    <div class="monitor-body">
+        <%- partial('../parts/sakh') %>
+    </div>
+
+    <div class="monitor-loader">
+      <span class="fa fa-refresh fa-spin"></span>
+    </div>
+  </div>
+</div>
+
+<div id="page-alert" class="page-alert danger">
+  <div class="page-alert-panel">
+
+  </div>
+</div>
+
+<% script(`${mod}/js/grouped-categories.js`) -%>
+<% script(`${mod}/js/object-card.js`) -%>
+<% script(`${mod}/js/year-graph.js`) -%>
+<% script(`${mod}/js/progress-chart.js`) -%>
+<% script(`${mod}/js/progress-svod-chart.js`) -%>
+<% script(`${mod}/js/indicators-chart.js`) -%>
+<% script(`${mod}/js/current-indicators-chart.js`) -%>
+<% script(`${mod}/js/monitor.js`) -%>

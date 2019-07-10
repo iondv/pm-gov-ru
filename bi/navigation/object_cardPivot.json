@@ -1,0 +1,9 @@
+{
+  "code": "object_cardPivot",
+  "caption": "Сводный по мероприятиям",
+  "parent": "object",
+  "mine": "pm-gov-ru@eventsBase",
+  "report": "cardPivot",
+  "namespace": "pm-gov-ru",
+  "order": 4
+}

@@ -1,0 +1,15 @@
+{
+  "code": "providerRegister",
+  "caption": "Реестр поставщиков",
+  "orderNumber": 40,
+  "type": 1,
+  "title": "",
+  "hint": "",
+  "classname": "provider",
+  "container": "",
+  "collection": "",
+  "url": "",
+  "conditions": [],
+  "sorting": [],
+  "pathChains": []
+}

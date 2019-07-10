@@ -1,0 +1,75 @@
+<!-- pm-gov-ru\templates\registry\attrs\briefcase\costProj -->
+<%
+let basic = item.property('projects');
+let url = item.getItemId() ? `${module}/api/${item.getClassName()}/${item.getItemId()}/${basic.getName()}` : '';
+let value = prop.getValue();
+%>
+<div class="form-group <%= cssFromTags(field) %>">
+  <label class="col-md-2 col-sm-3 control-label"><%= field.caption %></label>
+  <div class="col-md-10 col-sm-9">
+    <div id="<%- id %>" class="form-attr-project-card form-control-static"
+         data-value="<%= value %>">
+      <div class="attr-loader">
+        <span class="fa fa-refresh fa-spin"></span>
+      </div>
+      <div class="attr-content">
+        <div class="form-attr-project-card-title green">
+          <span class="value cost">-</span> млн. руб.
+        </div>
+        <div class="form-attr-project-card-text">
+          Фактическая стоимость <span class="value fact-cost">-</span> млн. руб.
+        </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" style="width:0;"></div>
+        </div>
+      </div>
+    </div>
+    <p class="error-block"></p>
+  </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% script(`${module}/app-static/js/common.js`) -%>
+
+<script>
+  $(document.body).on('js:common:ready', function () {
+    $(document.getElementById('<%- id %>')).each(function () {
+      var $container = $(this);
+      var url = $container.data('url');
+      var value = $container.data('value');
+      if (value instanceof Array && value.length === 2) {
+        setValues(parseInt(value[0].value) || 0, parseInt(value[1].value) || 0);
+      } else if (url) {
+        cooperativeAjax('post', url, {
+          start: 0,
+          length: 100
+        }, function (data) {
+          var items = data.data || [], cost = 0, factCost = 0;
+          for (var i = 0; i < items.length; ++i) {
+            if (items[i].budget_ref) {
+              cost += parseInt(items[i].budget_ref.cost) || 0;
+              factCost += parseInt(items[i].budget_ref.factCost) || 0;
+            }
+          }
+          if (cost) {
+            setValues (cost, factCost);
+          }
+          $container.removeClass('loading');
+        });
+      }
+
+      function setValues (cost, factCost) {
+        var $scale = $container.find('.progress-bar');
+        var percent = cost ? parseInt(factCost * 100 / cost) : 0;
+        if (percent > 100) {
+          $scale.css('width', '100%').addClass('progress-bar-danger');
+        } else {
+          $scale.css('width', percent + '%').addClass('progress-bar-info');
+        }
+        $scale.html(percent + '%');
+        $container.find('.cost').html(cost);
+        $container.find('.fact-cost').html(factCost);
+      }
+    });
+  });
+</script>

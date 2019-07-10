@@ -1,0 +1,31 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\stateView -->
+<%
+let stage = item.property('stage').getValue();
+let end = item.property('datePlannedEnd').getValue();
+let rest = end ? moment(end).diff(moment(), 'days') : null;
+let text = 'Закрыт', type = 'default';
+if (rest !== null) {
+  if (['initiation'].includes(stage) && rest < 0) {
+    type = 'danger';
+    text = 'Просрочен';
+  } else if (['implementation'].includes(stage) && rest < 8) {
+    type = 'warning';
+    text = 'Истекает';
+  } else if (['initiation', 'implementation','completion'].includes(stage) && rest > 0) {
+    type = 'success';
+    text = 'В работе';
+  }
+}
+%>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+
+<div class="form-group <%= cssFromTags(field) %>">
+  <div class="col-sm-12">
+    <div class="attr-content">
+      <div id="<%- id %>" class="alert alert-<%- type %> banner">
+        <div class="banner-title"><%- text %></div>
+      </div>
+    </div>
+  </div>
+</div>

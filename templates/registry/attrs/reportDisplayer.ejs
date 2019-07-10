@@ -1,0 +1,9 @@
+<%stylesheet(`${module}/app-static/css/styles.css`) -%>
+<%
+var reportUrl = field.options.reportUrl.replace(/\$\{([^\}]+)\}/g, function (a, b) {
+  return item.get(b);
+});
+%>
+<div class="form-group">
+  <iframe class="report-displayer" src="<%=reportUrl%>"></iframe>
+</div>

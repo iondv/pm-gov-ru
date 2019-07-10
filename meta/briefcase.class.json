@@ -1,0 +1,924 @@
+{
+  "isStruct": false,
+  "key": [
+    "guid"
+  ],
+  "semantic": "name",
+  "name": "briefcase",
+  "version": "31",
+  "caption": "Портфель",
+  "ancestor": null,
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "cacheDependencies": [
+    "conclusion"
+  ],
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 15,
+      "name": "guid",
+      "caption": "Глобальный идентификатор",
+      "type": 12,
+      "size": 24,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": false,
+      "readonly": true,
+      "indexed": false,
+      "unique": true,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "name",
+      "caption": "Наименование",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": true,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "descript",
+      "caption": "Описание",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "status",
+      "caption": "Статус",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "new",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [{
+            "key": "new",
+            "value": "Создан"
+          },
+          {
+            "key": "work",
+            "value": "В работе"
+          },
+          {
+            "key": "rework",
+            "value": "Корректировка"
+          },
+          {
+            "key": "close",
+            "value": "Закрыт"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 86,
+      "name": "projects",
+      "caption": "Проекты",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "project",
+      "backRef": "briefcase",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "archive",
+          "operation": 1,
+          "value": [
+            true
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [
+        {
+          "property": "numBriefcase",
+          "mode": 0
+        }
+      ],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 86,
+      "name": "programs",
+      "caption": "Программы",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "program",
+      "backRef": "",
+      "backColl": "briefcases",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [
+        {
+          "property": "numBriefcase",
+          "mode": 0
+        }
+      ],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 86,
+      "name": "eventOnly",
+      "caption": "Мероприятия",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "eventOnly",
+      "allowedSubclasses": [
+        "eventControl",
+        "eventOnly"
+      ],
+      "backRef": "briefcase",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 610,
+      "name": "purposes",
+      "caption": "Стратегические цели",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "purposeStrategic",
+      "allowedSubclasses": [
+        "purposeStrategic"
+      ],
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 720,
+      "name": "indicatorBasic",
+      "caption": "Показатели",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorBasic",
+      "allowedSubclasses": [
+        "indicatorDigital",
+        "indicatorFinancial",
+        "indicatorMedia",
+        "indicatorText"
+      ],
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "status",
+          "operation": 1,
+          "value": [
+            "archive"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [{
+        "property": "name",
+        "mode": 0
+      }],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 420,
+      "name": "instructions",
+      "caption": "Поручения",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "assignment",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 600,
+      "name": "meetings",
+      "caption": "Совещания",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "meetingBasic",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 520,
+      "name": "problematic",
+      "caption": "Вопросы",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "problematic",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 300,
+      "name": "cloudFile",
+      "caption": "Файл",
+      "type": 110,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "stateView",
+      "caption": "Состояние",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "duration",
+      "caption": "Длительность",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "[{\"caption\":\"Плановая длительность\",\"value\":\"",
+          {
+            "dateDiff": [
+              "d",
+              {
+                "max": [
+                  "$projects",
+                  "datePlannedEnd"
+                ]
+              },
+              {
+                "min": [
+                  "$projects",
+                  "datePlannedStart"
+                ]
+              }
+            ]
+          },
+          "\"},{\"caption\":\"Время до планового завершения\",\"value\":\"",
+          {
+            "dateDiff": [
+              "d",
+              {
+                "max": [
+                  "$projects",
+                  "datePlannedEnd"
+                ]
+              },
+              {
+                "now": []
+              }
+            ]
+          },
+          "\"}]"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "costProj",
+      "caption": "Плановая стоимость проектов портфеля",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "[{\"caption\":\"Плановая стоимость проектов портфеля\",\"value\":\"",
+          {
+            "sum": [
+              "$projects.budget",
+              "cost"
+            ]
+          },
+          "\"},{\"caption\":\"Фактическая стоимость\",\"value\":\"",
+          {
+            "sum": [
+              "$projects.budget",
+              "factCost"
+            ]
+          },
+          "\"}]"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "factCostProj",
+      "caption": "Фактическая стоимость проектов портфеля",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "[{\"caption\":\"Фактическая стоимость\",\"value\":\"",
+          {
+            "sum": [
+              "$projects.budget",
+              "factCost"
+            ]
+          },
+          "\"},{\"caption\":\"Стоимость выполненных работ\",\"value\":\"",
+          {
+            "sum": [
+              "$projects.budget",
+              "workCost"
+            ]
+          },
+          "\"}]"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "closeProj",
+      "caption": "Закрытых проектов",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          {
+            "count": [
+              "$projects",
+              {
+                "&eq": [
+                  "$stage",
+                  "after"
+                ]
+              }
+            ]
+          },
+          " / ",
+          {
+            "count": [
+              "$projects"
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "stageProj",
+      "caption": "Проекты по статусам",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "[{\"caption\":\"Инициирование\",\"value\":\"",
+          {
+            "count": [
+              "$projects",
+              {
+                "&eq": [
+                  "$stage",
+                  "initiation"
+                ]
+              }
+            ]
+          },
+          "\"},{\"caption\":\"Реализация\",\"value\":\"",
+          {
+            "count": [
+              "$projects",
+              {
+                "&eq": [
+                  "$stage",
+                  "implementation"
+                ]
+              }
+            ]
+          },
+          "\"},{\"caption\":\"Завершение\",\"value\":\"",
+          {
+            "count": [
+              "$projects",
+              {
+                "&eq": [
+                  "$stage",
+                  "completion"
+                ]
+              }
+            ]
+          },
+          "\"}]"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 50,
+      "name": "conclusion",
+      "caption": "Выводы",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "conclusion",
+      "backRef": "briefcase",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "typeProj",
+      "caption": "Отстающие проекты по типам",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 400,
+      "name": "remark",
+      "caption": "Комментарий",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "resReporting",
+      "backRef": "briefcase",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "files",
+      "caption": "Файлы",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "fileCol@pm-gov-ru",
+      "backRef": "briefcase",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "metaVersion": "2.0.61",
+      "orderNumber": 90,
+      "name": "archive",
+      "caption": "Архив",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

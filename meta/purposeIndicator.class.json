@@ -1,0 +1,356 @@
+{
+    "isStruct": false,
+    "key": [
+      "id"
+    ],
+    "semantic": "indicator.name",
+    "name": "purposeIndicator",
+    "version": "",
+    "caption": "Показатели цели",
+    "ancestor": null,
+    "container": null,
+    "creationTracker": "",
+    "changeTracker": "",
+    "history": 0,
+    "journaling": true,
+    "compositeIndexes": null,
+    "properties": [
+      {
+        "orderNumber": 15,
+        "name": "id",
+        "caption": "Идентификатор",
+        "type": 12,
+        "size": 24,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": true,
+        "indexed": false,
+        "unique": true,
+        "autoassigned": true,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 86,
+        "name": "indicator",
+        "caption": "Показатель",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "indicatorBasic",
+        "allowedSubclasses": [
+          "indicatorDigital",
+          "indicatorFinancial",
+          "indicatorMedia",
+          "indicatorText"
+        ],
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [
+          {
+            "property": "archive",
+            "operation": 1,
+            "value": [true],
+            "nestedConditions": []
+          }
+        ],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 30,
+        "name": "maxLevel",
+        "caption": "Максимально возможное влияние (%)",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula":  {
+          "sub": [
+            {
+              "add": [
+                100,
+                "$level"
+              ]
+            },
+            {
+              "add": [
+                {
+                  "sum": [
+                    "$purpose.purposeIndicator",
+                    "level"
+                  ]
+                },
+                {
+                  "sum": [
+                    "$purpose.purposes",
+                    "level"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "orderNumber": 40,
+        "name": "level",
+        "caption": "Уровень влияния на цель",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "if": [
+            {
+              "gt": [
+                {
+                  "add": [
+                    {
+                      "sum": [
+                        "$purpose.purposeIndicator",
+                        "level"
+                      ]
+                    },
+                    {
+                      "sum": [
+                        "$purpose.purposes",
+                        "level"
+                      ]
+                    }
+                  ]
+                },
+                100
+              ]
+            },
+            {
+              "sub": [
+                {
+                  "add": [
+                    100,
+                    "$level"
+                  ]
+                },
+                {
+                  "add": [
+                    {
+                      "sum": [
+                        "$purpose.purposeIndicator",
+                        "level"
+                      ]
+                    },
+                    {
+                      "sum": [
+                        "$purpose.purposes",
+                        "level"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "if": [
+                {
+                  "lt": [
+                    "$level",
+                    0
+                  ]
+                },
+                0,
+                "$level"
+              ]
+            }
+          ]
+        },
+        "cached": true
+      },
+      {
+        "orderNumber": 86,
+        "name": "purpose",
+        "caption": "Цель",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": true,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "purposeStrategic",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 900,
+        "name": "purposeIndicator",
+        "caption": "Целевой показатель [вычислимое]",
+        "type": 1,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula":  {
+          "concat": [
+            "$purpose.name",
+            " / ",
+            "$indicator.name"
+          ]
+        }
+      },
+      {
+        "orderNumber": 900,
+        "name": "partValuePurpose",
+        "caption": "Вклад достижений по показателю на привязанную цель",
+        "type": 7,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": 0,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula":  {
+          "div": [
+            {
+              "count": [
+                "$indicator.indicatorValueBasic",
+                {
+                  "&eq": [
+                    "$endProgress",
+                    true
+                  ]
+                }
+              ]
+            },
+            {
+              "count": [
+                "$indicator.indicatorValueBasic"
+              ]
+            },
+            {
+              "div": [
+                100,
+                "$level"
+              ]
+            }
+          ]
+        },
+        "cached": true
+      }
+    ],
+    "metaVersion": "2.0.61"
+  }

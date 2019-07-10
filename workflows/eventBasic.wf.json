@@ -1,0 +1,367 @@
+{
+  "name": "eventBasic",
+  "caption": "Мероприятие",
+  "wfClass": "eventBasic",
+  "startState": "new",
+  "states": [{
+      "name": "new",
+      "caption": "Планирование",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "work",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningHead",
+      "caption": "Утверждение руководителем",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "planningCurator",
+      "caption": "Утверждение куратором",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "inaccepted",
+      "caption": "Утверждено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "fin",
+      "caption": "Закрыто",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "newInWork",
+      "caption": "В работу",
+      "startState": "new",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [{
+        "key": "state",
+        "value": "work"
+      }],
+      "conditions": [
+        {
+          "operation": 2,
+          "nestedConditions": [
+            {
+              "property": "project.code",
+              "operation": 4,
+              "value": [
+                "proposal_"
+              ],
+              "nestedConditions": []
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "workInHead",
+      "caption": "Утвердить у руководителя",
+      "startState": "work",
+      "finishState": "planningHead",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "planningHead"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "planningHeadInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningHead",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "planningHead"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "planningCuratorInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "planningCurator",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "workInHead",
+      "caption": "Утвердить у руководителя",
+      "startState": "work",
+      "finishState": "planningHead",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "planningHead"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "headInCurator",
+      "caption": "Утвердить у куратора",
+      "startState": "planningHead",
+      "finishState": "planningCurator",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "planningCurator"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "planningHead"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorinAccepted",
+      "caption": "Утвердить",
+      "startState": "planningCurator",
+      "finishState": "inaccepted",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "inaccepted"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "planningCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "inacceptedInClose",
+      "caption": "Закрыть",
+      "startState": "inaccepted",
+      "finishState": "fin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "fin"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "dateStart",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "property": "dateEnd",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "inaccepted"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

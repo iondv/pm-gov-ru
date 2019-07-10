@@ -1,0 +1,267 @@
+<%
+form.ids = {
+  attr: 'a_' + form.namespace + '_' + form.className,
+  formBtn: 'fa_' + form.namespace + '_' + form.className + '_',
+  listBtn: 'la_' + form.namespace + '_' + form.className + '_',
+  refBtn: 'ra_' + form.namespace + '_' + form.className + '_',
+  colBtn: 'ca_' + form.namespace + '_' + form.className + '_'
+};
+
+var options = {
+  locale,
+  log,
+  id: item.getItemId(),
+  title: item.toString(null, utils.dateCallback),
+  itemClass: item.getClassName(),
+  selectionListTriggers,
+  node,
+  url: {
+    node: `${module}/${node}/`,
+    item: `${module}/${node}/view/${item.getClassName()}`,
+    signData: `${module}/digisign/${item.getClassName()}/:id/data`,
+    sign: `${module}/digisign/${item.getClassName()}/:id/sign`,
+    history: `${module}/api/${item.getClassName()}/${encodeURIComponent(item.getItemId())}/history`,
+    selectionLists: item.getItemId() ? `${module}/api/${item.getClassName()}/${item.getItemId() ? encodeURIComponent(item.getItemId()) + '/' : ''}selection-lists`: '',
+    workflowState: item.getItemId() ? `${module}/api/${item.getClassName()}/${item.getItemId() ? encodeURIComponent(item.getItemId()) + '/' : ''}workflow-state`: '',
+    concurencyState: item.getItemId() ? `${module}/api/${item.getClassName()}/${item.getItemId() ? encodeURIComponent(item.getItemId()) + '/' : ''}concurency-state`: '',
+    share: `${module}/api/share/:fileId`
+  },
+  globalReadonly,
+  shortView,
+  condensedView,
+  concurencyState,
+  refShortViewDelay
+};
+
+if (master.item) {
+  if (!options.id) {
+    if (typeof forceMaster !== 'undefined' && forceMaster) {
+      options.master = {id: master.id, backRef: master.backRef};
+    }
+    if (typeof containerProperty !== 'undefined' && containerProperty) {
+      if (containerProperty.type === PropertyTypes.REFERENCE) {
+        locals.preTitle = `Создание объекта по ссылке "${containerProperty.caption}"
+        объекта "${master.item.toString(null, utils.dateCallback())}"`;
+      } else if (containerProperty.type === PropertyTypes.COLLECTION) {
+        locals.preTitle = `Создание объекта в коллекции "${containerProperty.caption}"
+        объекта "${master.item.toString(null, utils.dateCallback())}"`;
+      }
+    }
+  }
+}
+%>
+
+<% if(typeof validateBy !== 'undefined' && validateBy !== null) {
+  options.validateBy = validateBy;
+} %>
+<%- layout(resolveTpl('imodal/content', filename)) %>
+
+<% stylesheet(module + '/vendor/bootstrap3-wysihtml5-bower/bootstrap3-wysihtml5.min.css') -%>
+<% stylesheet(module + '/vendor/jquery-ui/themes/base/tabs.css') -%>
+
+<% script(module + '/js/ajax-uploader-new.js') -%>
+<% script(module + '/vendor/bootstrap3-wysihtml5-bower/bootstrap3-wysihtml5.all.min.js') -%>
+<% script(module + '/vendor/bootstrap3-wysihtml5-bower/locales/bootstrap-wysihtml5.ru-RU.js') -%>
+
+<% block('scripts', `<script>
+  userActionHistory.addObject({
+    url: location.pathname +'?'+ location.search,
+    title: '${options.title}'
+  });
+</script>`) -%>
+
+<script src="<%= module %>/js/cryptopro.js"></script>
+<script>
+  var DATE_FORMAT = '<%=locale.dateFormat%>';
+  var DATETIME_FORMAT = '<%=locale.dateTimeFormat%>';
+</script>
+
+<% if (!condensedView) { %>
+<div id="cert-dlg" class="cert-dlg" style="display:none;">
+  <div class="form-group">
+    <label class="control-label bold mb10">Выберите сертификат для подписи:</label>
+    <select class="no-select2 form-control" name="cert"></select>
+  </div>
+  <div class="text-right">
+    <a href="#" id="cert_info_view" style="display:none">Просмотреть информацию о сертификате</a>&nbsp;
+    <button id="cert_select_cancel" class="btn btn-primary">Отменить</button>
+    <button id="cert_select_confirm" class="btn btn-primary">Выбрать</button>
+  </div>
+</div>
+<div id="cert-info" class="cert-dlg panel form-horizontal" style="display:none;">
+  <div class="panel-body">
+    <div class="form-group">
+      <label class="col-md-3 col-sm-3 control-label" for="cert_subject">Субьект</label>
+      <div class="col-md-9 col-sm-9">
+        <input id="cert_subject" type="text" class="form-control attr-value" readonly="true" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 col-sm-3 control-label" for="cert_provider">Постащик</label>
+      <div class="col-md-9 col-sm-9">
+        <input id="cert_provider" type="text" class="form-control attr-value" readonly="true" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 col-sm-3 control-label" for="cert_valid_since">Действителен с</label>
+      <div class="col-md-6 col-sm-6">
+        <input id="cert_valid_since" type="text" class="form-control attr-value" readonly="true" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 col-sm-3 control-label" for="cert_valid_till">Действителен по</label>
+      <div class="col-md-6 col-sm-6">
+        <input id="cert_valid_till" type="text" class="form-control attr-value" readonly="true" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 col-sm-3 control-label" for="cert_serial">Серийный номер</label>
+      <div class="col-md-7 col-sm-7">
+        <input id="cert_serial" type="text" class="form-control attr-value" readonly="true" value="">
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-primary">Закрыть</button>
+  </div>
+</div>
+<% for (var cmd of form.commands) {
+if (cmd.signBefore || cmd.signAfter) { %>
+<% script(module + '/js/cades/cadesplugin_api.js') -%>
+<% break;
+}}} %>
+
+<div class="panel panel-default <%- globalReadonly ? 'global-readonly' : ''%> <%- condensedView ? 'condensed-view' : ''%>">
+
+  <div class="object-loader overlay" style="display: none;"><i class="fa fa-refresh fa-spin"></i></div>
+
+  <% if (!condensedView) { %>
+  <% if (options.id) { %>
+  <%- partial(resolveTpl('view/_history')) %>
+  <% } %>
+
+  <div class="panel-heading">
+    <div class="workflow panel-workflow"></div>
+
+    <div class="imodal-frame select-group workflow-confirmation">
+      <div class="imodal-box">
+        <div class="imodal-box-header">
+          <h3 class="imodal-box-title">Подтвердите ваши действия</h3>
+        </div>
+        <div class="imodal-box-body">
+          <div class="confirm-message"></div>
+          <div>
+            <button type="button" class="confirm btn btn-default">Продолжить</button>
+            <button type="button" class="cancel btn btn-default">Отменить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if (!globalReadonly) { %>
+    <% for (var cmd of form.commands) { %>
+    <% if ((cmd.id === 'SAVE' || cmd.id === 'SAVEANDCLOSE') && !permissions.write) continue; %>
+    <% if (cmd.id === 'DELETE' && !permissions.delete) continue; %>
+    <button id="<%=`${form.ids.formBtn}${cmd.id.toLowerCase()}`%>" type="button"
+            data-id="<%- cmd.id %>"
+            data-sign-before="<%- cmd.signBefore %>"
+            data-sign-after="<%- cmd.signAfter %>"
+            class="btn command btn-default object-control <%- cmd.id %>">
+      <%- cmd.caption %>
+    </button>
+    <% }} %>
+    <button id="<%=`${form.ids.formBtn}close`%>" type="button" class="closer btn btn-default object-control" data-id="CLOSE">
+      Закрыть
+    </button>
+    <button id="<%=`${form.ids.formBtn}reload`%>" type="button" class="reload btn btn-default object-control" data-id="RELOAD" title="Обновить">
+      <span class="fa fa-refresh"></span>
+    </button>
+    <% if (options.id && item.getMetaClass().isJournaling()) { %>
+    <button id="<%=`${form.ids.formBtn}history`%>" type="button" class="history btn btn-default object-control" data-id="HISTORY" title="Журнал изменений">
+      <span class="fa fa-history"></span>
+    </button>
+    <% } %>
+    <%
+      if (item.getItemId() && !item.permissions.write) {
+        globalReadonly = true;
+        options.globalReadonly = true;
+      }
+    %>
+    <% if (typeof exporters !== 'undefined' && Array.isArray(exporters) && exporters.length) {%>
+    <div class="btn-group">
+      <button id="<%=`${form.ids.formBtn}export-toggle`%>" type="button" title="Экспорт"
+              class="export-toggle btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-export"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <% for (var cmd of exporters) { %>
+        <li>
+          <a id="<%=`${form.ids.formBtn}${cmd.name.toLowerCase()}`%>" href="javascript:void(0)" class="export <%- cmd.name %>"
+             data-id="<%- cmd.name %>">
+            <%- cmd.caption %>
+          </a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+    <%}%>
+
+  </div>
+
+  <div class="float-tools object-float-tools">
+    <% for (var cmd of form.commands) { %>
+    <button id="<%=`f${form.ids.formBtn}${cmd.id.toLowerCase()}`%>"
+            data-cmd="<%- cmd.id %>"
+            style="display:none;" type="button" class="btn <%- cmd.id %>" title="<%- cmd.caption %>">
+      <span class="glyphicon glyphicon-new-window"></span>
+      <span class="glyphicon glyphicon-save"></span>
+      <span class="glyphicon glyphicon-trash"></span>
+    </button>
+    <% } %>
+    <button id="<%=`f${form.ids.formBtn}close`%>" type="button" class="btn btn-default CLOSE" title="Закрыть" data-cmd="CLOSE">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <button id="<%=`f${form.ids.formBtn}reload`%>" type="button" class="btn btn-default" title="Обновить" data-cmd="RELOAD">
+      <span class="fa fa-refresh"></span>
+    </button>
+  </div>
+
+  <% } %>
+  <form class="object-manager form form-horizontal" method="post" autocomplete="off"
+        onsubmit="return false;"
+        enctype="multipart/form-data" data-options="<%= JSON.stringify(options) %>">
+    <div class="panel-body">
+      <input type="hidden" name="$action" value="">
+      <div class="tabs">
+        <%- partial(resolveTpl('groups/_tabs'), {
+          tabs: form.tabs
+        }) %>
+        <div class="tab-content">
+          <% for (var i = 0; i < form.tabs.length; ++i) { %>
+          <%- partial(resolveTpl('groups/_default'), {
+            item,
+            fields: form.tabs[i][shortView ? 'shortFields' : 'fullFields'],
+            title: form.tabs[i].caption,
+            numb: i
+          }) %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  $(function () {
+    $('form.object-manager').on('formClosed', function () {
+      if (typeof parent.closeModal == 'function') {
+        parent.closeModal();
+      }
+    });
+    $('form.object-manager').on('actionPerformed', function (e, action, data) {
+      var act = action.toUpperCase();
+      if (typeof parent.setModalResult == 'function') {
+        parent.setModalResult(act == 'DELETE' ? act : data.__class + '@' + data._id);
+      }
+    });
+  });
+</script>

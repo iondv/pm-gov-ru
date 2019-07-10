@@ -1,0 +1,36 @@
+{
+  "code": "indicator.budget",
+  "orderNumber": 80,
+  "type": 1,
+  "title": "",
+  "caption": "Бюджетные показатели",
+  "classname": "indicatorBudget",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "owner.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "owner.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        }
+      ]
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

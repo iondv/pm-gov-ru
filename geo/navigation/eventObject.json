@@ -1,0 +1,11 @@
+{
+    "type": "data",
+    "order": 4,
+    "code": "eventObject",
+    "caption": "Объекты",
+    "hint": "Расположение объектов на карте",
+    "layers": [
+      "objectBasic"
+    ],
+    "filter": []
+}  

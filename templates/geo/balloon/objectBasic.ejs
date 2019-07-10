@@ -1,0 +1,26 @@
+<%
+let result = {
+  title: item.get('name'),
+  address: item.get ('address'),
+  image: item.get ('imageObj')
+}
+%>
+<ul class='balloon-attrlist' style='width:275px'>
+  <li>
+    <b><%- result.title %></b>
+  </li>
+  <li>
+    <b>Адрес:</b> <%- result.address %>
+  </li>
+  <% if (result.image) { %>
+  <li class="text-center mt10">
+    <img src="<%- result.image.thumbnails.medium.link %>" class="img-responsive">
+  </li>
+  <% } %>
+</ul>
+<div>
+    <button type='button' class='btn btn-sm btn-primary map-modal-link' data-type='url'
+          data-url='/registry/pm-gov-ru@objectBasic/view/objectBasic@pm-gov-ru/<%- item.id %>?readonly=on&condensed=on&modal=on'>
+      Подробная информация
+    </button>
+</div>

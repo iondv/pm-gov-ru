@@ -1,0 +1,313 @@
+{
+  "name": "indicatorBasic",
+  "caption": "Согласование показателей",
+  "wfClass": "indicatorBasic",
+  "startState": "edit",
+  "states": [
+    {
+      "name": "edit",
+      "caption": "Редактирование",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "onapp",
+      "caption": "На утверждении",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "app",
+      "caption": "Утверждено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "correct",
+      "caption": "Корректировка",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "archive",
+      "caption": "Архив",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "needAppTrs",
+      "caption": "На утверждение",
+      "startState": "edit",
+      "finishState": "onapp",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "onapprov"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "$__class",
+          "operation": 1,
+          "value": [
+            "indicatorBudget@pm-gov-ru"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "edit"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "notAppTrs",
+      "caption": "Вернуть на редактирование",
+      "startState": "onapp",
+      "finishState": "edit",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "edit"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "onapprov"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "appTrs",
+      "caption": "Утвердить",
+      "startState": "onapp",
+      "finishState": "app",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "approv"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "onapprov"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "toCorrect",
+      "caption": "Внести корректировки",
+      "startState": "app",
+      "finishState": "correct",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "correct"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approv"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    }, {
+      "name": "appCorr",
+      "caption": "Отправить на согласование",
+      "startState": "correct",
+      "finishState": "app",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "approv"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "correct"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "appInArchive",
+      "caption": "В архив",
+      "startState": "app",
+      "finishState": "archive",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "archive"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approv"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

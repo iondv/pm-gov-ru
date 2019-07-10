@@ -1,0 +1,195 @@
+<!-- sakh-info -->
+<%
+let mod = `/${module}/${portal}`;
+%>
+<div class="obj-card">
+
+  <div class="row mb10">
+    <div class="col-md-12">
+      <h1 class="obj-card-title" data-id="title"></h1>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row mb0">
+            <div class="col-lg-6 col-md-5 col-xs-4">
+              <div class="avatar" data-id="avatar"></div>
+            </div>
+            <div class="col-lg-6 col-md-7 col-xs-8">
+              <h4 class="mb15">Ответственный</h4>
+              <p class="head" data-id="head"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="obj-card-block mb20">
+            <h4 class="text-uppercase">Цель проекта</h4>
+            <p data-id="descript"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 obj-card-pictures">
+      <div class="text-center">
+        <img data-id="image1" src="" alt="" class="obj-card-picture mb20">
+        <!--
+        <img data-id="image2" src="" alt="" class="obj-card-picture mb20">
+        -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table class="table table-bordered obj-card-cost-table">
+          <thead>
+          <tr>
+            <th colspan="2" class="text-center">
+              Стоимость по распоряжению<br>
+              <span data-id="costOrder"></span> млн. руб.
+            </th>
+            <th class="text-center">
+              Срок реализации<br>
+              <span data-id="dateStart"></span>
+              -
+              <span data-id="dateEnd"></span>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="text-center">
+              Сметная стоимость<br>
+              <span class="h3" data-id="estimCost"></span> млн. руб.
+            </td>
+            <td>
+              <ul class="mt10">
+                <li>СМР - <span data-id="estimCostCMP"></span> млн. руб.</li>
+                <li>Оборудование - <span data-id="estimCostFacility"></span> млн. руб.</li>
+                <li>Прочее - <span data-id="estimCostOther"></span> млн. руб.</li>
+              </ul>
+            </td>
+            <td class="text-center" data-id="changeOrder"></td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th colspan="3" class="bg-info" data-id="keyTask"></th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table class="table obj-card-fin-table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th data-id="finTitle" colspan="6" class="text-center">Финансирование в 2018 году</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td rowspan="4" class="text-center align-middle">
+              <span data-id="finanYear" class="h3"></span>
+            </td>
+            <td></td>
+            <td data-id="fb">Федеральный</td>
+            <td data-id="region">Краевой</td>
+            <td data-id="mun">Муниципальный</td>
+            <td data-id="extra">Внебюджетный</td>
+          </tr>
+          <tr>
+            <td data-id="dp">Требуемое</td>
+            <td data-id="dpFb" class="text-right bold"></td>
+            <td data-id="dpRegion" class="text-right bold"></td>
+            <td data-id="dpMun" class="text-right bold"></td>
+            <td data-id="dpExtra" class="text-right bold"></td>
+          </tr>
+          <tr>
+            <td data-id="kaip">Плановое</td>
+            <td data-id="kaipFb" class="text-right bold"></td>
+            <td data-id="kaipRegion" class="text-right bold"></td>
+            <td data-id="kaipMun" class="text-right bold"></td>
+            <td data-id="kaipExtra" class="text-right bold"></td>
+          </tr>
+          <tr>
+            <td data-id="fact">Фактическое</td>
+            <td data-id="factFb" class="text-right bold"></td>
+            <td data-id="factRegion" class="text-right bold"></td>
+            <td data-id="factMun" class="text-right bold"></td>
+            <td data-id="factExtra" class="text-right bold"></td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th data-id="fin" colspan="2" class="text-center"></th>
+            <th data-id="finFb" class="text-right"></th>
+            <th data-id="finRegion" class="text-right"></th>
+            <th data-id="finMun" class="text-right"></th>
+            <th data-id="finExtra" class="text-right"></th>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt30">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th colspan="2">Цена контракта на выполнение</th>
+            <th>Выполнено всего 2017 - 2018</th>
+            <th colspan="2">Техническая готовность на 01.01.2018</th>
+            <th>Необходимо выполнить для достижения техготовности</th>
+            <th>Запланировано по графику на 2018</th>
+            <th>Незакон<wbr>трак<wbr>то<wbr>вано</th>
+            <th>Плановое задание на 2018</th>
+            <th>Целевое задание на 2018</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td rowspan="1">СМР</td>
+            <td rowspan="1" class="text-right" data-id="costContractSMR"></td>
+            <td rowspan="1" class="text-right" data-id="costOldContractSMR"></td>
+            <td data-id="planPercentCell" rowspan="3" class="text-center">
+              Плановая <span class="h4" data-id="planPercent"></span>%
+            </td>
+            <td data-id="factPercentCell" rowspan="3" class="text-center">
+              Фактическая <span class="h4" data-id="factPercent"></span>%
+            </td>
+            <td rowspan="3" class="text-center">
+              <span class="h3" data-id="needWorkSuccess"></span>
+            </td>
+            <td rowspan="1" class="text-right" data-id="plannedCMP"></td>
+            <td rowspan="1" class="text-right" data-id="illegContrCMP"></td>
+            <td rowspan="1" class="text-right" data-id="planTaskCMP"></td>
+            <td rowspan="1" class="text-right" data-id="targetTaskCMP"></td>
+          </tr>
+          <tr>
+            <td rowspan="1">Обор.</td>
+            <td rowspan="1" class="text-right" data-id="costContractFacility"></td>
+            <td rowspan="1" class="text-right" data-id="costOldContractFacility"></td>
+            <td rowspan="1" class="text-right" data-id="plannedFacility"></td>
+            <td rowspan="1" class="text-right" data-id="illegContrFacility"></td>
+            <td rowspan="1" class="text-right" data-id="planTaskFacility"></td>
+            <td rowspan="1" class="text-right" data-id="targetTaskFacility"></td>
+          </tr>
+          <tr>
+            <td rowspan="1">Прочее</td>
+            <td rowspan="1" class="text-right" data-id="costContractOther"></td>
+            <td rowspan="1" class="text-right" data-id="costOldContractOther"></td>
+            <td rowspan="1" class="text-right" data-id="plannedOther"></td>
+            <td rowspan="1" class="text-right" data-id="illegContrOther"></td>
+            <td rowspan="1" class="text-right" data-id="planTaskOther"></td>
+            <td rowspan="1" class="text-right" data-id="targetTaskOther"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<%- partial('../specificPivot', {
+  sheet,
+  data,
+    options: {
+      totals: true,
+        excludeToFooter: {nameProj: 'Ограничение'},
+        untitledGroupTotals: false
+    }}) %>

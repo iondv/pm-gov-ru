@@ -1,0 +1,3731 @@
+{
+  "deployer": "built-in", 
+  "namespace": "pm-gov-ru", 
+  "globals": {
+    "jobs": {
+      "recache": {
+        "launch": {
+          "timeout": 3600000, 
+          "hour": 24
+        }, 
+        "worker": "recacher", 
+        "description": "Пересчет кэша семантики", 
+        "di": {
+          "recacher": {
+            "executable": "core/util/recacher", 
+            "options": {
+              "classes": {
+                "basicObj@pm-gov-ru": {
+                  "sort": {
+                    "createDatet": -1
+                  }, 
+                  "step": 100, 
+                  "skipDependencies": true
+                }
+              }, 
+              "dataRepo": "ion://dataRepo", 
+              "log": "ion://sysLog", 
+              "metaRepo": "ion://metaRepo"
+            }
+          }
+        }
+      }, 
+      "fact-creator": {
+        "launch": {
+          "timeout": 3600000, 
+          "hour": 24
+        }, 
+        "worker": "factCreator", 
+        "description": "Служба генератора фактический показателей", 
+        "di": {
+          "factCreator": {
+            "executable": "applications/pm-gov-ru/lib/fact-creator", 
+            "options": {
+              "data": "ion://dataRepo", 
+              "log": "ion://sysLog", 
+              "workflows": "ion://workflows"
+            }
+          }
+        }
+      }, 
+      "report-builder": {
+        "launch": {
+          "timeout": 3600000, 
+          "hour": 24
+        }, 
+        "worker": "rebuilder", 
+        "description": "Служба сборки шахт данных модуля отчетов", 
+        "di": {
+          "rebuilder": {
+            "executable": "modules/report/lib/rebuilder", 
+            "options": {
+              "meta": "ion://reportMeta", 
+              "log": "ion://sysLog", 
+              "mineBuilders": {
+                "pm-gov-ru": {
+                  "controlReport": {
+                    "indicatorAllPeriod": "ion://stdBuilder", 
+                    "indicatorAll": "ion://stdBuilder", 
+                    "projectAll": "ion://stdBuilder", 
+                    "indicatorValueAllSource": "ion://stdBuilder", 
+                    "eventAllResult": "ion://stdBuilder", 
+                    "taskAllSource": "ion://stdBuilder", 
+                    "eventAllSource": "ion://stdBuilder", 
+                    "indicatorAllSource": "ion://stdBuilder", 
+                    "indicatorValueAll": "ion://stdBuilder"
+                  }, 
+                  "projects": {
+                    "eventAll": "ion://stdBuilder", 
+                    "roadmapProject": "mineBuilder", 
+                    "allIndicatorWaitResult": "ion://stdBuilder", 
+                    "objectBasicIndicator": "mineBuilder", 
+                    "plannedIndicator": "ion://stdBuilder", 
+                    "curIndicatorsSource": "mineBuilder", 
+                    "riskSource": "ion://stdBuilder", 
+                    "programGosProgramProject": "ion://stdBuilder", 
+                    "basicObject": "ion://stdBuilder", 
+                    "eventBasicIndicator": "mineBuilder", 
+                    "finResourceSource2": "ion://stdBuilder", 
+                    "roadmapSource": "ion://stdBuilder", 
+                    "riskProject": "ion://stdBuilder", 
+                    "indicatorAll": "ion://stdBuilder", 
+                    "programBase": "ion://stdBuilder", 
+                    "infoTransfer": "ion://stdBuilder", 
+                    "basicBudgetJoin": "ion://stdBuilder", 
+                    "finResourceProject": "ion://stdBuilder", 
+                    "participantSource": "ion://stdBuilder", 
+                    "statusResults": "ion://stdBuilder", 
+                    "financialPlannedIndicator": "ion://stdBuilder", 
+                    "finBriefcaseSource": "ion://stdBuilder", 
+                    "statusProject": "ion://stdBuilder", 
+                    "projectObjectBasicIndicator": "mineBuilder", 
+                    "basicBudget": "ion://stdBuilder", 
+                    "programProject": "ion://stdBuilder", 
+                    "targetIndicator": "ion://stdBuilder", 
+                    "finProgramSource": "ion://stdBuilder", 
+                    "finResourceSource": "ion://stdBuilder", 
+                    "indicatorValueBasic": "ion://stdBuilder", 
+                    "opportunityProject": "ion://stdBuilder", 
+                    "assignment": "ion://stdBuilder", 
+                    "indicatorValuePlanByInd": "mineBuilder", 
+                    "basicProjectCode": "ion://stdBuilder", 
+                    "teamActive": "ion://stdBuilder", 
+                    "allIndicatorsSource": "mineBuilder", 
+                    "opportunitySource": "ion://stdBuilder", 
+                    "projBasicIndicator": "mineBuilder", 
+                    "eventControlAll": "ion://stdBuilder", 
+                    "infoTransferSource": "ion://stdBuilder", 
+                    "financialTargetImplementation": "ion://stdBuilder", 
+                    "briefcaseProgramProject": "ion://stdBuilder", 
+                    "finProgramLimSource": "ion://stdBuilder", 
+                    "basicProject": "ion://stdBuilder", 
+                    "projIndicatorDouble": "ion://stdBuilder", 
+                    "waitResultSource": "ion://stdBuilder", 
+                    "teamActiveSource": "ion://stdBuilder", 
+                    "finProjSource": "ion://stdBuilder", 
+                    "finProgramGosSource": "ion://stdBuilder", 
+                    "indicatorValueCurrentByInd": "mineBuilder", 
+                    "roadmapResults": "ion://stdBuilder", 
+                    "totalKTSource": "ion://stdBuilder"
+                  }, 
+                  "eventsBase": {
+                    "cardObjectSource": "ion://stdBuilder", 
+                    "indicatorAllEvent": "ion://stdBuilder", 
+                    "indicatorAll": "ion://stdBuilder", 
+                    "objectBasic": "ion://stdBuilder", 
+                    "spendObjectSource": "ion://stdBuilder"
+                  }
+                }
+              }
+            }
+          }, 
+          "stdBuilder": {
+            "options": {
+              "dataRepo": "ion://dataRepo", 
+              "dataSource": "ion://Db", 
+              "metaRepo": "ion://metaRepo"
+            }, 
+            "module": "modules/report/lib/impl/StdMineBuilder"
+          }, 
+          "reportMeta": {
+            "initLevel": 1, 
+            "options": {
+              "calc": "ion://calculator", 
+              "dataSource": "ion://Db"
+            }, 
+            "module": "modules/report/lib/impl/DsReportMetaRepository", 
+            "initMethod": "init"
+          }
+        }
+      }, 
+      "projectReportCreator": {
+        "launch": {
+          "day": [
+            1
+          ], 
+          "timeout": 3600000
+        }, 
+        "worker": "reportCreator", 
+        "description": "Служба формирования отчетности проектов", 
+        "di": {
+          "pmListToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/list", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/listToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_2": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item2", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_6": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item6", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_7": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://item7Injector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/item7", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_4": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item4", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_Indicators": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://itemMunIndicatorsInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/itemIndicators", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "programPassportInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/programPassportInjector"
+          }, 
+          "pmItemToDocx_8": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item8", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_9": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item9", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToExcel": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [], 
+              "tplDir": "applications/pm-gov-ru/export/item"
+            }, 
+            "module": "modules/registry/export/itemToExcel", 
+            "initMethod": "init"
+          }, 
+          "pmFromListToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/list"
+            }, 
+            "module": "modules/registry/export/listToDocx", 
+            "initMethod": "init"
+          }, 
+          "reportCreator": {
+            "executable": "applications/pm-gov-ru/lib/project-reports-job", 
+            "options": {
+              "lang": "ru", 
+              "exporter": "ion://export", 
+              "eagerLoading": [
+                "direction.name", 
+                "curator.person.name", 
+                "head.person.name", 
+                "head.evaluationPerformByEmployee.basicObjPerform", 
+                "owner.person.name", 
+                "administrator.person.name", 
+                "stakeholdersImplementation.name", 
+                "risk.descript", 
+                "budget.cost", 
+                "result", 
+                "basicObjs.head.person.name", 
+                "basicObjs.head.evaluationPerformByEmployee.basicObjPerform", 
+                "basicObjs.curator.person.name", 
+                "basicObjs.owner.person.name", 
+                "basicObjs.basicObjs.basicObjs.basicObjs", 
+                "basicObjs.ownOrg.head.person", 
+                "basicObjs.result", 
+                "basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.result", 
+                "basicObjs.basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.basicObjs.result", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.result", 
+                "basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.head.person", 
+                "indicatorBasic.indicatorValueBasic", 
+                "indicatorBasic.measureUnit", 
+                "evaluation", 
+                "evaluationPerform.ownOrg.name", 
+                "evaluationPerform.basicObjs.name"
+              ], 
+              "log": "ion://sysLog", 
+              "storage": "ion://fileStorage", 
+              "step": 10, 
+              "dayOffset": 1, 
+              "directory": "${code}/reports", 
+              "data": "ion://securedDataRepo"
+            }
+          }, 
+          "pmItemToDocx_3": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item3", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "itemProgressInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/itemProgressInjector"
+          }, 
+          "pmItemToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://programPassportInjector", 
+                "ion://changeReqInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/item"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_Progress": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://itemProgressInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/itemProgress", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "export": {
+            "initLevel": 2, 
+            "options": {
+              "configs": {
+                "project@pm-gov-ru": {
+                  "rating": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Оценка деятельности исполнителя и соисполнителей проекта", 
+                    "params": {
+                      "till": {
+                        "default": "$monthEnd", 
+                        "caption": "Период по", 
+                        "type": "date"
+                      }, 
+                      "since": {
+                        "default": "$monthStart", 
+                        "caption": "Период с", 
+                        "type": "date"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmItemToDocx_2", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "planEvents": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [], 
+                    "extension": "docx", 
+                    "caption": "План мероприятий проекта", 
+                    "preprocessor": "ion://pmItemToDocx_8", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "markComplite": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Оценка степени реализации проекта", 
+                    "preprocessor": "ion://pmItemToDocx_6", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "passportNew": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "head.organization.name", 
+                      "administrator.organization.name", 
+                      "coordinator.organization.name", 
+                      "indicatorBasic.indicatorValueBasic.indicatorBasic", 
+                      "indicatorBudget.indicatorValueBasic", 
+                      "indicatorBudget.obj", 
+                      "infoTransfer.fromInfo.person", 
+                      "infoTransfer.toInfo.person", 
+                      "opportunity.manager.person", 
+                      "opportunity.manager.organization", 
+                      "opportunity.taskResponse", 
+                      "risk.manager.person", 
+                      "risk.manager.organization", 
+                      "risk.taskResponse", 
+                      "basicObjs.indicatorBasic.indicatorValueBasic", 
+                      "basicObjs.indicatorBasic.measureUnit", 
+                      "basicObjs.owner.person", 
+                      "basicObjs.head.person", 
+                      "basicObjs.curator.person", 
+                      "basicObjs.coexecEvent.person", 
+                      "basicObjs.indicatorBasic.owner.person", 
+                      "basicObjs.indicatorBasic.head.person", 
+                      "basicObjs.indicatorBasic.ownerValue.person", 
+                      "basicObjs.indicatorBasic.headValue.person"
+                    ], 
+                    "extension": "docx", 
+                    "caption": "Паспорт проекта", 
+                    "preprocessor": "ion://pmItemToDocx_7", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "indicatorsMun": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "program.aip.indicatorBasic.indicatorValueBasic", 
+                      "program.aip.mo"
+                    ], 
+                    "extension": "docx", 
+                    "caption": "Показатели регионального проекта по муниципальным образованиям ", 
+                    "preprocessor": "ion://pmItemToDocx_Indicators", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "schemsProject": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicatorBasic.owner.person", 
+                      "indicatorBasic.measureUnit.shortName", 
+                      "stakeholdersImplementation.representative.person", 
+                      "stakeholdersImplementation.ownerInteraction.person"
+                    ], 
+                    "extension": "docx", 
+                    "caption": "Обоснование проекта", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "passportProject": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "basicObjs", 
+                      "basicObjs.head.person"
+                    ], 
+                    "extension": "docx", 
+                    "caption": "Паспорт регионального проекта (new ver)", 
+                    "preprocessor": "ion://pmItemToDocx_9", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "team": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Состав команды проекта", 
+                    "preprocessor": "ion://pmItemToDocx_4", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "markResult": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Оценка проектов", 
+                    "params": {
+                      "project": {
+                        "className": "project@pm-gov-ru", 
+                        "caption": "Проект", 
+                        "type": "reference"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmFromListToDocx", 
+                    "isBackground": true, 
+                    "query": {
+                      "filter": {
+                        "and": [
+                          {
+                            "eq": [
+                              "$guid", 
+                              ":project"
+                            ]
+                          }
+                        ]
+                      }
+                    }, 
+                    "type": "list"
+                  }, 
+                  "stepProcessNew": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Итоговый отчет", 
+                    "preprocessor": "ion://pmItemToDocx_5", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "projectProgress": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicatorBasic.indicatorValueBasic", 
+                      "indicatorBudget.indicatorValueBasic", 
+                      "indicatorBasic.remark.owner", 
+                      "basicObjs.remark.owner"
+                    ], 
+                    "extension": "docx", 
+                    "caption": "Отчет о ходе реализации проекта", 
+                    "params": {
+                      "periodYYYY": {
+                        "caption": "Год", 
+                        "type": "string"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmItemToDocx_Progress", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "stepProcess": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "caption": "Ход реализации сводного плана проекта", 
+                    "preprocessor": "ion://pmItemToDocx_3", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }
+                }
+              }, 
+              "dataRepo": "ion://securedDataRepo", 
+              "metaRepo": "ion://metaRepo"
+            }, 
+            "module": "modules/registry/backend/ExportManager", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_5": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item5", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "itemMunIndicatorsInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/itemMunIndicatorsInjector"
+          }, 
+          "changeReqInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/changeReqInjector"
+          }, 
+          "item7Injector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/item7Injector"
+          }
+        }
+      }
+    }, 
+    "moduleTitles": {
+      "report": {
+        "description": "Аналитика", 
+        "order": 30
+      }, 
+      "portal": {
+        "description": "Мониторинг", 
+        "order": 40
+      }, 
+      "registry": {
+        "skipModules": true, 
+        "description": "Проектное управление", 
+        "order": 10
+      }, 
+      "gantt-chart": {
+        "description": "План-график(Гант)", 
+        "order": 20
+      }, 
+      "geomap": {
+        "description": "Геоданные", 
+        "order": 50
+      }
+    }, 
+    "explicitTopMenu": [
+      {
+        "url": "/registry/pm-gov-ru@indicatorValue.all", 
+        "caption": "Мои задачи", 
+        "id": "mytasks"
+      }, 
+      {
+        "url": "/registry/pm-gov-ru@project", 
+        "caption": "Проектное управление", 
+        "id": "projectmanagement"
+      }, 
+      {
+        "type": "system", 
+        "name": "gantt-chart"
+      }, 
+      {
+        "type": "system", 
+        "name": "portal"
+      }, 
+      {
+        "type": "system", 
+        "name": "geomap"
+      }, 
+      {
+        "type": "system", 
+        "name": "report"
+      }, 
+      {
+        "url": "/registry/pm-gov-ru@classification.okogu", 
+        "caption": "Справочники", 
+        "id": "distionary"
+      }
+    ], 
+    "pageTitle": "ИСУП", 
+    "pageEndContent": "<div><img src=https://mc.iondv.com/watch/github/app/pm-gov-ru style=\"position:absolute; left:-9999px;\" alt=\"iondv-metrics\" /></div>", 
+    "theme": "applications/pm-gov-ru/themes/www", 
+    "staticOptions": {
+      "maxAge": 3600000
+    }, 
+    "plugins": {
+      "customProfile": {
+        "options": {
+          "fields": {
+            "notifyTo": {
+              "caption": "Дополнительные способы оповещения", 
+              "readonly": false, 
+              "selection": [
+                {
+                  "value": "email", 
+                  "key": "Электронная почта"
+                }, 
+                {
+                  "value": "sms", 
+                  "key": "СМС"
+                }, 
+                {
+                  "value": "skype", 
+                  "key": "Skype"
+                }, 
+                {
+                  "value": "telegram", 
+                  "key": "Telegram"
+                }
+              ], 
+              "type": 10, 
+              "required": false
+            }, 
+            "foto": {
+              "caption": "Фотография", 
+              "readonly": true, 
+              "required": false, 
+              "type": 13
+            }, 
+            "surname": {
+              "caption": "Фамилия", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "name": {
+              "caption": "Имя", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "creator": {
+              "caption": "Создан пользователем", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "modifeDate": {
+              "caption": "Метка времени изменения", 
+              "readonly": true, 
+              "required": false, 
+              "type": 6
+            }, 
+            "mobilePhone": {
+              "caption": "Мобильный телефон", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "birthDate": {
+              "caption": "Дата рождения", 
+              "readonly": true, 
+              "required": false, 
+              "type": 120
+            }, 
+            "editor": {
+              "caption": "Изменен пользователем", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "patronymic": {
+              "caption": "Отчество", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "email": {
+              "caption": "Электронная почта", 
+              "readonly": true, 
+              "required": false
+            }, 
+            "createDatet": {
+              "caption": "Метка времени создания", 
+              "readonly": true, 
+              "required": false, 
+              "type": 6
+            }
+          }, 
+          "propertyMap": {
+            "employee@pm-gov-ru": {
+              "filter": "person.user", 
+              "recursion": {
+                "id": "substitution.employee.id"
+              }, 
+              "properties": {
+                "employee": "id", 
+                "organization": "organization.id", 
+                "substOrgs": "substitution.employee.organization.id", 
+                "substitution": "substitution.employee.id"
+              }
+            }, 
+            "person@pm-gov-ru": {
+              "filter": "user", 
+              "properties": {
+                "foto": "foto", 
+                "surname": "surname", 
+                "mobilePhone": "mobilePhone", 
+                "creator": "creator", 
+                "modifeDate": "modifeDate", 
+                "birthDate": "birthDate", 
+                "name": "name", 
+                "person": "id", 
+                "editor": "editor", 
+                "patronymic": "patronymic", 
+                "email": "email", 
+                "createDatet": "createDatet"
+              }
+            }
+          }, 
+          "dataRepo": "ion://dataRepo", 
+          "metaRepo": "ion://metaRepo"
+        }, 
+        "module": "lib/plugins/customProfile"
+      }, 
+      "indicatorWfHandler": {
+        "initLevel": 2, 
+        "options": {
+          "data": "ion://securedDataRepo", 
+          "log": "ion://sysLog", 
+          "workflows": "ion://workflows"
+        }, 
+        "module": "applications/pm-gov-ru/lib/util/indicatorWfHandler", 
+        "initMethod": "init"
+      }, 
+      "emailNotifier": {
+        "options": {
+          "templates": {
+            "meeting-participant": {
+              "plain": "meeting-participant.plain.ejs", 
+              "html": "meeting-participant.html.ejs"
+            }, 
+            "project-events": {
+              "plain": "project-events.plain.ejs", 
+              "html": "project-events.html.ejs"
+            }, 
+            "project-change": {
+              "plain": "project-changed.plain.ejs", 
+              "html": "project-changed.html.ejs"
+            }
+          }, 
+          "tplDir": "applications/pm-gov-ru/email-templates", 
+          "sender": "ion://[[mail.worker]]", 
+          "defaultSenderEmail": "[[mail.sender]]", 
+          "log": "ion://sysLog"
+        }, 
+        "module": "core/impl/notifications/EmailNotifier"
+      }, 
+      "sendmail": {
+        "options": {}, 
+        "module": "core/impl/email/SendMail"
+      }, 
+      "wfEvents": {
+        "initLevel": 1, 
+        "options": {
+          "dataRepo": "ion://dataRepo", 
+          "workflows": "ion://workflows", 
+          "AIPConfigPath": "applications/pm-gov-ru/paths_config/eventOnlyAIP.json", 
+          "log": "ion://sysLog", 
+          "metaRepo": "ion://metaRepo"
+        }, 
+        "module": "applications/pm-gov-ru/lib/wfEvents", 
+        "initMethod": "init"
+      }, 
+      "fileStorage": {
+        "options": {
+          "url": "[[ownCloud.url]]", 
+          "login": "[[ownCloud.login]]", 
+          "password": "[[ownCloud.pwd]]"
+        }, 
+        "module": "core/impl/resource/OwnCloudStorage"
+      }, 
+      "sessionHandler": {
+        "options": {
+          "storage": {
+            "type": "[[session.type]]", 
+            "options": {
+              "host": "[[cache.redis.host]]", 
+              "port": "[[cache.redis.port]]"
+            }
+          }
+        }
+      }, 
+      "aclProvider": {
+        "options": {
+          "map": {
+            "deputy@pm-gov-ru": {
+              "jumps": [
+                "employee"
+              ]
+            }, 
+            "organization@pm-gov-ru": {
+              "sidAttribute": "id", 
+              "jumps": [
+                "headOrg"
+              ]
+            }, 
+            "employee@pm-gov-ru": {
+              "sidAttribute": "id", 
+              "jumps": [
+                "organization", 
+                "person", 
+                "substitution"
+              ]
+            }, 
+            "person@pm-gov-ru": {
+              "sidAttribute": "user", 
+              "jumps": [
+                "employee"
+              ], 
+              "isEntry": true
+            }
+          }, 
+          "calculator": "ion://calculator", 
+          "dataRepo": "ion://dataRepo", 
+          "accessManager": "ion://roleAccessManager", 
+          "acl": "ion://actualAclProvider"
+        }, 
+        "module": "core/impl/access/aclMetaMap"
+      }, 
+      "securedDataRepo": {
+        "options": {
+          "roleMap": {
+            "projDepart@pm-gov-ru": {
+              "PROJ_DEPART_EMPLOYEE": {
+                "caption": "Сотрудники в ведомственном проекте", 
+                "resource": {
+                  "caption": "Ведомственные проекты", 
+                  "id": "pm::projDepart"
+                }, 
+                "attribute": "ownOrg"
+              }, 
+              "PROJ_DEPART_MANAGER": {
+                "caption": "Руководитель ведомственного проекта", 
+                "resource": {
+                  "id": "pm::projDepart"
+                }, 
+                "attribute": "head"
+              }, 
+              "PROJ_DEPART_OPERATOR": {
+                "caption": "Оператор ведомственного проекта", 
+                "resource": {
+                  "id": "pm::projDepart"
+                }, 
+                "attribute": "owner"
+              }, 
+              "PROJ_DEPART_VPO": {
+                "caption": "Сотрудники ВПО", 
+                "resource": {
+                  "id": "pm::projDepart"
+                }, 
+                "attribute": "ownOrg.vedomstveniyPO"
+              }
+            }, 
+            "project@pm-gov-ru": {
+              "PROJECT_ADMIN": {
+                "attribute": "administrator", 
+                "resource": {
+                  "id": "pm::project"
+                }
+              }, 
+              "PROJECT_BENEFITIAR": {
+                "sids": [
+                  "$ownOrg", 
+                  "$stakeholdersImplementation.organization", 
+                  "$participantsOccupation"
+                ], 
+                "resource": {
+                  "id": "pm::project"
+                }
+              }, 
+              "PROJECT_VPO": {
+                "caption": "Сотрудники ВПО", 
+                "sids": [
+                  "$ownOrg.vedomstveniyPO"
+                ], 
+                "resource": {
+                  "id": "pm::project"
+                }
+              }, 
+              "PROJECT_MANAGER": {
+                "attribute": "head", 
+                "resource": {
+                  "id": "pm::project"
+                }
+              }, 
+              "PROJECT_RESPONSIBLE": {
+                "sids": [
+                  "$owner"
+                ], 
+                "resource": {
+                  "id": "pm::project"
+                }
+              }, 
+              "PROJECT_CURATOR": {
+                "attribute": "curator", 
+                "resource": {
+                  "caption": "Проект", 
+                  "id": "pm::project"
+                }
+              }
+            }, 
+            "indicatorBasic@pm-gov-ru": {
+              "INDICATOR_OWNER": {
+                "caption": "Оператора показателя", 
+                "resource": {
+                  "id": "pm::indicator"
+                }, 
+                "attribute": "owner"
+              }, 
+              "INDICATOR_VALUEHEAD": {
+                "caption": "Ответственный за утверждение значения", 
+                "resource": {
+                  "id": "pm::indicator"
+                }, 
+                "attribute": "headValue"
+              }, 
+              "INDICATOR_HEAD": {
+                "caption": "Нормоконтролер", 
+                "resource": {
+                  "id": "pm::indicator"
+                }, 
+                "attribute": "head"
+              }, 
+              "INDICATOR_VALUEOWNER": {
+                "caption": "Ответственный за ввод значения", 
+                "resource": {
+                  "id": "pm::indicator"
+                }, 
+                "attribute": "ownerValue"
+              }
+            }, 
+            "program@pm-gov-ru": {
+              "PROGRAM_COORD": {
+                "sids": [
+                  "$coordinator", 
+                  "Operators"
+                ], 
+                "resource": {
+                  "id": "pm::program"
+                }
+              }
+            }, 
+            "eventBasic@pm-gov-ru": {
+              "EVENT_RESPONSIBLE": {
+                "caption": "Полный доступ к мероприятию (исполнители, соисполнители, руководитель и куратор мероприятия)", 
+                "sids": [
+                  "$coexecEvent", 
+                  "$owner", 
+                  "$curator", 
+                  "$head"
+                ], 
+                "resource": {
+                  "id": "pm::event"
+                }
+              }, 
+              "EVENT_BENEFITIAR": {
+                "caption": "Интересант мероприятия", 
+                "resource": {
+                  "id": "pm::event"
+                }, 
+                "attribute": "ownOrg"
+              }, 
+              "PROJECT_ADMIN": {
+                "caption": "Администратор проекта", 
+                "resource": {
+                  "id": "pm::project-events"
+                }, 
+                "attribute": "project.administrator"
+              }, 
+              "PROJECT_BENEFITIAR": {
+                "caption": "Интересант проекта", 
+                "sids": [
+                  "$project.ownOrg", 
+                  "$project.stakeholdersImplementation.organization", 
+                  "$project.participantsOccupation.participant"
+                ], 
+                "resource": {
+                  "id": "pm::project-events"
+                }
+              }, 
+              "PROJECT_VPO": {
+                "caption": "Сотрудники ВПО", 
+                "sids": [
+                  "$project.ownOrg.vedomstveniyPO"
+                ], 
+                "resource": {
+                  "id": "pm::project-events"
+                }
+              }, 
+              "PROJECT_MANAGER": {
+                "caption": "Руководитель проекта", 
+                "resource": {
+                  "id": "pm::project-events"
+                }, 
+                "attribute": "project.head"
+              }, 
+              "PROJECT_RESPONSIBLE": {
+                "caption": "Ответственный по проекту", 
+                "sids": [
+                  "$project.owner"
+                ], 
+                "resource": {
+                  "id": "pm::project-events"
+                }
+              }, 
+              "PROJECT_CURATOR": {
+                "caption": "Куратор проекта.", 
+                "resource": {
+                  "caption": "Задачи проекта", 
+                  "id": "pm::project-events"
+                }, 
+                "attribute": "project.curator"
+              }
+            }, 
+            "indicatorValueBasic@pm-gov-ru": {
+              "INDICATORVALUE_HEAD": {
+                "caption": "Нормоконтролер", 
+                "resource": {
+                  "id": "pm::indicatorValue"
+                }, 
+                "attribute": "indicatorBasic.head"
+              }, 
+              "INDICATORVALUE_CONFIRM": {
+                "caption": "Сотрудники ответственной организации за верификацию значений", 
+                "resource": {
+                  "id": "pm::indicatorValue"
+                }, 
+                "attribute": "indicatorBasic.confirm"
+              }, 
+              "INDICATORVALUE_VALUEOWNER": {
+                "caption": "Ответственный за ввод значения", 
+                "resource": {
+                  "id": "pm::indicatorValue"
+                }, 
+                "attribute": "indicatorBasic.ownerValue"
+              }, 
+              "INDICATORVALUE_OWNER": {
+                "caption": "Оператора показателя", 
+                "resource": {
+                  "id": "pm::indicatorValue"
+                }, 
+                "attribute": "indicatorBasic.owner"
+              }, 
+              "INDICATORVALUE_VALUEHEAD": {
+                "caption": "Ответственный за утверждение значения", 
+                "resource": {
+                  "id": "pm::indicatorValue"
+                }, 
+                "attribute": "indicatorBasic.headValue"
+              }
+            }
+          }, 
+          "accessManager": "ion://roleAccessManager"
+        }
+      }, 
+      "eventNotifier": {
+        "initLevel": 2, 
+        "options": {
+          "listeners": {
+            "projectEvents": {
+              "component": "ion://dataRepo", 
+              "events": {
+                "assignment@pm-gov-ru.responsible.put": {
+                  "subject": "Вы назначены ответственным за поручение по теме ${master.name}", 
+                  "type": "assignment-owner", 
+                  "messageData": "master", 
+                  "recievers": [
+                    "details.person.user"
+                  ]
+                }, 
+                "project@pm-gov-ru.edit": {
+                  "subject": "Внесены изменения в проект ${item.code}", 
+                  "type": "project-change", 
+                  "messageData": "item", 
+                  "recievers": [
+                    "item.curator.person.user", 
+                    "item.head.person.user", 
+                    "item.administrator.person.user"
+                  ]
+                }, 
+                "meeting@pm-gov-ru.participants.put": {
+                  "subject": "Запланировано совещание на тему ${master.name}", 
+                  "type": "meeting-participant", 
+                  "messageData": "master", 
+                  "recievers": [
+                    "details.person.user"
+                  ]
+                }, 
+                "deputy@pm-gov-ru.deputy.put": {
+                  "subject": "Вы назначены заместителем пользователя ${master.employee}", 
+                  "type": "deputy-person", 
+                  "messageData": "master", 
+                  "recievers": [
+                    "details.person.user"
+                  ]
+                }, 
+                "changeReq@pm-gov-ru.owner.put": {
+                  "subject": "Вы инициировали запрос на изменение параметров проекта ${master.basicObj.name}", 
+                  "type": "changeReq-owner", 
+                  "messageData": "master", 
+                  "recievers": [
+                    "details.person.user"
+                  ]
+                }
+              }
+            }
+          }, 
+          "dataRepo": "ion://dataRepo", 
+          "log": "ion://sysLog", 
+          "notifier": "ion://notifier"
+        }, 
+        "module": "lib/plugins/EventNotifier", 
+        "initMethod": "init"
+      }, 
+      "dataRepo": {
+        "options": {
+          "maxEagerDepth": 4
+        }
+      }, 
+      "auth": {
+        "options": {
+          "checkUrlAccess": [
+            "^/registry/pm-gov-ru@indicatorValue.all", 
+            "^/registry/pm-gov-ru@project", 
+            "^/portal", 
+            "^/geomap", 
+            "^/report", 
+            "^/registry/pm-gov-ru@classification.okogu", 
+            "^/registry/pm-gov-ru@person"
+          ]
+        }
+      }, 
+      "accounts": {
+        "options": {
+          "plugins": {
+            "customProfile": "ion://customProfile"
+          }
+        }
+      }, 
+      "actualAclProvider": {
+        "initLevel": 1, 
+        "options": {
+          "dataSource": "ion://Db"
+        }, 
+        "module": "core/impl/access/DsAcl", 
+        "initMethod": "init"
+      }, 
+      "nodemailer": {
+        "options": {
+          "transport": {
+            "secure": "[[mail.smtp.secure]]", 
+            "sendmail": "[[mail.sendmail.enabled]]", 
+            "newline": "[[mail.sendmail.newline]]", 
+            "auth": {
+              "user": "[[mail.smtp.user]]", 
+              "pass": "[[mail.smtp.password]]"
+            }, 
+            "host": "[[mail.smtp.host]]", 
+            "path": "[[mail.sendmail.path]]", 
+            "port": "[[mail.smtp.port]]", 
+            "pool": "[[mail.smtp.pool]]"
+          }
+        }, 
+        "module": "core/impl/email/NodeMailer"
+      }, 
+      "notifier": {
+        "options": {
+          "templates": {
+            "meeting-participant": "meeting-participant.ejs", 
+            "assignment-owner": "assignment-owner.ejs", 
+            "changeReq-owner": "changeReq-owner.ejs", 
+            "project-change": "project-changed.ejs", 
+            "deputy-person": "deputy-person.ejs"
+          }, 
+          "tplDir": "applications/pm-gov-ru/notifications", 
+          "dispatchers": {
+            "email": "ion://emailNotifier"
+          }, 
+          "log": "ion://sysLog"
+        }
+      }
+    }
+  }, 
+  "modules": {
+    "geomap": {
+      "import": {
+        "src": "applications/pm-gov-ru/geo", 
+        "namespace": "pm-gov-ru"
+      }, 
+      "globals": {
+        "templates": [
+          "applications/pm-gov-ru/templates"
+        ], 
+        "statics": {
+          "geoicons": "applications/pm-gov-ru/icons", 
+          "common-static": "applications/pm-gov-ru/templates/static"
+        }, 
+        "defaultNav": {
+          "node": "objectBasic", 
+          "namespace": "pm-gov-ru"
+        }, 
+        "di": {
+          "dataRepo": {
+            "options": {
+              "log": "ion://sysLog", 
+              "imageStorage": "ion://imageStorage", 
+              "maxEagerDepth": 3, 
+              "fileStorage": "ion://fileStorage", 
+              "keyProvider": {
+                "name": "keyProvider", 
+                "module": "core/impl/meta/keyProvider", 
+                "options": {
+                  "metaRepo": "ion://metaRepo"
+                }
+              }, 
+              "dataSource": "ion://Db", 
+              "metaRepository": "ion://metaRepo"
+            }, 
+            "module": "core/impl/datarepository/ionDataRepository"
+          }
+        }, 
+        "hidePageHead": false, 
+        "search": {
+          "enabled": true, 
+          "timeout": 2000, 
+          "panel": {
+            "orderNumber": 10, 
+            "name": "filterFloat"
+          }
+        }, 
+        "zoom": 3, 
+        "regions": {
+          "activeLevels": {
+            "6": {
+              "strokeStyle": "solid", 
+              "strokeWidth": 2, 
+              "strokeOpacity": 0.8, 
+              "fillColor": "#ffffff", 
+              "strokeColor": "#a183cd", 
+              "fillOpacity": 0
+            }
+          }, 
+          "button": {
+            "caption": "Районы", 
+            "resetHint": "Сбросить фильтр", 
+            "hint": "Фильтр по районам"
+          }, 
+          "enabled": true, 
+          "levels": {
+            "2": {
+              "strokeStyle": "solid", 
+              "strokeWidth": 3, 
+              "strokeOpacity": 1, 
+              "fillColor": "#ffffff", 
+              "strokeColor": "#7e8dab", 
+              "fillOpacity": 0
+            }, 
+            "6": {
+              "strokeStyle": "solid", 
+              "strokeWidth": 1, 
+              "strokeOpacity": 1, 
+              "fillColor": "#ffffff", 
+              "strokeColor": "#6e93c6", 
+              "fillOpacity": 0
+            }
+          }, 
+          "osmIds": [
+            "60189"
+          ], 
+          "panel": {
+            "name": "filterFloat"
+          }
+        }, 
+        "start": [
+          83.76, 
+          47.0
+        ], 
+        "stroke": {
+          "path": {
+            "opacity": 0.8, 
+            "strokeColor": "#00ff00", 
+            "strokeWidth": 6
+          }, 
+          "polygon": {
+            "strokeColor": "#00ff00", 
+            "strokeWidth": 3, 
+            "fillColor": "#00ff00", 
+            "strokeOpacity": 0.9, 
+            "fillOpacity": 0.1
+          }, 
+          "panel": {
+            "name": "filterFloat"
+          }
+        }, 
+        "ymapControls": {
+          "loader": {
+            "position": {
+              "top": 90, 
+              "left": 15
+            }
+          }, 
+          "zoomControl": {
+            "position": {
+              "top": 10, 
+              "right": 10
+            }
+          }, 
+          "typeSelector": {
+            "float": "right"
+          }, 
+          "rulerControl": null
+        }, 
+        "namespaces": {
+          "pm-gov-ru": "Геоданные проекта"
+        }, 
+        "hidePageSidebar": true, 
+        "logo": "common-static/logo.png", 
+        "formFilter": {
+          "panel": {
+            "name": "filterFloat"
+          }
+        }, 
+        "panels": {
+          "rightInfo": {
+            "type": "rightInfo"
+          }, 
+          "filterFloat": {
+            "cssStyle": "left:10px; bottom:10px; width: 310px; max-height:calc(100% - 163px);", 
+            "cssClass": "map-filter-float collapsible", 
+            "type": "float", 
+            "title": "Фильтры"
+          }, 
+          "navFloat": {
+            "cssStyle": "left:10px; top:46px; width: 310px; max-height:calc(100% - 163px);", 
+            "cssClass": "map-nav-float nav-tree", 
+            "type": "float"
+          }
+        }
+      }
+    }, 
+    "rest": {
+      "globals": {
+        "authMode": {
+          "accept": "pwd"
+        }, 
+        "di": {}
+      }
+    }, 
+    "ionadmin": {
+      "logo": "common-static/logo.png", 
+      "statics": {
+        "common-static": "applications/pm-gov-ru/templates/static"
+      }, 
+      "globals": {
+        "defaultPath": "ionadmin", 
+        "securityParams": {
+          "resourceTypes": {
+            "n:::": {
+              "title": "Навигация"
+            }, 
+            "c:::": {
+              "title": "Классы"
+            }, 
+            "*": {
+              "title": "Общие"
+            }, 
+            "ionadmin:::": {
+              "title": "Модуль администрирования"
+            }, 
+            "sys:::url": {
+              "title": "Пути"
+            }
+          }, 
+          "hiddenRoles": [
+            "^PROJ_DEPART_EMPLOYEE", 
+            "^PROJ_DEPART_MANAGER", 
+            "^PROJ_DEPART_OPERATOR", 
+            "^PROJECT_ADMIN", 
+            "^PROJECT_BENEFITIAR", 
+            "^PROJECT_CURATOR", 
+            "^PROJECT_MANAGER", 
+            "^PROJECT_RESPONSIBLE"
+          ]
+        }
+      }
+    }, 
+    "diagram": {
+      "globals": {
+        "config": {
+          "org1": {
+            "edit": true, 
+            "caption": "Организационная структура", 
+            "relations": {
+              "className": "organization@pm-gov-ru", 
+              "img": "", 
+              "title": "name", 
+              "text": "address", 
+              "filter": [
+                {
+                  "operation": 0, 
+                  "property": "headOrg", 
+                  "value": [
+                    null
+                  ], 
+                  "nestedConditions": []
+                }
+              ], 
+              "children": [
+                {
+                  "className": "organization@pm-gov-ru", 
+                  "text": "address", 
+                  "property": "subordinate", 
+                  "children": [
+                    {
+                      "className": "organization@pm-gov-ru", 
+                      "property": "subordinate", 
+                      "children": []
+                    }, 
+                    {
+                      "className": "branchOrg@pm-gov-ru", 
+                      "property": "branch", 
+                      "children": []
+                    }, 
+                    {
+                      "className": "employee@pm-gov-ru", 
+                      "property": "employee", 
+                      "children": []
+                    }
+                  ], 
+                  "title": "name"
+                }, 
+                {
+                  "className": "branchOrg@pm-gov-ru", 
+                  "text": "address", 
+                  "property": "branch", 
+                  "children": [
+                    {
+                      "className": "branchOrg@pm-gov-ru", 
+                      "property": "branch", 
+                      "children": []
+                    }, 
+                    {
+                      "className": "employee@pm-gov-ru", 
+                      "property": "employee", 
+                      "children": []
+                    }
+                  ], 
+                  "title": "name"
+                }, 
+                {
+                  "className": "employee@pm-gov-ru", 
+                  "text": "workPhone", 
+                  "property": "employee", 
+                  "children": [], 
+                  "title": "position"
+                }
+              ]
+            }, 
+            "showSections": false
+          }
+        }
+      }
+    }, 
+    "portal": {
+      "import": {
+        "src": "applications/pm-gov-ru/portal", 
+        "namespace": "pm-gov-ru"
+      }, 
+      "globals": {
+        "templates": [
+          "applications/pm-gov-ru/themes/portal/templates"
+        ], 
+        "statics": {
+          "pm": "applications/pm-gov-ru/themes/portal/static"
+        }, 
+        "default": "index", 
+        "portalName": "pm", 
+        "theme": "pm-gov-ru/portal", 
+        "pageTemplates": {
+          "navigation": {
+            "index": "pages/index"
+          }
+        }, 
+        "needAuth": true
+      }
+    }, 
+    "registry": {
+      "globals": {
+        "templates": [
+          "applications/pm-gov-ru/templates/registry"
+        ], 
+        "defaultPath": "dashboard", 
+        "statics": {
+          "app-static": "applications/pm-gov-ru/templates/registry/static", 
+          "common-static": "applications/pm-gov-ru/templates/static", 
+          "app-vendor": "applications/pm-gov-ru/themes/registry/static/vendor"
+        }, 
+        "eagerLoading": {
+          "*": {
+            "event@pm-gov-ru": {
+              "item": [
+                "instructions.responsible", 
+                "basicObj"
+              ]
+            }, 
+            "project@pm-gov-ru": {
+              "item": [
+                "indicatorBasic.measureUnit", 
+                "changeReq.document", 
+                "risk.typeRisk", 
+                "instructions.responsible", 
+                "indicatorBudget.obj", 
+                "indicatorBudget.indicatorValueBasic", 
+                "indicatorBudget.budgetType", 
+                "stakeholdersImplementation", 
+                "stakeholdersImplementation.organization", 
+                "stakeholdersImplementation.representative", 
+                "stakeholdersImplementation.representative.person", 
+                "participantsOccupation", 
+                "participantsOccupation.participant", 
+                "participantsOccupation.participant.person", 
+                "basicObjs", 
+                "basicObjs.project"
+              ], 
+              "list": [
+                "vidProject.name"
+              ], 
+              "exportList": [
+                "result", 
+                "basicObjs.basicObjs.result", 
+                "evaluation", 
+                "evaluationPerform.ownOrg", 
+                "problematic"
+              ], 
+              "exportItem": [
+                "direction.name", 
+                "curator.person.name", 
+                "head.person.name", 
+                "head.evaluationPerformByEmployee.basicObjPerform", 
+                "owner.person.name", 
+                "administrator.person.name", 
+                "stakeholdersImplementation.name", 
+                "risk.descript", 
+                "budget.cost", 
+                "result", 
+                "basicObjs.head.person.name", 
+                "basicObjs.head.evaluationPerformByEmployee.basicObjPerform", 
+                "basicObjs.curator.person.name", 
+                "basicObjs.owner.person.name", 
+                "basicObjs.basicObjs.basicObjs.basicObjs", 
+                "basicObjs.ownOrg.head.person", 
+                "basicObjs.result", 
+                "basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.result", 
+                "basicObjs.basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.basicObjs.result", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.ownOrg.head.person", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.result", 
+                "basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.basicObjs.basicObjs.basicObjs.coexecEvent", 
+                "basicObjs.head.person", 
+                "indicatorBasic.indicatorValueBasic", 
+                "indicatorBasic.measureUnit", 
+                "evaluation", 
+                "evaluationPerform.ownOrg.name", 
+                "evaluationPerform.basicObjs.name", 
+                "curator.head.person", 
+                "head.head.person", 
+                "administrator.head.person", 
+                "coordinator.head.person", 
+                "basicObjs.owner.head.person", 
+                "basicObjs.head.head.person", 
+                "basicObjs.curator.head.person", 
+                "problemReg.owner.head.person", 
+                "problemReg", 
+                "problemReg.problemFed", 
+                "problemReg.results", 
+                "participantsOccupation", 
+                "participantsOccupation.participant", 
+                "participantsOccupation.participant.person", 
+                "participantsOccupation.participant.head.person", 
+                "stakeholdersImplementation", 
+                "stakeholdersImplementation.organization", 
+                "stakeholdersImplementation.representative", 
+                "stakeholdersImplementation.representative.person", 
+                "stakeholdersImplementation.ownerInteraction", 
+                "stakeholdersImplementation.ownerInteraction.person", 
+                "knowledgeBase", 
+                "knowledgeBase.glossary"
+              ]
+            }, 
+            "eventOnly@pm-gov-ru": {
+              "item": [
+                "instructions.responsible"
+              ]
+            }, 
+            "indicatorBasic@pm-gov-ru": {
+              "item": [
+                "owner.person", 
+                "head.person", 
+                "measureUnit"
+              ]
+            }, 
+            "changeEvents@pm-gov-ru": {
+              "item": [
+                "newEdition"
+              ]
+            }, 
+            "objectBasic@pm-gov-ru": {
+              "item": [
+                "indicatorBasic.measureUnit"
+              ]
+            }, 
+            "question@pm-gov-ru": {
+              "item": [
+                "assignment", 
+                "assignment.responsible.person"
+              ]
+            }, 
+            "proposal@pm-gov-ru": {
+              "exportItem": [
+                "initiator", 
+                "initiator.person", 
+                "purposes.name", 
+                "eventBlock", 
+                "eventBlock.name", 
+                "risk", 
+                "risk.name", 
+                "propBudgt", 
+                "propBudgt.budgetType"
+              ]
+            }, 
+            "reportProject@pm-gov-ru": {
+              "item": [
+                "files"
+              ]
+            }, 
+            "deputy@pm-gov-ru": {
+              "list": [
+                "employee.person", 
+                "deputy.person"
+              ]
+            }, 
+            "assignment@pm-gov-ru": {
+              "item": [
+                "responsible"
+              ]
+            }, 
+            "organization@pm-gov-ru": {
+              "item": [
+                "subordinate.head.person", 
+                "branch.head.person", 
+                "headOrg.name"
+              ], 
+              "list": [
+                "head.person"
+              ]
+            }, 
+            "employee@pm-gov-ru": {
+              "item": [
+                "substitution", 
+                "substitution.employee.person", 
+                "substitution.deputy.person"
+              ]
+            }, 
+            "fileCol@pm-gov-ru": {
+              "item": [
+                "author.person"
+              ], 
+              "list": [
+                "author.person"
+              ]
+            }, 
+            "meeting@pm-gov-ru": {
+              "item": [
+                "participants.organization", 
+                "instructions.responsible"
+              ]
+            }, 
+            "projDepart@pm-gov-ru": {
+              "item": []
+            }, 
+            "governmentPower@pm-gov-ru": {
+              "item": [
+                "subordinate.head.person", 
+                "branch.head.person"
+              ], 
+              "list": [
+                "head.person"
+              ]
+            }, 
+            "risk@pm-gov-ru": {
+              "list": [
+                "owner.person"
+              ]
+            }, 
+            "eventObjectBasic@pm-gov-ru": {
+              "item": [
+                "instructions.responsible", 
+                "objectBasic", 
+                "head", 
+                "ownOrg"
+              ]
+            }, 
+            "occupationInTheProject@pm-gov-ru": {
+              "item": [
+                "participant"
+              ], 
+              "list": [
+                "participant"
+              ]
+            }, 
+            "eventControl@pm-gov-ru": {
+              "item": [
+                "indicatorBasic.measureUnit"
+              ]
+            }, 
+            "eventObject@pm-gov-ru": {
+              "item": [
+                "instructions.responsible", 
+                "objectBasic", 
+                "head", 
+                "ownOrg"
+              ]
+            }, 
+            "knowledgeBase@pm-gov-ru": {
+              "list": [
+                "basicObj"
+              ]
+            }, 
+            "evaluationPerform@pm-gov-ru": {
+              "exportList": [
+                "ownOrg.name", 
+                "basicObjPerform.name", 
+                "basicObjs.name", 
+                "basicObjPerform.curator.person.name", 
+                "basicObjPerform.head.person.name"
+              ]
+            }, 
+            "briefcase@pm-gov-ru": {
+              "item": [
+                "projects.vidProject.name"
+              ], 
+              "list": [
+                "projects.vidProject.name"
+              ], 
+              "exportItem": [
+                "projects", 
+                "programs"
+              ]
+            }, 
+            "indicatorValueBasic@pm-gov-ru": {
+              "item": [
+                "indicatorBasic.owner.person", 
+                "indicatorBasic.head.person", 
+                "indicatorBasic.ownerValue.person", 
+                "indicatorBasic.headValue.person", 
+                "indicatorBasic.confirm"
+              ], 
+              "list": [
+                "indicatorBasic.ownerValue", 
+                "indicatorBasic.measureUnit", 
+                "indicatorBasic.measureType", 
+                "indicatorBasic.objectBasic"
+              ]
+            }, 
+            "changeReq@pm-gov-ru": {
+              "item": [
+                "changeBudgetCol.currentEdition", 
+                "changeBudgetCol.newEdition", 
+                "document", 
+                "changeResultsCol.currentEdition", 
+                "changeResultsCol.newEdition"
+              ], 
+              "list": [
+                "document"
+              ], 
+              "exportItem": [
+                "basicObj", 
+                "owner.person", 
+                "document", 
+                "changeIndicatorsCol.basicObj", 
+                "changeIndicatorsCol.currentEdition.measureUnit", 
+                "changeIndicatorsCol.newEdition.measureUnit", 
+                "changeEventsCol.currentEdition", 
+                "changeEventsCol.newEdition", 
+                "changeOtherCol.currentEdition", 
+                "changeOtherCol.newEdition", 
+                "changeInfoTransferCol.currentEdition.fromInfo.person", 
+                "changeInfoTransferCol.currentEdition.toInfo.person", 
+                "changeInfoTransferCol.newEdition.fromInfo.person", 
+                "changeInfoTransferCol.newEdition.toInfo.person", 
+                "changePrimaryCol"
+              ]
+            }, 
+            "eventBasic@pm-gov-ru": {
+              "item": [
+                "objectBasic", 
+                "basicObj", 
+                "basicObj.stakeholdersImplementation", 
+                "basicObj.stakeholdersImplementation.organization", 
+                "indicatorBasic.measureUnit", 
+                "risk.typeRisk"
+              ], 
+              "list": [
+                "curator.person", 
+                "head.person", 
+                "administrator.person", 
+                "owner.person", 
+                "coexecEvent.person", 
+                "ownerOrg", 
+                "instructions.responsible"
+              ]
+            }, 
+            "branchOrg@pm-gov-ru": {
+              "list": [
+                "employee.person", 
+                "head.person"
+              ]
+            }, 
+            "eventBlock@pm-gov-ru": {
+              "item": [
+                "instructions.responsible"
+              ]
+            }
+          }
+        }, 
+        "customTemplates": [
+          {
+            "node": "pm-gov-ru@eventBasic", 
+            "classes": [
+              {
+                "name": "*", 
+                "types": {
+                  "item": "task/view", 
+                  "create": "task/view", 
+                  "selectClass": "task/selectClass"
+                }
+              }
+            ]
+          }, 
+          {
+            "node": "*", 
+            "classes": [
+              {
+                "name": "project@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "eventControl@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "eventRisk@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "eventObject@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "eventObjectBasic@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "event@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "briefcase@pm-gov-ru", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }, 
+              {
+                "name": "*", 
+                "types": {
+                  "item": "to-gantt-view", 
+                  "create": "to-gantt-view", 
+                  "selectClass": "task/selectClass"
+                }
+              }
+            ]
+          }
+        ], 
+        "listSearchMinLength": 3, 
+        "di": {
+          "signManager": {
+            "options": {
+              "signaturePreprocessor": "ion://signSaver", 
+              "Preprocessor": "ion://digestData"
+            }
+          }, 
+          "actions": {
+            "options": {
+              "actions": [
+                {
+                  "code": "CREATE_INDICATOR_VALUE", 
+                  "handler": "ion://createIndicatorValueHandler"
+                }, 
+                {
+                  "code": "ASSIGNMENT_TO_EVENT_ONLY", 
+                  "handler": "ion://assignmentToEventOnly"
+                }, 
+                {
+                  "code": "CREATE_PROJECT_REPORTS", 
+                  "handler": "ion://createProjectReportsHandler"
+                }
+              ]
+            }
+          }, 
+          "assignmentToEventOnly": {
+            "module": "applications/pm-gov-ru/lib/actions/assignmentToEventOnly"
+          }, 
+          "export": {
+            "options": {
+              "configs": {
+                "meeting@pm-gov-ru": {
+                  "writ": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "questions", 
+                      "questions.speaker.person"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Повестка совещания.${item.name}", 
+                    "caption": "Повестка совещания", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "protocol": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "questions", 
+                      "questions.assignment", 
+                      "owner.person", 
+                      "participants.person", 
+                      "questions.responsible", 
+                      "assignment", 
+                      "questions.responsible.name", 
+                      "questions.responsible.person"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Протокол совещания.${item.name}", 
+                    "caption": "Протокол совещания", 
+                    "preprocessor": "ion://pmItemToDocx_2", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }
+                }, 
+                "proposal@pm-gov-ru": {
+                  "passProj": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Паспорт проектного предложения.${item.code}", 
+                    "caption": "Паспорт проектного предложения", 
+                    "preprocessor": "ion://pmItemToDocx_7", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "reestr": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Реестр проектных предложений.${list.code}", 
+                    "caption": "Реестр проектных предложений", 
+                    "preprocessor": "ion://pmFromListToDocx", 
+                    "isBackground": false, 
+                    "type": "list"
+                  }
+                }, 
+                "project@pm-gov-ru": {
+                  "rating": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Оценка деятельности по проекту.${item.code}", 
+                    "caption": "Оценка деятельности исполнителя и соисполнителей проекта", 
+                    "params": {
+                      "till": {
+                        "default": "$monthEnd", 
+                        "caption": "Период по", 
+                        "type": "date"
+                      }, 
+                      "since": {
+                        "default": "$monthStart", 
+                        "caption": "Период с", 
+                        "type": "date"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmItemToDocx_2", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "planEvents": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "План мероприятий.${item.code}", 
+                    "caption": "План мероприятий проекта", 
+                    "preprocessor": "ion://pmItemToDocx_8", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "markComplite": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Оценка степени реализации проекта.${item.code}", 
+                    "caption": "Оценка степени реализации проекта", 
+                    "preprocessor": "ion://pmItemToDocx_6", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "passportNew": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "head.organization.name", 
+                      "administrator.organization.name", 
+                      "coordinator.organization.name", 
+                      "indicatorBasic.indicatorValueBasic.indicatorBasic", 
+                      "indicatorBudget.indicatorValueBasic", 
+                      "indicatorBudget.obj", 
+                      "infoTransfer.fromInfo.person", 
+                      "infoTransfer.toInfo.person", 
+                      "opportunity.manager.person", 
+                      "opportunity.manager.organization", 
+                      "opportunity.taskResponse", 
+                      "risk.manager.person", 
+                      "risk.manager.organization", 
+                      "risk.taskResponse", 
+                      "basicObjs.indicatorBasic.indicatorValueBasic", 
+                      "basicObjs.indicatorBasic.measureUnit", 
+                      "basicObjs.owner.person", 
+                      "basicObjs.head.person", 
+                      "basicObjs.curator.person", 
+                      "basicObjs.coexecEvent.person", 
+                      "basicObjs.indicatorBasic.owner.person", 
+                      "basicObjs.indicatorBasic.head.person", 
+                      "basicObjs.indicatorBasic.ownerValue.person", 
+                      "basicObjs.indicatorBasic.headValue.person"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Паспорт проекта.${item.code}", 
+                    "caption": "Паспорт проекта", 
+                    "preprocessor": "ion://pmItemToDocx_7", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "indicatorsMun": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "program.aip.indicatorBasic.indicatorValueBasic", 
+                      "program.aip.mo"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Показатели регионального проекта по муниципальным образованиям .${item.code}", 
+                    "caption": "Показатели регионального проекта по муниципальным образованиям ", 
+                    "preprocessor": "ion://pmItemToDocx_Indicators", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "schemsProject": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicatorBasic.owner.person", 
+                      "indicatorBasic.measureUnit.shortName", 
+                      "stakeholdersImplementation.representative.person", 
+                      "stakeholdersImplementation.ownerInteraction.person"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Обоснование проекта.${item.code}", 
+                    "caption": "Обоснование проекта", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "passportProject": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Паспорт регионального проекта.${item.code}", 
+                    "caption": "Паспорт регионального проекта (new ver)", 
+                    "preprocessor": "ion://pmItemToDocx_9", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "team": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Состав команды проекта.${item.code}", 
+                    "caption": "Состав команды проекта", 
+                    "preprocessor": "ion://pmItemToDocx_4", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "markResult": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Оценка проектов.${params.project}", 
+                    "caption": "Оценка проектов", 
+                    "params": {
+                      "project": {
+                        "className": "project@pm-gov-ru", 
+                        "caption": "Проект", 
+                        "type": "reference"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmFromListToDocx", 
+                    "isBackground": true, 
+                    "query": {
+                      "filter": {
+                        "and": [
+                          {
+                            "eq": [
+                              "$guid", 
+                              ":project"
+                            ]
+                          }
+                        ]
+                      }
+                    }, 
+                    "type": "list"
+                  }, 
+                  "stepProcessNew": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Итоговый отчет.${item.code}", 
+                    "caption": "Итоговый отчет", 
+                    "preprocessor": "ion://pmItemToDocx_5", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "projectProgress": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicatorBasic.indicatorValueBasic", 
+                      "indicatorBudget.indicatorValueBasic", 
+                      "indicatorBasic.remark.owner", 
+                      "basicObjs.remark.owner"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Отчет о ходе реализации проекта.${item.code}", 
+                    "caption": "Отчет о ходе реализации проекта", 
+                    "params": {
+                      "periodYYYY": {
+                        "caption": "Год", 
+                        "type": "string"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmItemToDocx_Progress", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "stepProcess": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Ход реализации сводного плана проекта.${item.code}", 
+                    "caption": "Ход реализации сводного плана проекта", 
+                    "preprocessor": "ion://pmItemToDocx_3", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }
+                }, 
+                "evaluationPerform@pm-gov-ru": {
+                  "rating": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "ownOrg", 
+                      "basicObjs"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Оценка деятельности исполнителя и соисполнителей проекта.${list.name}", 
+                    "caption": "Оценка деятельности исполнителя и соисполнителей проекта", 
+                    "params": {
+                      "project": {
+                        "className": "project@pm-gov-ru", 
+                        "caption": "Проект", 
+                        "type": "reference"
+                      }, 
+                      "till": {
+                        "default": "$monthEnd", 
+                        "caption": "Период по", 
+                        "type": "date"
+                      }, 
+                      "since": {
+                        "default": "$monthStart", 
+                        "caption": "Период с", 
+                        "type": "date"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmListToDocx", 
+                    "isBackground": true, 
+                    "query": {
+                      "filter": {
+                        "and": [
+                          {
+                            "eq": [
+                              "$basicObjPerform", 
+                              ":project"
+                            ]
+                          }, 
+                          {
+                            "gte": [
+                              "$date", 
+                              ":since"
+                            ]
+                          }, 
+                          {
+                            "lte": [
+                              "$date", 
+                              ":till"
+                            ]
+                          }
+                        ]
+                      }
+                    }, 
+                    "type": "list"
+                  }
+                }, 
+                "briefcase@pm-gov-ru": {
+                  "pmItemToExcel": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                    "extension": "xlsx", 
+                    "fileNameTemplate": "Балансировка портфеля.${item.name}", 
+                    "caption": "Балансировка портфеля", 
+                    "preprocessor": "ion://pmItemToExcel", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }
+                }, 
+                "program@pm-gov-ru": {
+                  "foundation": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicator", 
+                      "indicator.owner", 
+                      "indicator.owner.person", 
+                      "project", 
+                      "project.purposes", 
+                      "project.purposes.purposeIndicator"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Обоснование программы.${item.name}", 
+                    "caption": "Обоснование программы", 
+                    "preprocessor": "ion://pmItemToDocx_2", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "programProgress": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicator.indicatorValueBasic", 
+                      "indicator.remark.owner", 
+                      "project.indicatorBudget.indicatorValueBasic", 
+                      "eventOnly.remark.owner"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Отчет о ходе реализации программы.${item.name}", 
+                    "caption": "Итоговый отчет", 
+                    "params": {
+                      "periodYYYY": {
+                        "caption": "Год", 
+                        "type": "string"
+                      }
+                    }, 
+                    "preprocessor": "ion://pmItemToDocx_Progress", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "passport": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "project.problemReg.indicatorBasic.indicatorValueBasic", 
+                      "project.indicatorBudget.indicatorValueBasic", 
+                      "project.curator.person", 
+                      "project.head.person", 
+                      "curator.person", 
+                      "head.person", 
+                      "head.organization", 
+                      "administrator.person", 
+                      "administrator.organization", 
+                      "coordinator.organization", 
+                      "purposes.purposeIndicator.indicator.indicatorValueBasic", 
+                      "purposes.purposes.purposeIndicator.indicator.indicatorValueBasic", 
+                      "purposes.purposes.purposes.purposeIndicator.indicator.indicatorValueBasic", 
+                      "purposes.purposes.purposes.purposes.purposeIndicator.indicator.indicatorValueBasic", 
+                      "purposes.purposes.purposes.purposes.purposes.purposeIndicator.indicator.indicatorValueBasic", 
+                      "project.problemReg", 
+                      "project.problemReg.problemFed", 
+                      "project.problemReg.results"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Паспорт программы.${item.name}", 
+                    "caption": "Паспорт программы", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": true, 
+                    "type": "item"
+                  }, 
+                  "projectProgramm": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "extension": "docx", 
+                    "fileNameTemplate": "План мероприятий программы.${item.name}", 
+                    "caption": "План мероприятий программы", 
+                    "preprocessor": "ion://pmItemToDocx_3", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }
+                }, 
+                "assignmentBasic@pm-gov-ru": {
+                  "orders": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "responsible.person", 
+                      "head.person", 
+                      "responsible", 
+                      "head", 
+                      "owner.person", 
+                      "owner"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Реестр поручений.${list.name}", 
+                    "caption": "Реестр поручений", 
+                    "preprocessor": "ion://pmListToDocx", 
+                    "isBackground": false, 
+                    "type": "list"
+                  }
+                }, 
+                "programGos@pm-gov-ru": {
+                  "consistProg": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "indicator.name", 
+                      "project.name", 
+                      "program.name", 
+                      "purposes.name", 
+                      "eventOnly.name"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Состав государственной программы.${item.name}", 
+                    "caption": "Состав государственной программы", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }
+                }, 
+                "changeReq@pm-gov-ru": {
+                  "scheme": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Схема маршрута БП.${item.name}", 
+                    "caption": "Схема маршрута БП", 
+                    "preprocessor": "ion://pmItemToDocx_2", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }, 
+                  "change": {
+                    "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+                    "eagerLoading": [
+                      "changeIndicatorsCol.currentEdition.indicatorValueBasic", 
+                      "changeIndicatorsCol.newEdition.indicatorValueBasic", 
+                      "changeBudgetCol.currentEdition.indicatorValueBasic", 
+                      "changeBudgetCol.newEdition.indicatorValueBasic", 
+                      "changeBudgetCol.currentEdition.obj", 
+                      "changeBudgetCol.newEdition.obj", 
+                      "changeBudgetCol.currentEdition.grbs", 
+                      "changeBudgetCol.newEdition.grbs"
+                    ], 
+                    "extension": "docx", 
+                    "fileNameTemplate": "Запрос на внесение изменений в проект (программу).${item.name}", 
+                    "caption": "Запрос на внесение изменений в проект (программу)", 
+                    "preprocessor": "ion://pmItemToDocx", 
+                    "isBackground": false, 
+                    "type": "item"
+                  }
+                }
+              }, 
+              "exportPath": "[[export.path]]", 
+              "fileStorage": "[[export.fs]]"
+            }
+          }, 
+          "pmItemToDocx_2": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item2", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_3": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item3", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_6": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item6", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_7": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://item7Injector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/item7", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_4": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item4", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_5": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item5", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_8": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item8", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_9": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/item9", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "fileCollectionController": {
+            "initLevel": 0, 
+            "options": {
+              "cloudLogin": "[[ownCloud.login]]", 
+              "cloudPassword": "[[ownCloud.pwd]]", 
+              "fileStorage": "ion://fileStorage", 
+              "module": "ion://module", 
+              "cloudUrl": "[[ownCloud.url]]"
+            }, 
+            "module": "applications/viewlib/lib/controllers/api/file-collection", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://programPassportInjector", 
+                "ion://changeReqInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/item"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_Progress": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://itemProgressInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/itemProgress", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "itemMunIndicatorsInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/itemMunIndicatorsInjector"
+          }, 
+          "fileshareController": {
+            "initLevel": 0, 
+            "options": {
+              "fileStorage": "ion://fileStorage", 
+              "module": "ion://module"
+            }, 
+            "module": "applications/viewlib/lib/controllers/api/fileshare", 
+            "initMethod": "init"
+          }, 
+          "collectionsCreator": {
+            "initLevel": 2, 
+            "options": {
+              "map": {
+                "eventBasic@pm-gov-ru:result": {
+                  "eventObject@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }, 
+                  "event@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }, 
+                  "eventOnly@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }, 
+                  "eventObjectBasic@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }, 
+                  "eventControl@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }, 
+                  "eventBlock@pm-gov-ru": {
+                    "resultEvent": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "resultEvent@pm-gov-ru.work"
+                          ], 
+                          "values": {
+                            "resultPlan": "$plan", 
+                            "status": "work", 
+                            "dateCreate": {
+                              "now": []
+                            }, 
+                            "resultFact": "$fact"
+                          }
+                        }
+                      ], 
+                      "elementClass": "resultEvent@pm-gov-ru"
+                    }
+                  }
+                }, 
+                "eventBasic@pm-gov-ru:mapAIP": {
+                  "eventObject@pm-gov-ru": {
+                    "indicatorBasic": {
+                      "patterns": [
+                        {
+                          "push": [
+                            "indicatorBasic@pm-gov-ru.onapp"
+                          ], 
+                          "values": {
+                            "dateStart": "$datePlannedStart", 
+                            "about": "Фото-видео фиксация", 
+                            "name": {
+                              "concat": [
+                                "Фото-видео фиксация", 
+                                " (", 
+                                "$code", 
+                                ") ", 
+                                {
+                                  "if": [
+                                    {
+                                      "gt": [
+                                        {
+                                          "size": [
+                                            "$name"
+                                          ]
+                                        }, 
+                                        30
+                                      ]
+                                    }, 
+                                    {
+                                      "concat": [
+                                        {
+                                          "substr": [
+                                            "$name", 
+                                            0, 
+                                            30
+                                          ]
+                                        }, 
+                                        "..."
+                                      ]
+                                    }, 
+                                    "$name"
+                                  ]
+                                }
+                              ]
+                            }, 
+                            "confirm": "$ownOrg", 
+                            "periodType": "week", 
+                            "head": "$head", 
+                            "objectBasic": "$objectBasic", 
+                            "headValue": "$head", 
+                            "dateEnd": "$datePlannedEnd", 
+                            "ownerValue": "$head", 
+                            "owner": "$head"
+                          }
+                        }
+                      ], 
+                      "elementClass": "indicatorMedia@pm-gov-ru"
+                    }
+                  }
+                }
+              }, 
+              "changelogFactory": "ion://changelogFactory", 
+              "log": "ion://sysLog", 
+              "workflows": "ion://workflows", 
+              "calc": "ion://calculator", 
+              "data": "ion://securedDataRepo"
+            }, 
+            "module": "applications/pm-gov-ru/lib/util/collectionCreator", 
+            "initMethod": "init"
+          }, 
+          "pmItemToExcel": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [], 
+              "tplDir": "applications/pm-gov-ru/export/item"
+            }, 
+            "module": "modules/registry/export/itemToExcel", 
+            "initMethod": "init"
+          }, 
+          "itemProgressInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/itemProgressInjector"
+          }, 
+          "createIndicatorValueHandler": {
+            "initLevel": 2, 
+            "options": {
+              "data": "ion://securedDataRepo", 
+              "state": "onapp", 
+              "changelogFactory": "ion://changelogFactory", 
+              "log": "ion://sysLog", 
+              "workflows": "ion://workflows"
+            }, 
+            "module": "applications/pm-gov-ru/lib/actions/createIndicatorValueHandler", 
+            "initMethod": "init"
+          }, 
+          "digestData": {
+            "options": {
+              "log": "ion://sysLog"
+            }, 
+            "module": "applications/pm-gov-ru/lib/digest/digestData"
+          }, 
+          "createProjectReportsHandler": {
+            "initLevel": 2, 
+            "options": {
+              "bg": "ion://background", 
+              "changelogFactory": "ion://changelogFactory", 
+              "log": "ion://sysLog", 
+              "storage": "ion://fileStorage", 
+              "auth": "ion://auth", 
+              "exporter": "ion://export", 
+              "directory": "${code}/reports", 
+              "data": "ion://securedDataRepo"
+            }, 
+            "module": "applications/pm-gov-ru/lib/actions/createProjectReportsHandler", 
+            "initMethod": "init"
+          }, 
+          "pmListToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/list", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/listToDocx", 
+            "initMethod": "init"
+          }, 
+          "pmItemToDocx_Indicators": {
+            "initLevel": 0, 
+            "options": {
+              "injectors": [
+                "ion://itemMunIndicatorsInjector"
+              ], 
+              "tplDir": "applications/pm-gov-ru/export/itemIndicators", 
+              "log": "ion://sysLog"
+            }, 
+            "module": "modules/registry/export/itemToDocx", 
+            "initMethod": "init"
+          }, 
+          "programPassportInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/programPassportInjector"
+          }, 
+          "signSaver": {
+            "options": {
+              "dataRepo": "ion://dataRepo", 
+              "metaRepo": "ion://metaRepo"
+            }, 
+            "module": "applications/pm-gov-ru/lib/digest/signSaver"
+          }, 
+          "changeReqInjector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/changeReqInjector"
+          }, 
+          "item7Injector": {
+            "options": {}, 
+            "module": "applications/pm-gov-ru/export/injectors/item7Injector"
+          }, 
+          "pmFromListToDocx": {
+            "initLevel": 0, 
+            "options": {
+              "tplDir": "applications/pm-gov-ru/export/list"
+            }, 
+            "module": "modules/registry/export/listToDocx", 
+            "initMethod": "init"
+          }
+        }, 
+        "storage": {
+          "eventControl@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "event@pm-gov-ru": {
+            "resultCloudFile": "/${item.basicObj.code}/${item.code}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }, 
+          "eventObject@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "project@pm-gov-ru": {
+            "resultCloudFile": "/${item.code}/", 
+            "cloudFile": "/${item.code}/"
+          }, 
+          "person@pm-gov-ru": {
+            "foto": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "program@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "eventOnly@pm-gov-ru": {
+            "resultCloudFile": "/${item.basicObj.code}/${item.code}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }, 
+          "programGos@pm-gov-ru.files": {
+            "file": "/${item.name}/pm_${attr}/"
+          }, 
+          "eventRisk@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "event@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "objectBasic@pm-gov-ru": {
+            "cloudFile": "/${item.name} (${item.objectBasicSource.name})/", 
+            "imageObj": "/${item.name} (${item.objectBasicSource.name})/"
+          }, 
+          "eventBlock@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "result@pm-gov-ru": {
+            "cloudFile": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "project@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "deputy@pm-gov-ru": {
+            "basis": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "indicatorValueFinancial@pm-gov-ru": {
+            "cloudFile": "/${class}/${item.indicatorBasic.name} (${item.cloudDate})/"
+          }, 
+          "assignment@pm-gov-ru": {
+            "fileAssig": "/${class}/pm_${attr}/${dddd}/", 
+            "fileAnsw": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "organization@pm-gov-ru": {
+            "schems": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "briefcase@pm-gov-ru.files": {
+            "file": "/${item.name}/pm_${attr}/"
+          }, 
+          "indicatorValueDigital@pm-gov-ru": {
+            "cloudFile": "/${class}/${item.indicatorBasic.name} (${item.cloudDate})/"
+          }, 
+          "proposal@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "basicObj@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "eventOnly@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "contract@pm-gov-ru": {
+            "cloudFile": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "eventRisk@pm-gov-ru": {
+            "resultCloudFile": "/${item.basicObj.code}/${item.code}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }, 
+          "projDepart@pm-gov-ru": {
+            "cloudFile": "/${item.code}/"
+          }, 
+          "governmentPower@pm-gov-ru": {
+            "schems": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "task@pm-gov-ru": {
+            "cloudFile": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "eventBasic@pm-gov-ru.files": {
+            "file": "/${item.code}/pm_${attr}/"
+          }, 
+          "contract@pm-gov-ru.files": {
+            "file": "/${item.name}/pm_${attr}/"
+          }, 
+          "eventObjectBasic@pm-gov-ru": {
+            "resultCloudFile": "/${class}/pm_${attr}/${dddd}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }, 
+          "eventControl@pm-gov-ru": {
+            "resultCloudFile": "/${item.basicObj.code}/${item.code}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }, 
+          "basicObj@pm-gov-ru": {
+            "resultCloudFile": "/${item.code}/", 
+            "cloudFile": "/${item.code}/"
+          }, 
+          "document@pm-gov-ru.files": {
+            "file": "/${class}/pm_${attr}/"
+          }, 
+          "indicatorValueText@pm-gov-ru": {
+            "cloudFile": "/${class}/${item.indicatorBasic.name} (${item.cloudDate})/"
+          }, 
+          "workCost@pm-gov-ru": {
+            "cloudFile": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "reportProject@pm-gov-ru.files": {
+            "file": "/${item.project.code}/${class}/${s}/"
+          }, 
+          "knowledgeBase@pm-gov-ru.files": {
+            "file": "/${item.basicObj.code}/${class}/${s}/"
+          }, 
+          "indicatorValueMedia@pm-gov-ru": {
+            "valueMedia": "/${class}/${item.indicatorBasic.name} (${item.cloudDate})/"
+          }, 
+          "eventBasic@pm-gov-ru": {
+            "resultCloudFile": "/${class}/pm_${attr}/${dddd}/", 
+            "cloudFile": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "branchOrg@pm-gov-ru": {
+            "schems": "/${class}/pm_${attr}/${dddd}/"
+          }, 
+          "eventBlock@pm-gov-ru": {
+            "resultCloudFile": "/${item.basicObj.code}/${item.code}/", 
+            "cloudFile": "/${item.basicObj.code}/${item.code}/"
+          }
+        }, 
+        "listSearchOptions": {
+          "objectBasic@pm-gov-ru": {
+            "*": {
+              "splitBy": "\\s+", 
+              "joinBy": "and", 
+              "searchBy": [
+                "name"
+              ], 
+              "mode": [
+                "starts"
+              ]
+            }
+          }, 
+          "measureUnit@pm-gov-ru": {
+            "*": {
+              "minLength": 1, 
+              "searchBy": [
+                "name", 
+                "shortName"
+              ], 
+              "mode": [
+                "starts"
+              ]
+            }
+          }, 
+          "indicatorValueBasic@pm-gov-ru": {
+            "*": {
+              "splitBy": "\\s+", 
+              "joinBy": "and", 
+              "searchBy": [
+                "indicatorBasic"
+              ], 
+              "mode": [
+                "starts"
+              ]
+            }
+          }, 
+          "indicatorBasic@pm-gov-ru": {
+            "*": {
+              "splitBy": "\\s+", 
+              "joinBy": "and", 
+              "searchBy": [
+                "name"
+              ], 
+              "mode": [
+                "starts"
+              ]
+            }
+          }, 
+          "employee@pm-gov-ru": {
+            "*": {
+              "minLength": 2, 
+              "searchBy": [
+                "person", 
+                "position"
+              ], 
+              "mode": [
+                "starts"
+              ]
+            }
+          }
+        }, 
+        "signedClasses": [
+          "indicatorValueBasic@pm-gov-ru", 
+          "indicatorValueFinancial@pm-gov-ru", 
+          "indicatorBasic@pm-gov-ru"
+        ], 
+        "staticOptions": {
+          "maxAge": 3600000
+        }, 
+        "logo": "common-static/logo.png", 
+        "explicitTopMenu": [
+          "mytasks", 
+          "projectmanagement", 
+          {
+            "type": "system", 
+            "name": "gantt-chart"
+          }, 
+          {
+            "type": "system", 
+            "name": "portal"
+          }, 
+          {
+            "type": "system", 
+            "name": "geomap"
+          }, 
+          {
+            "type": "system", 
+            "name": "report"
+          }, 
+          "distionary", 
+          "mark"
+        ], 
+        "navigation": {
+          "menus": {
+            "top": [
+              "pm-gov-ru@mytasks", 
+              "pm-gov-ru@projectmanagement", 
+              "pm-gov-ru@distionary", 
+              "pm-gov-ru@mark"
+            ]
+          }, 
+          "namespaces": {
+            "pm-gov-ru": "Проектное управление"
+          }
+        }, 
+        "dashboard": {
+          "pm-gov-ru": {
+            "modules": {
+              "dashboard": {}
+            }
+          }
+        }, 
+        "inlineForm": true
+      }
+    }, 
+    "gantt-chart": {
+      "globals": {
+        "logo": "common-static/logo.png", 
+        "statics": {
+          "common-static": "applications/pm-gov-ru/templates/static"
+        }, 
+        "config": {
+          "map": {
+            "eventObject@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0b9", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "parents": [
+                "program", 
+                "basicObj"
+              ], 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "projDepart@pm-gov-ru": {
+              "planEnd": "dateEnd", 
+              "color": "#e3fcef", 
+              "text": "name", 
+              "filter": {
+                "ne": [
+                  "$archive", 
+                  true
+                ]
+              }, 
+              "percentProgress": true, 
+              "planStart": "dateStart", 
+              "parents": [
+                "basicObj"
+              ], 
+              "url": "registry/pm-gov-ru@myProjectDepart/view/:class/:id", 
+              "override": {
+                "owner": "head"
+              }, 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "type": "project"
+            }, 
+            "project@pm-gov-ru": {
+              "planEnd": "dateEnd", 
+              "color": "#e3fcef", 
+              "text": "name", 
+              "filter": {
+                "ne": [
+                  "$archive", 
+                  true
+                ]
+              }, 
+              "percentProgress": true, 
+              "planStart": "dateStart", 
+              "parents": [
+                "basicObj"
+              ], 
+              "url": "registry/pm-gov-ru@myprojectevent.all/view/:class/:id", 
+              "override": {
+                "owner": "head"
+              }, 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "type": "project"
+            }, 
+            "task@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "percentProgress": true, 
+              "planStart": "dateStart", 
+              "progress": "progress", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "eventOnlyAIP@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0b9", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "parents": [
+                "basicObjAip"
+              ], 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "briefcase@pm-gov-ru": {
+              "color": "#deebff", 
+              "open": true, 
+              "url": "registry/pm-gov-ru@myBriefcase/view/:class/:id", 
+              "text": "name", 
+              "textColor": "#000", 
+              "type": "project"
+            }, 
+            "program@pm-gov-ru": {
+              "end": "datePlannedEnd", 
+              "planEnd": "dateEnd", 
+              "color": "#deebff", 
+              "text": "name", 
+              "start": "datePlannedStart", 
+              "planStart": "dateStart", 
+              "url": "registry/pm-gov-ru@myprogram/view/:class/:id", 
+              "type": "project", 
+              "percentProgress": true, 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "open": true
+            }, 
+            "event@pm-gov-ru": {
+              "splitClass": "event@pm-gov-ru", 
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0bf", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "programGos@pm-gov-ru": {
+              "color": "#deebff", 
+              "open": true, 
+              "url": "registry/pm-gov-ru@myProgramGos/view/:class/:id", 
+              "text": "name", 
+              "textColor": "#000", 
+              "type": "project"
+            }, 
+            "employee@pm-gov-ru": {
+              "eager": [
+                "person", 
+                "organization"
+              ]
+            }, 
+            "eventOnly@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0bf", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "eventControl@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "start": "dateEnd", 
+              "color": "#e62520", 
+              "planEnd": "dateEnd", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "type": "milestone"
+            }, 
+            "eventObjectBasic@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0b9", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "basicObj@pm-gov-ru": {
+              "duration": "duration", 
+              "start": "datePlannedStart", 
+              "end": "datePlannedEnd", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "parents": [
+                "basicObj"
+              ]
+            }, 
+            "eventBasic@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0bf", 
+              "percentProgress": true, 
+              "planStart": "dateStart", 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }, 
+            "eventBlock@pm-gov-ru": {
+              "blocks": [
+                "blocks"
+              ], 
+              "planEnd": "dateEnd", 
+              "color": "#41bed0bf", 
+              "planStart": "dateStart", 
+              "percentProgress": true, 
+              "readonly": {
+                "progress": {
+                  "or": [
+                    {
+                      "nempty": [
+                        "$basicObjs"
+                      ]
+                    }, 
+                    {
+                      "ne": [
+                        "$state", 
+                        "work"
+                      ]
+                    }
+                  ]
+                }
+              }, 
+              "sortBy": "num", 
+              "url": "registry/pm-gov-ru@myprojectevent.myevent/view/:class/:id", 
+              "progress": "progress", 
+              "textColor": "#000", 
+              "blocked": [
+                "blocked"
+              ]
+            }
+          }, 
+          "createUrl": {
+            "eventObject@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/basicObjs/eventOnly@pm-gov-ru", 
+            "event@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/basicObjs/event@pm-gov-ru", 
+            "project@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/program/project@pm-gov-ru", 
+            "eventOnly@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/basicObjs/eventOnly@pm-gov-ru", 
+            "eventObjectBasic@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/basicObjs/eventOnly@pm-gov-ru", 
+            "eventBlock@pm-gov-ru": "registry/pm-gov-ru@myprojectevent.all/new/{{parentClass}}.{{parentId}}/basicObjs/event@pm-gov-ru"
+          }, 
+          "inplaceCreation": {
+            "skip": [
+              "program@pm-gov-ru", 
+              "programGos@pm-gov-ru", 
+              "project@pm-gov-ru"
+            ], 
+            "rootLevel": true, 
+            "force": {
+              "eventObject@pm-gov-ru": "eventOnlyAIP@pm-gov-ru", 
+              "eventOnly@pm-gov-ru": "eventOnly@pm-gov-ru", 
+              "eventOnlyAIP@pm-gov-ru": "eventOnlyAIP@pm-gov-ru", 
+              "@root": "program@pm-gov-ru", 
+              "eventObjectBasic@pm-gov-ru": "eventOnly@pm-gov-ru"
+            }, 
+            "ambigiousDefault": "event@pm-gov-ru"
+          }, 
+          "roots": [
+            "briefcase@pm-gov-ru", 
+            "program@pm-gov-ru", 
+            "project@pm-gov-ru", 
+            "programGos@pm-gov-ru"
+          ], 
+          "preConfigurations": {
+            "config1": {
+              "default": true, 
+              "days_mode": "full", 
+              "caption": "Основная", 
+              "step": 3, 
+              "units": "month", 
+              "showPlan": true, 
+              "hours_mode": "full"
+            }, 
+            "config3": {
+              "days_mode": "full", 
+              "caption": "Обзорная", 
+              "step": 5, 
+              "units": "year", 
+              "showPlan": true, 
+              "hours_mode": "full", 
+              "columnDisplay": {
+                "owner": true, 
+                "text": true
+              }
+            }, 
+            "config2": {
+              "days_mode": "full", 
+              "caption": "Расширенная", 
+              "units": "year", 
+              "showPlan": true, 
+              "hours_mode": "work", 
+              "columnDisplay": {
+                "owner": true, 
+                "text": true, 
+                "priority": true, 
+                "start": true, 
+                "progress": true
+              }
+            }
+          }, 
+          "searchCount": 25, 
+          "columns": [
+            {
+              "caption": "Название", 
+              "name": "text", 
+              "editor": {
+                "bind": "name", 
+                "type": "text"
+              }
+            }, 
+            {
+              "filter": true, 
+              "caption": "Владелец", 
+              "align": "center", 
+              "name": "owner", 
+              "editor": {
+                "type": "select2", 
+                "from": "employee@pm-gov-ru"
+              }
+            }, 
+            {
+              "filter": true, 
+              "caption": "Приоритет", 
+              "align": "center", 
+              "name": "priority", 
+              "editor": {
+                "type": "select", 
+                "from": "basicObj@pm-gov-ru.priority"
+              }
+            }, 
+            {
+              "caption": "Начало", 
+              "align": "center", 
+              "format": "date", 
+              "editor": {
+                "type": "date"
+              }, 
+              "name": "start"
+            }, 
+            {
+              "caption": "Прогресс", 
+              "align": "center", 
+              "name": "progress", 
+              "editor": {
+                "type": "progress", 
+                "update": "progressInput"
+              }
+            }
+          ], 
+          "initialDepth": 1
+        }, 
+        "staticOptions": {
+          "maxAge": 3600000
+        }, 
+        "rootParamNeeded": true
+      }
+    }, 
+    "report": {
+      "import": {
+        "src": "applications/pm-gov-ru/bi", 
+        "namespace": "pm-gov-ru"
+      }, 
+      "globals": {
+        "templates": [
+          "applications/pm-gov-ru/templates/report/view"
+        ], 
+        "statics": {
+          "common-static": "applications/pm-gov-ru/templates/static"
+        }, 
+        "defaultNav": {
+          "report": "roadmap", 
+          "namespace": "pm-gov-ru", 
+          "mine": "projects"
+        }, 
+        "di": {}, 
+        "mineBuilders": {
+          "pm-gov-ru": {
+            "test": {
+              "roadmapSource": "mineBuilder", 
+              "roadmapResults": "mineBuilder", 
+              "statusResults": "mineBuilder", 
+              "projects": "mineBuilder", 
+              "basic": "mineBuilder"
+            }, 
+            "controlReport": {
+              "indicatorAllPeriod": "mineBuilder", 
+              "indicatorAll": "mineBuilder", 
+              "projectAll": "mineBuilder", 
+              "indicatorValueAllSource": "mineBuilder", 
+              "eventAllResult": "mineBuilder", 
+              "taskAllSource": "mineBuilder", 
+              "eventAllSource": "mineBuilder", 
+              "indicatorAllSource": "mineBuilder", 
+              "indicatorValueAll": "mineBuilder"
+            }, 
+            "projects": {
+              "eventAll": "mineBuilder", 
+              "roadmapProject": "mineBuilder", 
+              "allIndicatorWaitResult": "mineBuilder", 
+              "objectBasicIndicator": "mineBuilder", 
+              "plannedIndicator": "mineBuilder", 
+              "curIndicatorsSource": "mineBuilder", 
+              "riskSource": "mineBuilder", 
+              "programGosProgramProject": "mineBuilder", 
+              "basicObject": "mineBuilder", 
+              "eventBasicIndicator": "mineBuilder", 
+              "finResourceSource2": "mineBuilder", 
+              "roadmapSource": "mineBuilder", 
+              "riskProject": "mineBuilder", 
+              "indicatorAll": "mineBuilder", 
+              "programBase": "mineBuilder", 
+              "infoTransfer": "mineBuilder", 
+              "basicBudgetJoin": "mineBuilder", 
+              "finResourceProject": "mineBuilder", 
+              "participantSource": "mineBuilder", 
+              "statusResults": "mineBuilder", 
+              "financialPlannedIndicator": "mineBuilder", 
+              "finBriefcaseSource": "mineBuilder", 
+              "statusProject": "mineBuilder", 
+              "projectObjectBasicIndicator": "mineBuilder", 
+              "basicBudget": "mineBuilder", 
+              "programProject": "mineBuilder", 
+              "targetIndicator": "mineBuilder", 
+              "finProgramSource": "mineBuilder", 
+              "finResourceSource": "mineBuilder", 
+              "indicatorValueBasic": "mineBuilder", 
+              "opportunityProject": "mineBuilder", 
+              "assignment": "mineBuilder", 
+              "indicatorValuePlanByInd": "mineBuilder", 
+              "basicProjectCode": "mineBuilder", 
+              "teamActive": "mineBuilder", 
+              "allIndicatorsSource": "mineBuilder", 
+              "opportunitySource": "mineBuilder", 
+              "projBasicIndicator": "mineBuilder", 
+              "eventControlAll": "mineBuilder", 
+              "infoTransferSource": "mineBuilder", 
+              "financialTargetImplementation": "mineBuilder", 
+              "briefcaseProgramProject": "mineBuilder", 
+              "finProgramLimSource": "mineBuilder", 
+              "basicProject": "mineBuilder", 
+              "projIndicatorDouble": "mineBuilder", 
+              "waitResultSource": "mineBuilder", 
+              "teamActiveSource": "mineBuilder", 
+              "finProjSource": "mineBuilder", 
+              "finProgramGosSource": "mineBuilder", 
+              "indicatorValueCurrentByInd": "mineBuilder", 
+              "roadmapResults": "mineBuilder", 
+              "totalKTSource": "mineBuilder"
+            }, 
+            "eventsBase": {
+              "cardObjectSource": "mineBuilder", 
+              "indicatorAllEvent": "mineBuilder", 
+              "indicatorAll": "mineBuilder", 
+              "objectBasic": "mineBuilder", 
+              "spendObjectSource": "mineBuilder"
+            }
+          }
+        }, 
+        "namespaces": {
+          "pm-gov-ru": "Проектное управление"
+        }, 
+        "logo": "common-static/logo.png"
+      }
+    }, 
+    "dashboard": {
+      "globals": {
+        "layouts": {
+          "indicator": {
+            "title": "Показатели"
+          }, 
+          "tasks": {
+            "title": "Мои задачи"
+          }
+        }, 
+        "root": {
+          "pm-gov-ru": "applications/pm-gov-ru/dashboard"
+        }, 
+        "namespaces": {
+          "pm-gov-ru": "Проектное управление"
+        }
+      }
+    }
+  }, 
+  "parametrised": true
+}

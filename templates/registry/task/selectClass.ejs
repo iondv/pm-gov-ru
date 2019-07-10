@@ -1,0 +1,32 @@
+<!-- pm-gov-ru\templates\registry\task\selectClass.ejs -->
+
+<% stylesheet(module + '/vendor/bootstrap3-wysihtml5-bower/bootstrap3-wysihtml5.min.css') -%>
+<% stylesheet(module + '/vendor/jquery-ui/themes/base/tabs.css') -%>
+
+<% script(module + '/vendor/bootstrap3-wysihtml5-bower/bootstrap3-wysihtml5.all.min.js') -%>
+<% script(module + '/vendor/bootstrap3-wysihtml5-bower/locales/bootstrap-wysihtml5.ru-RU.js') -%>
+
+<%- layout(resolveTpl('imodal/content', filename)) %>
+
+<div class="panel panel-default">
+  <form class="object-manager form form-horizontal" method="get" autocomplete="off"
+        enctype="application/x-www-form-urlencoded">
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-md-10 col-sm-9">
+          <h4>Создать</h4>
+        </div>
+        <% subclasses.forEach(function (c) {
+        %>
+        <div class="col-sm-offset-2 col-md-10 col-sm-9">
+          <input name="choice" id="<%=c.name%>" type="radio" value="<%=c.name%>" />
+          <label for="<%=c.name%>"><%=c.caption%></label>
+        </div><%
+        }); %>
+      </div>
+      <footer>
+        <button id="submit" type="submit" class="btn btn-primary pull-right">Далее</button>
+      </footer>
+    </div>
+  </form>
+</div>

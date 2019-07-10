@@ -1,0 +1,29 @@
+{
+  "name": "monitoring",
+  "version": "0.0.1",
+  "authors": [
+    "akumidv <akuminov@mail.ru>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+     "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome-min": "~4.3.0",
+    "ionicons-min": "~2.0.1",
+    "store-js": "^2.0.4",
+    "async": "^2.4.0",
+    "highcharts": "^5.0.14",
+    "bootstrap": "^3.3.7",
+    "jquery-custom-scrollbar": "^0.5.5",
+    "bootstrap-daterangepicker": "^2.1.27"
+  }
+}

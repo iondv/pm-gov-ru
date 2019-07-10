@@ -1,0 +1,9 @@
+{
+  "code": "project_totalKT",
+  "caption": "Итог КТ",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "totalKT",
+  "namespace": "pm-gov-ru",
+  "order": 9
+}

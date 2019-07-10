@@ -1,0 +1,22 @@
+{
+  "code": "mycontract",
+  "orderNumber": 230,
+  "type": 1,
+  "title": "",
+  "caption": "Контракты",
+  "classname": "contract",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "property": "archive",
+      "operation": 1,
+      "value": [true],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

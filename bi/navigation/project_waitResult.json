@@ -1,0 +1,9 @@
+{
+  "code": "project_waitResult",
+  "caption": "Ожидаемые результаты реализации проекта (показатели)",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "waitResult",
+  "namespace": "pm-gov-ru",
+  "order": 2
+}

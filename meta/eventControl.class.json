@@ -1,0 +1,50 @@
+{
+  "isStruct": false,
+  "key": [
+    "guid"
+  ],
+  "semantic": "name| ( |code| )",
+  "name": "eventControl",
+  "version": "31",
+  "caption": "Контрольная точка",
+  "ancestor": "eventOnly",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+      {
+      "orderNumber": 900,
+      "name": "progress",
+      "caption": "Процент выполнения [гант]",
+      "type": 7,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": 0,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": "$progressInput",
+      "cached": true
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

@@ -1,0 +1,427 @@
+{
+  "code": "myprojectevent.requireAttention",
+  "orderNumber": 50,
+  "type": 1,
+  "title": "",
+  "caption": "Требуют внимания",
+  "classname": "eventBasic",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": "Отображаются мероприятия, плановая дата завершения которых назначена на текущий месяц.",
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "curator"
+              ]
+            },
+            {
+              "property": "state",
+              "operation": 0,
+              "value": [
+                "planningCurator"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "curator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "manager"
+              ]
+            },
+            {
+              "property": "state",
+              "operation": 0,
+              "value": [
+                "planningHead"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "head.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "property": "$displayMode",
+              "operation": 0,
+              "value": [
+                "executor"
+              ]
+            },
+            {
+              "property": "state",
+              "operation": 9,
+              "value": [
+                "new",
+                "work"
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ]
+                },
+                {
+                  "property": "owner.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operation": 0,
+          "nestedConditions": [
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "$displayMode",
+                  "operation": 0,
+                  "value": [
+                    "all"
+                  ]
+                },
+                {
+                  "property": "$displayMode",
+                  "operation": 2,
+                  "value": []
+                }
+              ]
+            },
+            {
+              "operation": 1,
+              "nestedConditions": [
+                {
+                  "property": "curator.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "curator.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "head.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "head.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "owner.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "owner.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ]
+                },
+                {
+                  "property": "coexecEvent.person.user",
+                  "operation": 0,
+                  "value": [
+                    "$$uid"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "coexecEvent.id",
+                  "operation": 9,
+                  "value": [
+                    "$substitution"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "stakeholders.id",
+                  "operation": 0,
+                  "value": [
+                    "$organization"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "stakeholders.id",
+                  "operation": 9,
+                  "value": [
+                    "$substOrgs"
+                  ]
+                },
+                {
+                  "property": "ownOrg.id",
+                  "operation": 0,
+                  "value": [
+                    "$organization"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": "ownOrg.id",
+                  "operation": 9,
+                  "value": [
+                    "$substOrgs"
+                  ]
+                }       
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "property": "state",
+      "operation": 1,
+      "value": [
+        "fin"
+      ],
+      "nestedConditions": []
+    },
+    {
+      "property": null,
+      "operation": 0,
+      "value": null,
+      "nestedConditions": [
+        {
+          "property": "datePlannedEnd",
+          "operation": 6,
+          "value": null,
+          "nestedConditions": [
+            {
+              "property": null,
+              "operation": 9,
+              "value": null,
+              "nestedConditions": [
+                {
+                  "property": null,
+                  "operation": 8,
+                  "value": [
+                    "today"
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": null,
+                  "operation": 12,
+                  "value": null,
+                  "nestedConditions": [
+                    {
+                      "property": null,
+                      "operation": null,
+                      "value": [
+                        0
+                      ],
+                      "nestedConditions": []
+                    },
+                    {
+                      "property": null,
+                      "operation": 24,
+                      "value": null,
+                      "nestedConditions": [
+                        {
+                          "property": null,
+                          "operation": 8,
+                          "value": [
+                            "today"
+                          ],
+                          "nestedConditions": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "property": null,
+                  "operation": null,
+                  "value": [
+                    "d"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "property": "datePlannedEnd",
+          "operation": 5,
+          "value": null,
+          "nestedConditions": [
+            {
+              "property": null,
+              "operation": 9,
+              "value": null,
+              "nestedConditions": [
+                {
+                  "property": null,
+                  "operation": 9,
+                  "value": null,
+                  "nestedConditions": [
+                    {
+                      "property": null,
+                      "operation": 8,
+                      "value": [
+                        "today"
+                      ],
+                      "nestedConditions": []
+                    },
+                    {
+                      "property": null,
+                      "operation": 12,
+                      "value": null,
+                      "nestedConditions": [
+                        {
+                          "property": null,
+                          "operation": null,
+                          "value": [
+                            0
+                          ],
+                          "nestedConditions": []
+                        },
+                        {
+                          "property": null,
+                          "operation": 24,
+                          "value": null,
+                          "nestedConditions": [
+                            {
+                              "property": null,
+                              "operation": 8,
+                              "value": [
+                                "today"
+                              ],
+                              "nestedConditions": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "property": null,
+                      "operation": null,
+                      "value": [
+                        "d"
+                      ],
+                      "nestedConditions": []
+                    }
+                  ]
+                },
+                {
+                  "property": null,
+                  "operation": null,
+                  "value": [
+                    1
+                  ],
+                  "nestedConditions": []
+                },
+                {
+                  "property": null,
+                  "operation": null,
+                  "value": [
+                    "m"
+                  ],
+                  "nestedConditions": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "property": "archive",
+      "operation": 1,
+      "value": [
+        true
+      ],
+      "nestedConditions": []
+    },
+    {
+        "property": "state",
+        "operation": 1,
+        "value": [
+            "fin"
+        ]
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

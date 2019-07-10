@@ -1,0 +1,87 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "name",
+  "name": "indicatorText",
+  "version": "",
+  "caption": "Показатели (текстовые)",
+  "ancestor": "indicatorBasic",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 40,
+      "name": "measureUnit",
+      "caption": "Единица измерения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "measureUnit",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 200,
+      "name": "indicatorValueBasic",
+      "caption": "Текстовые показатели по периодам",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorValueText",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "state",
+          "operation": 1,
+          "value": [
+            "archive"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

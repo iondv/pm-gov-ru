@@ -1,0 +1,9 @@
+{
+  "code": "project_finResource",
+  "caption": "Финансовое обеспечение реализации",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "finResource",
+  "namespace": "pm-gov-ru",
+  "order": 11
+}

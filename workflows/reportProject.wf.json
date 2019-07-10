@@ -1,0 +1,281 @@
+{
+    "name": "reportProject",
+    "caption": "Согласование отчетов проекта",
+    "wfClass": "reportProject",
+    "startState": "check",
+    "states": [
+      {
+        "name": "check",
+        "caption": "Проверка",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "inacceptedHead",
+        "caption": "Согласование у руководителя проекта",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "create",
+        "caption": "Создается",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "inacceptedCurator",
+        "caption": "Согласование у куратора проекта",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "inconfirm",
+        "caption": "Утвержден",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      }
+    ],
+    "transitions": [
+      {
+        "name": "inAcceptedHead",
+        "caption": "Согласовать у руководителя проекта",
+        "startState": "check",
+        "finishState": "inacceptedHead",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "status",
+            "value": "inacceptedHead"
+          }
+        ],
+        "conditions": [
+          {
+            "operation": 1,
+            "nestedConditions": [
+              {
+                "property": "project.owner.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "project.owner.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          },
+          {
+            "property": "status",
+            "operation": 0,
+            "value": [
+              "check"
+            ],
+            "nestedConditions": []
+          }
+        ]
+      },
+      {
+        "name": "inAcceptedCurator",
+        "caption": "Согласовать у куратора проекта",
+        "startState": "inacceptedHead",
+        "finishState": "inacceptedCurator",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "status",
+            "value": "inacceptedCurator"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "status",
+            "operation": 0,
+            "value": [
+              "inacceptedHead"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "operation": 1,
+            "nestedConditions": [
+              {
+                "property": "project.head.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "project.head.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          } 
+        ]
+      },
+      {
+        "name": "inReworkHead",
+        "caption": "Вернуть на проверку",
+        "startState": "inacceptedHead",
+        "finishState": "check",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "status",
+            "value": "check"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "status",
+            "operation": 0,
+            "value": [
+              "inacceptedHead"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "operation": 1,
+            "nestedConditions": [
+              {
+                "property": "project.head.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "project.head.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "inСonfirm",
+        "caption": "Утвердить",
+        "startState": "inacceptedCurator",
+        "finishState": "inconfirm",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "status",
+            "value": "inconfirm"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "status",
+            "operation": 0,
+            "value": [
+              "inacceptedCurator"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "operation": 1,
+            "nestedConditions": [
+              {
+                "property": "project.curator.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "project.curator.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "inReworkCurator",
+        "caption": "Вернуть на согласование у руководителя",
+        "startState": "inacceptedCurator",
+        "finishState": "inacceptedHead",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "status",
+            "value": "inacceptedHead"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "status",
+            "operation": 0,
+            "value": [
+                "inacceptedCurator"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "operation": 1,
+            "nestedConditions": [
+              {
+                "property": "project.curator.person.user",
+                "operation": 0,
+                "value": [
+                  "$$uid"
+                ],
+                "nestedConditions": []
+              },
+              {
+                "property": "project.curator.id",
+                "operation": 9,
+                "value": [
+                  "$substitution"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "metaVersion": "2.0.61"
+  }

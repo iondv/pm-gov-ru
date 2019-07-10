@@ -1,0 +1,678 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "obj",
+  "name": "indicatorBudget",
+  "version": "",
+  "caption": "Показатели (бюджет)",
+  "ancestor": "indicatorFinancial",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 40,
+      "name": "dateStart",
+      "caption": "Дата начала сбора данных",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "if": [
+          {
+            "and": [
+              {
+                "empty": [
+                  "$basicObj.datePlannedStart"
+                ]
+              },
+              {
+                "empty": [
+                  "$obj.datePlannedStart"
+                ]
+              },
+              {
+                "empty": [
+                  "$problemReg.dateEnd"
+                ]
+              }
+            ]
+          },
+          null,
+          {
+            "if": [
+              "$obj.datePlannedStart",
+              "$obj.datePlannedStart",
+              {
+                "if": [
+                  "$basicObj.datePlannedStart",
+                  "$basicObj.datePlannedStart",
+                  "$problemReg.dateStart"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "dateEnd",
+      "caption": "Дата окончания сбора данных",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "if": [
+          {
+            "and": [
+              {
+                "empty": [
+                  "$basicObj.datePlannedEnd"
+                ]
+              },
+              {
+                "empty": [
+                  "$obj.datePlannedEnd"
+                ]
+              },
+              {
+                "empty": [
+                  "$problemReg.dateEnd"
+                ]
+              }
+            ]
+          },
+          null,
+          {
+            "if": [
+              "$obj.datePlannedEnd",
+              "$obj.datePlannedEnd",
+              {
+                "if": [
+                  "$basicObj.datePlannedEnd",
+                  "$basicObj.datePlannedEnd",
+                  "$problemReg.dateEnd"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "dateStartPrint",
+      "caption": "Дата начала сбора данных",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "if": [
+          {
+            "and": [
+              {
+                "empty": [
+                  "$basicObj.datePlannedStart"
+                ]
+              },
+              {
+                "empty": [
+                  "$obj.datePlannedStart"
+                ]
+              },
+              {
+                "empty": [
+                  "$problemReg.dateStart"
+                ]
+              }
+            ]
+          },
+          "Не заполнена Дата начала",
+          {
+            "if": [
+              "$obj.datePlannedStart",
+              {
+                "dateFormat": [
+                  "$obj.datePlannedStart",
+                  "DD.MM.YYYY"
+                ]
+              },
+              {
+                "if": [
+                  "$basicObj.datePlannedStart",
+                  {
+                    "dateFormat": [
+                      "$basicObj.datePlannedStart",
+                      "DD.MM.YYYY"
+                    ]
+                  },
+                  {
+                    "dateFormat": [
+                      "$problemReg.dateStart",
+                      "DD.MM.YYYY"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 40,
+      "name": "dateEndPrint",
+      "caption": "Дата окончания сбора данных",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "if": [
+          {
+            "and": [
+              {
+                "empty": [
+                  "$basicObj.datePlannedEnd"
+                ]
+              },
+              {
+                "empty": [
+                  "$obj.datePlannedEnd"
+                ]
+              },
+              {
+                "empty": [
+                  "$problemReg.dateStart"
+                ]
+              }
+            ]
+          },
+          "Не заполнена Дата завершения",
+          {
+            "if": [
+              "$obj.datePlannedEnd",
+              {
+                "dateFormat": [
+                  "$obj.datePlannedEnd",
+                  "DD.MM.YYYY"
+                ]
+              },
+              {
+                "if": [
+                  "$basicObj.datePlannedEnd",
+                  {
+                    "dateFormat": [
+                      "$basicObj.datePlannedEnd",
+                      "DD.MM.YYYY"
+                    ]
+                  },
+                  {
+                    "dateFormat": [
+                      "$problemReg.dateEnd",
+                      "DD.MM.YYYY"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 200,
+      "name": "indicatorValueBasic",
+      "caption": "Бюджетные показатели по периодам",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorValueBudget",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": null,
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 150,
+      "name": "valueSum",
+      "caption": "Факт показателей на период (сумма)",
+      "type": 7,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "value"
+        ]
+      }
+    },
+    {
+      "orderNumber": 410,
+      "name": "obj",
+      "caption": "Этап",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "basicObj",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [{
+        "property": "project_code",
+        "operation": 0,
+        "value": [
+          "$project_code"
+        ],
+        "nestedConditions": []
+      }],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "measureUnit",
+      "caption": "Единица измерения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "384",
+      "refClass": "measureUnit",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 410,
+      "name": "basicObj",
+      "caption": "Учетный объект финансирования",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "basicObj",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 410,
+      "name": "problemReg",
+      "caption": "Учетный объект финансирования",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "problemReg",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "project_code",
+      "caption": "project_code [вычислимое, храним код проекта]",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": {
+        "if": ["$basicObj", "$basicObj.project_code", ""]
+      },
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 410,
+      "name": "grbs",
+      "caption": "ГРБС",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "governmentPower",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 120,
+      "name": "periodType",
+      "caption": "Тип периодичности",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "year",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [{
+            "key": "year",
+            "value": "Ежегодный"
+          },
+          {
+            "key": "halfyear",
+            "value": "Полугодие"
+          },
+          {
+            "key": "quarter",
+            "value": "Квартал"
+          },
+          {
+            "key": "month",
+            "value": "Ежемесячный"
+          },
+          {
+            "key": "week",
+            "value": "Еженедельный"
+          },
+          {
+            "key": "one",
+            "value": "Разовый"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 130,
+      "name": "codeSource",
+      "caption": "Код источника",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 140,
+      "name": "kbk",
+      "caption": "КБК расходов",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

@@ -1,0 +1,5041 @@
+name: projects
+caption: Отчеты по проектам
+sources:
+  - name: basicProject
+    # Выгружаем из класса project все
+    # проекты
+    caption: >-
+      Данные о проектах
+    load:
+      - className: project
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: guidProj
+            expr: $guid
+          - field: nameProj
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: descriptProj
+            expr: $descript
+          - field: planProj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factProj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: descrOperProj
+            expr: $descrOper
+          - field: curatorId
+            expr: $curator.id
+              # concat:
+              #   - $curator.person.surname
+              #   - ' '
+              #   - $curator.person.name
+              #   - ' '
+              #   - $curator.person.patronymic
+          - field: headId
+            expr: $head.id
+              # concat:
+              #   - $head.person.surname
+              #   - ' '
+              #   - $head.person.name
+              #   - ' '
+              #   - $head.person.patronymic
+          - field: administratorId
+            expr: $administrator.id
+              # concat:
+              #   - $administrator.person.surname
+              #   - ' '
+              #   - $administrator.person.name
+              #   - ' '
+              #   - $administrator.person.patronymic
+          - field: ownerId
+            expr: $owner.id
+              # concat:
+              #   - $owner.person.surname
+              #   - ' '
+              #   - $owner.person.name
+              #   - ' '
+              #   - $owner.person.patronymic
+          # - field: position
+          #   expr: $employee.position
+      - className: projDepart
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: guidProj
+            expr: $guid
+          - field: nameProj
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: descriptProj
+            expr: $descript
+          - field: planProj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factProj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: descrOperProj
+            expr: ''
+    index:
+      - guidProj
+  - name: riskProject
+    # Выгружаем из класса risk
+    caption: >-
+      Данные о рисках проектах
+    load:
+      - className: risk
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          # - field: archive
+          #   expr: $archive
+          - field: projectCode
+            expr: $basicObj.project_code
+          - field: guid
+            expr: $guid
+          - field: riskName
+            expr: $name
+          - field: effect
+            expr: $effects
+          - field: eventResp
+            expr: $taskWeakening.name
+          - field: probability
+            expr:
+              case:
+                - eq:
+                  - $probability
+                  - '25'
+                - 'Низкая'
+                - eq:
+                  - $probability
+                  - '50'
+                - 'Средняя'
+                - eq:
+                  - $probability
+                  - '75'
+                - 'Высокая'
+                - ' '
+          - field: level
+            expr:
+              case:
+                - eq:
+                  - $impact
+                  - 'low'
+                - 'Низкое'
+                - eq:
+                  - $impact
+                  - 'mid'
+                - 'Среднее'
+                - eq:
+                  - $impact
+                  - 'high'
+                - 'Высокое'
+                - ' '
+          - field: period
+            expr:
+              case:
+                - eq:
+                  - $period
+                  - 0
+                - 'Без периода'
+                - eq:
+                  - $period
+                  - 7
+                - 'Еженедельный'
+                - eq:
+                  - $period
+                  - 30
+                - 'Ежемесячный'
+                - eq:
+                  - $period
+                  - 90
+                - 'Ежеквартальный'
+                - eq:
+                  - $period
+                  - 178
+                - 'Полугодичный'
+                - eq:
+                  - $period
+                  - 356
+                - 'Годовой'
+                - ' '
+          - field: riskPerson
+            expr:
+              concat:
+                - $manager.person.surname
+                - ' '
+                - $manager.person.name
+                - ' '
+                - $manager.person.patronymic
+                - ', '
+                - $manager.position
+    index:
+      - guid
+  - name: assignment
+    # Выгружаем из класса assignment
+    caption: >-
+      Данные о поручениях
+    load:
+      - className: assignment
+        filter:
+          eq:
+            - $state
+            - 'fin'
+        results:
+          - field: name
+            expr: $name
+          - field: guid
+            expr: $guid
+          - field: basicObj
+            expr: $basicObj.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: discript
+            expr: $descript
+          - field: owner
+            expr:
+              concat:
+                - $owner.person.surname
+                - ' '
+                - $owner.person.name
+                - ' '
+                - $owner.person.patronymic
+                - ', '
+                - $owner.position
+          - field: head
+            expr:
+              concat:
+                - $head.person.surname
+                - ' '
+                - $head.person.name
+                - ' '
+                - $head.person.patronymic
+                - ', '
+                - $head.position
+          - field: responsible
+            expr:
+              concat:
+                - $responsible.person.surname
+                - ' '
+                - $responsible.person.name
+                - ' '
+                - $responsible.person.patronymic
+                - ', '
+                - $responsible.position
+          - field: answ
+            expr: $answ
+    index:
+      - guid
+  - name: programProject
+    caption: >-
+      Данные о программах и их проектах
+    load:
+      - className: program
+        filter:
+          and:
+            - ne:
+              - $archive
+              - true
+            - ne:
+              - $project.guid
+              - null
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $code
+          - field: guidProj
+            expr: $project.guid
+          - field: nameProj
+            expr: $project.name
+    index:
+      - guid
+  - name: briefcaseProgramProject
+    caption: >-
+        Данные о портфеле и их проектах в программах
+    index:
+      - guid
+    load:
+      - className: briefcase
+        filter:
+          - and:
+            - ne:
+              - $archive
+              - true
+            - ne:
+              - $programs.guid
+              - null
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr: $name
+          - field: guidProgram
+            expr: $programs.guid
+          - field: nameProgram
+            expr:
+              concat:
+                - $programs.name
+                - ' - '
+                - $programs.code
+          - field: guidProj
+            expr: $programs.project.guid
+          - field: nameProj
+            expr: $programs.project.name
+      - className: briefcase
+        filter:
+          and:
+            - ne:
+              - $archive
+              - true
+            - nempty:
+              - $projects.events
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr: $name
+          - field: guidProj
+            expr: $projects.guid
+          - field: nameProj
+            expr: $projects.name
+  - name: programGosProgramProject
+    caption: >-
+      Данные о госпрограмме и их проектах в программах
+    index:
+      - guid
+    load:
+      - className: programGos
+        filter:
+          - and:
+            - ne:
+              - $archive
+              - true
+            - ne:
+              - $program.guid
+              - null
+        results:
+          - field: guid
+            expr: $id
+          - field: name
+            expr: $name
+          - field: guidProgram
+            expr: $program.guid
+          - field: nameProgram
+            expr:
+              concat:
+                - $program.name
+                - ' - '
+                - $program.code
+          - field: guidProj
+            expr: $program.project.guid
+          - field: nameProj
+            expr: $program.project.name
+      - className: programGos
+        filter:
+          - nempty:
+              - $project.events
+        results:
+          - field: guid
+            expr: $id
+          - field: name
+            expr: $name
+          - field: guidProj
+            expr: $project.guid
+          - field: nameProj
+            expr: $project.name
+  - name: opportunityProject
+    # Выгружаем из класса opportunity
+    caption: >-
+      Данные о возможностях проектах
+    load:
+      - className: opportunity
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: projectCode
+            expr: $basicObj.project_code
+          - field: guid
+            expr: $guid
+          - field: opportunityName
+            expr: $name
+          - field: effect
+            expr: $effects
+          - field: eventResp
+            expr: $taskResponse.name
+          - field: probability
+            expr:
+              case:
+                - eq:
+                  - $probability
+                  - '25'
+                - 'Низкая'
+                - eq:
+                  - $probability
+                  - '50'
+                - 'Средняя'
+                - eq:
+                  - $probability
+                  - '75'
+                - 'Высокая'
+                - ' '
+          - field: level
+            expr:
+              case:
+                - eq:
+                  - $impact
+                  - 'low'
+                - 'Низкое'
+                - eq:
+                  - $impact
+                  - 'mid'
+                - 'Среднее'
+                - eq:
+                  - $impact
+                  - 'high'
+                - 'Высокое'
+                - ' '
+          - field: period
+            expr:
+              case:
+                - eq:
+                  - $period
+                  - 0
+                - 'Без периода'
+                - eq:
+                  - $period
+                  - 7
+                - 'Еженедельный'
+                - eq:
+                  - $period
+                  - 30
+                - 'Ежемесячный'
+                - eq:
+                  - $period
+                  - 90
+                - 'Ежеквартальный'
+                - eq:
+                  - $period
+                  - 178
+                - 'Полугодичный'
+                - eq:
+                  - $period
+                  - 356
+                - 'Годовой'
+                - ' '
+          - field: opportunityPerson
+            expr:
+              concat:
+                - $manager.person.surname
+                - ' '
+                - $manager.person.name
+                - ' '
+                - $manager.person.patronymic
+                - ', '
+                - $manager.position
+    index:
+      - guid
+  - name: infoTransfer
+    # Выгружаем из класса infoTransfer
+    caption: >-
+      Данные о коммуникациях
+    load:
+      - className: infoTransfer
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: projectCode
+            expr:
+              if:
+                - nempty:
+                  - $project.project_code
+                - $project.project_code
+                - $event.project_code
+          - field: guid
+            expr: $id
+          - field: typeInfo
+            expr: $typeInfo
+          - field: fromInfo
+            expr: $fromInfoEval
+          - field: toInfo
+            expr: $toInfoEval
+          - field: channelInfo
+            expr: $channelInfo
+          - field: dateTransfer
+            expr: $dateTransfer
+    index:
+      - guid
+  - name: teamActive
+    caption: >-
+      Данные о деятельности команды проекта
+    load:
+      - className: evaluationPerform
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: projectCode
+            expr: $basicObjPerform.project_code
+          # - field: part
+          #   expr:
+          #     case:
+          #       - eq:
+          #         - $basicObjPerform.curator
+          #         - $employee
+          #       - 'Куратор проекта'
+          #       - eq:
+          #         - $basicObjPerform.head
+          #         - $employee
+          #       - 'Руководитель проекта'
+          #       - eq:
+          #         - $basicObjPerform.administrator
+          #         - $employee
+          #       - 'Администратор проекта'
+          #       - eq:
+          #         - $basicObjPerform.owner
+          #         - $employee
+          #       - 'Оператор проекта'
+          #       - 'Исполнитель или соисполнитель'
+          - field: guid
+            expr: $guid
+          - field: mark
+            expr: $evaluation
+          - field: evalType
+            expr:
+              case:
+                - eq:
+                  - $evalType
+                  - 'curator'
+                - 'Предлагаемая куратором проекта'
+                - eq:
+                  - $evalType
+                  - 'expert'
+                - 'Экспертная оценка МЭР'
+                - 'Не указан'
+          - field: ownOrg
+            expr: $ownOrg
+          - field: employeeId
+            expr: $employee.id
+          - field: fio
+            expr:
+              concat:
+                - $employee.person.surname
+                - ' '
+                - $employee.person.name
+                - ' '
+                - $employee.person.patronymic
+          - field: position
+            expr: $employee.position
+    index:
+      - guid
+  - name: teamActiveSource
+    caption: >-
+      Данные о деятельности команды проекта
+    load:
+      - source: teamActive
+        filter:
+          nempty:
+            - $projectJoin.projectCode
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        results:
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: role
+            expr:
+              case:
+                - eq:
+                  - $projectJoin.curatorId
+                  - $employeeId
+                - 'Куратор проекта'
+                - eq:
+                  - $projectJoin.headId
+                  - $employeeId
+                - 'Руководитель проекта'
+                - eq:
+                  - $projectJoin.administratorId
+                  - $employeeId
+                - 'Администратор проекта'
+                - eq:
+                  - $projectJoin.ownerId
+                  - $employeeId
+                - 'Оператор проекта'
+                - 'Исполнитель/соисполнитель'
+          - field: guid
+            expr: $guid
+          - field: mark
+            expr: $mark
+          - field: evalType
+            expr: $evalType
+          - field: ownOrg
+            expr: $ownOrg.name
+          - field: fio
+            expr: $fio
+          - field: position
+            expr: $position
+    index:
+      - guid
+  - name: basicProjectCode
+    # новая привязка к проекту по project_code без лишних сущностей
+    caption: Данные об учетных объектах
+    index:
+      - guid
+    load:
+      - className: project
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: projectName
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: name
+            expr: $name
+          - field: nameProj
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: ownerObj
+            expr: $owner.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: curatorProj
+            expr:
+              concat:
+                - $curator.person.surname
+                - ' '
+                - $curator.person.name
+                - ' '
+                - $curator.person.patronymic
+                - ', '
+                - $curator.position
+          - field: headProj
+            expr:
+              concat:
+                - $head.person.surname
+                - ' '
+                - $head.person.name
+                - ' '
+                - $head.person.patronymic
+                - ', '
+                - $head.position
+          - field: administratorProj
+            expr:
+              concat:
+                - $administrator.person.surname
+                - ' '
+                - $administrator.person.name
+                - ' '
+                - $administrator.person.patronymic
+                - ', '
+                - $administrator.position
+          - field: stakeholdersProj
+            expr: $stakeholdersImplementation.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: ownerEvent
+            expr:
+              concat:
+                - $owner.person.surname
+                - ' '
+                - $owner.person.name
+                - ' '
+                - $owner.person.patronymic
+                - ', '
+                - $owner.position
+      - className: projDepart
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: projectName
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: name
+            expr: $name
+          - field: ownerObj
+            expr: $owner.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+      - className: eventBasic
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: guidParent
+            expr: $basicObj.guid
+          - field: name
+            expr: $name
+          - field: ownerObj
+            expr: $coexec_eval
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+  - name: statusProject
+    caption: Данные об учетных объектах
+    index:
+      - guid
+    load:
+      - className: project
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: projectName
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: name
+            expr: $name
+          - field: nameProj
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: ownerObj
+            expr: $owner.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: status
+            expr:
+              if:
+                - eq:
+                  - $status
+                  - new
+                - 'Создан'
+                - if:
+                  - eq:
+                    - $status
+                    - create
+                  - 'Планирование'
+                  - if:
+                    - eq:
+                      - $status
+                      - planningVPO
+                    - 'Утверждение ВПО'
+                    - if:
+                      - eq:
+                        - $status
+                        - planningAdmin
+                      - 'Утверждение администратором'
+                      - if:
+                        - eq:
+                          - $status
+                          - planningHead
+                        - 'Утверждение руководителем'
+                        - if:
+                          - eq:
+                            - $status
+                            - planningCurator
+                          - 'Утверждение куратором'
+                          - if:
+                            - eq:
+                              - $status
+                              - planningPO
+                            - 'Утверждение ПО'
+                            - if:
+                              - eq:
+                                - $status
+                                - inaccepted
+                              - 'Утвержден'
+                              - if:
+                                - eq:
+                                  - $status
+                                  - rework
+                                - 'Доработка'
+                                - if:
+                                  - eq:
+                                    - $status
+                                    - close
+                                  - 'Архив'
+                                  - ''
+          - field: datePlannedStart
+            expr: $datePlannedStart
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: curatorProj # куратор
+            expr:
+              concat:
+                - $curator.person.surname
+                - ' '
+                - $curator.person.name
+                - ' '
+                - $curator.person.patronymic
+                - ', '
+                - $curator.position
+          - field: headProj # руководитель
+            expr:
+              concat:
+                - $head.person.surname
+                - ' '
+                - $head.person.name
+                - ' '
+                - $head.person.patronymic
+                - ', '
+                - $head.position
+          - field: administratorProj # админ
+            expr:
+              concat:
+                - $administrator.person.surname
+                - ' '
+                - $administrator.person.name
+                - ' '
+                - $administrator.person.patronymic
+                - ', '
+                - $administrator.position
+          - field: stakeholdersProj  # участники
+            expr: $stakeholdersImplementation.organization.name
+          - field: ownOrgEvent  # ответств ведомство
+            expr: $ownOrg.name
+          - field: ownerEvent # ответственный
+            expr:
+              concat:
+                - $owner.person.surname
+                - ' '
+                - $owner.person.name
+                - ' '
+                - $owner.person.patronymic
+                - ', '
+                - $owner.position
+  - name: objectBasicIndicator
+    caption: Данные о показателях объектов
+    index:
+      - guid
+      - objectBasicId
+    load:
+      - className: objectBasic
+        filter:
+          nempty:
+            - $indicatorBasic.id
+        results:
+          - field: guid
+            expr: $guid
+          # - field: projectCode
+          #   expr: $project_code
+          # - field: name
+          #   expr: $name
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: indicatorName
+            expr: $indicatorBasic.name
+          - field: indicatorMeasureUnit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicatorDateStart
+            expr: $indicatorBasic.dateStart
+          - field: indicatorDateEnd
+            expr: $indicatorBasic.dateEnd
+  - name: eventBasicIndicator
+    # здесь возможно выгружать только общие данные (по всем классам показателей)
+    caption: Данные о показателях мероприятия
+    index:
+      - guid
+      - projectCode
+      - objectBasicId
+    load:
+      - className: eventBasic
+        filter:
+          nempty:
+            - $indicatorBasic.id
+        results:
+          - field: guid
+            expr: $guid
+          - field: objectBasicId
+            expr: $objectBasic.guid
+          - field: projectCode
+            expr: $project_code
+          - field: name
+            expr: $name
+          - field: ownerObj
+            expr: $coexec_eval
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: indicatorName
+            expr: $indicatorBasic.name
+          - field: indicatorMeasureUnit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicatorDateStart
+            expr: $indicatorBasic.dateStart
+          - field: indicatorDateEnd
+            expr: $indicatorBasic.dateEnd
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: planEvent
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factEvent
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: progress
+            expr:
+              if:
+                - gt:
+                  - $countObjs
+                  - 0
+                - $progress
+                - $progressInput
+          - field: nonfulfillment
+            expr: $nonfulfillment
+  - name: projectObjectBasicIndicator
+    caption: Данные о показателях объектов по проекту
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: objectBasicIndicator
+        joins:
+          - table: eventBasicIndicator
+            alias: eventJoin
+            left: guid
+            right: objectBasicId
+        filter:
+          nempty:
+            - $eventJoin.objectBasicId
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $eventJoin.projectCode
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+          - field: ownerObj
+            expr: $eventJoin.ownerObj
+          - field: datePlannedEnd
+            expr: $eventJoin.datePlannedEnd
+          - field: planEvent
+            expr: $eventJoin.planEvent
+          - field: factEvent
+            expr: $eventJoin.factEvent
+          - field: progress
+            expr: $eventJoin.progress
+          - field: nonfulfillment
+            expr: $eventJoin.nonfulfillment
+  - name: riskSource
+    # здесь возможно выгружать только общие данные (по всем классам показателей)
+    caption: Данные о показателях проекта
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: riskProject
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        filter:
+          nempty:
+            - $projectJoin.projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $projectCode
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: riskName
+            expr: $riskName
+          - field: effect
+            expr: $effect
+          - field: eventResp
+            expr: $eventResp
+          - field: probability
+            expr: $probability
+          - field: level
+            expr: $level
+          - field: period
+            expr: $period
+          - field: riskPerson
+            expr: $riskPerson
+  - name: opportunitySource
+    caption: Данные о показателях проекта
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: opportunityProject
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        filter:
+          nempty:
+            - $projectJoin.projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $projectCode
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: opportunityName
+            expr: $opportunityName
+          - field: effect
+            expr: $effect
+          - field: eventResp
+            expr: $eventResp
+          - field: probability
+            expr: $probability
+          - field: level
+            expr: $level
+          - field: period
+            expr: $period
+          - field: opportunityPerson
+            expr: $opportunityPerson
+  - name: infoTransferSource
+    caption: Данные о деятельности проекта
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: infoTransfer
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        filter:
+          nempty:
+            - $projectJoin.projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $projectCode
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: typeInfo
+            expr: $typeInfo
+          - field: fromInfo
+            expr: $fromInfo
+          - field: toInfo
+            expr: $toInfo
+          - field: channelInfo
+            expr: $channelInfo
+          - field: dateTransfer
+            expr: $dateTransfer
+          # - field: riskName
+          #   expr: $riskName
+          # - field: effect
+          #   expr: $effect
+          # - field: eventResp
+          #   expr: $eventResp
+          # - field: probability
+          #   expr: $probability
+          # - field: level
+          #   expr: $level
+          # - field: period
+          #   expr: $period
+          # - field: riskPerson
+          #   expr: $riskPerson
+  - name: projBasicIndicator
+    # здесь возможно выгружать только общие данные (по всем классам показателей)
+    caption: Данные о показателях проекта
+    index:
+      - guid
+      - projectCode
+    load:
+      - className: project
+        filter:
+          nempty:
+            - $indicatorBasic.id
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $project_code
+          - field: name
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: ownerObj
+            expr: $basicObjsOwnOrg
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: indicatorName
+            expr: $indicatorBasic.name
+          - field: indicatorMeasureUnit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicatorDateStart
+            expr: $indicatorBasic.dateStart
+          - field: indicatorDateEnd
+            expr: $indicatorBasic.dateEnd
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: planEvent
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factEvent
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: progress
+            expr:
+              if:
+                - gt:
+                  - $countObjs
+                  - 0
+                - $progress
+                - $progressInput
+          - field: nonfulfillment
+            expr: $nonfulfillment
+      - className: projDepart
+        filter:
+          nempty:
+            - $indicatorBasic.id
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $project_code
+          - field: name
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: indicatorName
+            expr: $indicatorBasic.name
+          - field: indicatorMeasureUnit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicatorDateStart
+            expr: $indicatorBasic.dateStart
+          - field: indicatorDateEnd
+            expr: $indicatorBasic.dateEnd
+          - field: ownerObj
+            expr: $basicObjsOwnOrg
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: planEvent
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factEvent
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+          - field: progress
+            expr:
+              if:
+                - gt:
+                  - $countObjs
+                  - 0
+                - $progress
+                - $progressInput
+          - field: nonfulfillment
+            expr: $nonfulfillment
+      - source: projectObjectBasicIndicator
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        filter:
+          nempty:
+            - $projectJoin.projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectCode
+            expr: $projectCode
+          - field: name
+            expr: $projectJoin.nameProj
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+          - field: ownerObj
+            expr: $ownerObj
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: planEvent
+            expr: $planEvent
+          - field: factEvent
+            expr: $factEvent
+          - field: progress
+            expr: $progress
+          - field: nonfulfillment
+            expr: $nonfulfillment
+  - name: basicObject
+    caption: >-
+      Данные об учетных объектах
+    load:
+      - className: project
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: archive
+            expr: $archive
+          - field: guidObj
+            expr: $guid
+          - field: guidProj
+            expr: $guid
+          - field: nameObj
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $project_code
+          - field: ownerObj
+            expr: $owner.organization.name
+          - field: curatorProj
+            expr:
+              concat:
+                - $curator.person.surname
+                - ' '
+                - $curator.person.name
+                - ' '
+                - $curator.person.patronymic
+                - ', '
+                - $curator.position
+          - field: headProj
+            expr:
+              concat:
+                - $head.person.surname
+                - ' '
+                - $head.person.name
+                - ' '
+                - $head.person.patronymic
+                - ', '
+                - $head.position
+          - field: administratorProj
+            expr:
+              concat:
+                - $administrator.person.surname
+                - ' '
+                - $administrator.person.name
+                - ' '
+                - $administrator.person.patronymic
+                - ', '
+                - $administrator.position
+          - field: stakeholdersProj
+            expr: $stakeholdersImplementation.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: ownerEvent
+            expr:
+              concat:
+                - $owner.person.surname
+                - ' '
+                - $owner.person.name
+                - ' '
+                - $owner.person.patronymic
+                - ', '
+                - $owner.position
+          - field: numLevelObj
+            expr: 0
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+      - className: eventBlock
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: archive
+            expr: $archive
+          - field: guidObj
+            expr: $guid
+          - field: guidObj1
+            expr: $basicObj.guid
+          - field: guidObj2
+            expr: $basicObj.basicObj.guid
+          - field: guidObj3
+            expr: $basicObj.basicObj.basicObj.guid
+          - field: numObj
+            expr: $numEvent
+          - field: nameObjList
+            expr:
+              if:
+                - $basicObj.basicObj.basicObj.guid
+                - concat:
+                  - '   3 '
+                  - $name
+                - if:
+                  - $basicObj.basicObj.guid
+                  - concat:
+                    - '  2 '
+                    - $name
+                  - if:
+                    - $basicObj.guid
+                    - concat:
+                      - ' 1 '
+                      - $name
+                    - $name
+          - field: nameObjIndex
+            expr:
+              if:
+                - $basicObj.basicObj.basicObj.guid
+                - '3'
+                - if:
+                  - $basicObj.basicObj.guid
+                  - '2'
+                  - if:
+                    - $basicObj.guid
+                    - '1'
+                    - '0'
+          - field: idActive
+            expr:
+              if:
+                - eq:
+                  - $basicObj.basicObj.guid
+                  - null
+                - null
+                - $basicObj.guid
+          - field: guidProj
+            expr:
+              if:
+                - $basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $basicObj.basicObj.guid
+                    - ifNull:
+                      - $basicObj.guid
+                      - null
+          - field: nameObj
+            expr: $name
+          - field: ownerObj
+            expr: $owner.organization.name
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: ownerEvent
+            expr:
+              concat:
+                - $owner.person.surname
+                - ' '
+                - $owner.person.name
+                - ' '
+                - $owner.person.patronymic
+                - ', '
+                - $owner.position
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+    index:
+      - guidObj
+      - guidProj
+  - name: basicBudget
+    # Выгружаем из класса budget все
+    # объекты
+    caption: >-
+      Данные о бюджете
+    load:
+      - className: budget
+        results:
+          - field: guidBudget
+            expr: $guid
+          - field: guidObj
+            expr: $basicObj.guid
+          - field: finSource
+            expr:
+              if:
+                - eq:
+                  - $financing.finSource
+                  - kray
+                - 'Краевой бюджет'
+                - if:
+                  - eq:
+                    - $financing.finSource
+                    - krayFed
+                  - 'Cредства краевого бюджета, источником финансового обеспечения которых являются средства федерального бюджета'
+                  - if:
+                    - eq:
+                      - $financing.finSource
+                      - fed
+                    - 'Федеральный бюджет'
+                    - if:
+                      - eq:
+                        - $financing.finSource
+                        - mun
+                      - 'Бюджеты муниципальных образований'
+                      - if:
+                        - eq:
+                          - $financing.finSource
+                          - out
+                        - 'Внебюджетные средства'
+                        - 'Источник не выбран'
+          - field: estimatedCostsValue
+            expr: $financing.estimatedCosts.value
+          - field: estimatedCostsDate
+            expr: $financing.estimatedCosts.date
+    index:
+      - guidBudget
+      - guidObj
+  - name: indicatorAll
+    caption: >-
+      Данные о показателях (кроме базовых)
+    load:
+      - className: indicatorDigital
+        results:
+          - field: guid
+            expr: $id
+          #Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorFinancial
+        results:
+          - field: guid
+            expr: $id
+          #Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorMedia
+        results:
+          - field: guid
+            expr: $id
+          #Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+      - className: indicatorText
+        results:
+          - field: guid
+            expr: $id
+          #Уровни вложенности показателя относительно базового объекта
+          - field: guidProj
+            expr:
+              if:
+                - $active.basicObj.basicObj.basicObj.basicObj.guid
+                - null
+                - ifNull:
+                  - $active.basicObj.basicObj.basicObj.guid
+                  - ifNull:
+                    - $active.basicObj.basicObj.guid
+                    - ifNull:
+                      - $active.basicObj.guid
+                      - ifNull:
+                        - $active.guid
+                        - null
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $active.name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: planObj
+            expr: $active.plan
+          - field: factObj
+            expr: $active.fact
+    index:
+      - guid
+  - name: financialTargetImplementation
+    # Выгружаем из класса indicatorFinancial все
+    caption: >-
+      Данные о финансовых целевых показателях
+    load:
+      - className: indicatorFinancial
+        results:
+          - field: guid
+            expr: $id
+          - field: budgetType
+            expr:
+              case:
+                - eq:
+                  - $budgetType
+                  - munic
+                - Местные бюджеты
+                - eq:
+                  - $budgetType
+                  - krai
+                - Областной бюджет
+                - eq:
+                  - $budgetType
+                  - federal
+                - Федеральный бюджет
+                - eq:
+                  - $budgetType
+                  - vnebudgetFond
+                - Бюджеты государственных внебюджетных фондов
+                - eq:
+                  - $budgetType
+                  - vnebudget
+                - Внебюджетные источники
+                - ''
+          - field: measureType
+            expr: $measureType.shortName
+    index:
+      - guid
+  - name: indicatorValuePlanByInd
+    caption: >-
+      Данные о значениях базовых показателей
+    load:
+      - className: indicatorValueBasic
+        filter:
+          and:
+            - nempty:
+              - $plannedValue
+            - nempty:
+              - $indicatorBasic.id
+        results:
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: dateEndMax
+            expr:
+              max:
+                - $dateEnd
+    index:
+      - indicatorId
+  - name: indicatorValueCurrentByInd
+    caption: >-
+      Данные о значениях базовых показателей
+    load:
+      - className: indicatorValueBasic
+        filter:
+          and:
+            - eq:
+              - $state
+              - 'app'
+            - nempty:
+              - $value
+            - nempty:
+              - $indicatorBasic.id
+        results:
+          - field: indicatorId
+            expr: $indicatorBasic.id
+          - field: dateEndMax
+            expr:
+              max:
+                - $dateEnd
+    index:
+      - indicatorId
+  - name: indicatorValueBasic
+    # Выгружаем из дочерних классов indicatorValueBasic все необходимые
+    # данные в зависимости от выбранного класса
+    caption: >-
+      Данные о базовых плановых показателях
+    load:
+      - className: indicatorValueDigital
+        results:
+          - field: guid
+            expr: $id
+          - field: guidTargetImpl
+            expr: $indicatorBasic.id
+          - field: name
+            expr: $name
+          - field: state
+            expr: $state
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: plannedValue
+            expr: $plannedValue
+          - field: unit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicator
+            expr: $value
+          - field: desiredValue
+            expr: $desiredValue
+      - className: indicatorValueFinancial
+        results:
+          - field: guid
+            expr: $id
+          - field: guidTargetImpl
+            expr: $indicatorBasic.id
+          - field: name
+            expr: $name
+          - field: state
+            expr: $state
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: plannedValue
+            expr: $plannedValue
+          - field: unit
+            expr: $indicatorBasic.measureUnit.shortName
+          - field: indicator
+            expr: $value
+          - field: desiredValue
+            expr: $desiredValue
+      # - className: indicatorValueMedia
+      #   results:
+      #     - field: guid
+      #       expr: $id
+      #     - field: guidTargetImpl
+      #       expr: $indicatorBasic.id
+      #     - field: name
+      #       expr: $name
+      #     - field: state
+      #       expr: $state
+      #     - field: dateStart
+      #       expr: $dateStart
+      #     - field: dateEnd
+      #       expr: $dateEnd
+      #     - field: plannedValue
+      #       expr: $plannedValue
+      #     - field: unit
+      #       expr: $indicatorBasic.measureUnit.shortName
+      #     - field: indicator
+      #       expr: $value
+      #     - field: desiredValue
+      #       expr: $desiredValue
+      # - className: indicatorValueText
+      #   results:
+      #     - field: guid
+      #       expr: $id
+      #     - field: guidTargetImpl
+      #       expr: $indicatorBasic.id
+      #     - field: name
+      #       expr: $name
+      #     - field: state
+      #       expr: $state
+      #     - field: dateStart
+      #       expr: $dateStart
+      #     - field: dateEnd
+      #       expr: $dateEnd
+      #     - field: plannedValue
+      #       expr: $plannedValue
+      #     - field: unit
+      #       expr: $indicatorBasic.measureUnit.shortName
+      #     - field: indicator
+      #       expr: $value
+      #     - field: desiredValue
+      #       expr: $desiredValue
+    index:
+      - guid
+  - name: allIndicatorsSource
+    caption: Данные о показателях проекта и мероприятий
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: eventBasicIndicator
+        joins:
+          - table: indicatorValuePlanByInd
+            alias: planJoin
+            left: indicatorId
+            right: indicatorId
+          - table: indicatorValueCurrentByInd
+            alias: currentJoin
+            left: indicatorId
+            right: indicatorId
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            - nempty:
+              - $valueJoin.dateEnd
+            - or:
+              - eq:
+                - $planJoin.dateEndMax
+                - $valueJoin.dateEnd
+              - eq:
+                - $currentJoin.dateEndMax
+                - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr:
+              if:
+                - eq:
+                  - $planJoin.dateEndMax
+                  - $valueJoin.dateEnd
+                - $valueJoin.plannedValue
+                - 0
+          - field: value
+            expr:
+              if:
+                - eq:
+                  - $currentJoin.dateEndMax
+                  - $valueJoin.dateEnd
+                - $valueJoin.indicator
+                - 0
+          - field: name
+            expr: $name
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+      - source: projBasicIndicator
+        joins:
+          - table: indicatorValuePlanByInd
+            alias: planJoin
+            left: indicatorId
+            right: indicatorId
+          - table: indicatorValueCurrentByInd
+            alias: currentJoin
+            left: indicatorId
+            right: indicatorId
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            - nempty:
+              - $valueJoin.dateEnd
+            - or:
+              - eq:
+                - $planJoin.dateEndMax
+                - $valueJoin.dateEnd
+              - eq:
+                - $currentJoin.dateEndMax
+                - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr:
+              if:
+                - eq:
+                  - $planJoin.dateEndMax
+                  - $valueJoin.dateEnd
+                - $valueJoin.plannedValue
+                - 0
+          - field: value
+            expr:
+              if:
+                - eq:
+                  - $currentJoin.dateEndMax
+                  - $valueJoin.dateEnd
+                - $valueJoin.indicator
+                - 0
+          - field: name
+            expr: $name
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+  - name: curIndicatorsSource
+    caption: Данные о показателях проекта
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: projBasicIndicator
+        joins:
+          - table: indicatorValueCurrentByInd
+            alias: currentJoin
+            left: indicatorId
+            right: indicatorId
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            - nempty:
+              - $valueJoin.dateEnd
+            - nempty:
+              - $valueJoin.plannedValue
+            - eq:
+              - $currentJoin.dateEndMax
+              - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectName
+            expr: $name
+          - field: projectCode
+            expr: $projectCode
+          - field: state
+            expr: $valueJoin.state
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr: $valueJoin.plannedValue
+          - field: value
+            expr: $valueJoin.indicator
+          - field: name
+            expr: $name
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+  - name: financialPlannedIndicator
+    caption: >-
+      Данные о плановых финансовых показателях
+    load:
+      - className: indicatorValueFinancial
+        results:
+          - field: guid
+            expr: $id
+          - field: capacityFinansical
+            expr: $desiredValue
+    index:
+      - guid
+  - name: plannedIndicator
+    caption: >-
+      Данные о плановых показателях
+    load:
+      - source: indicatorValueBasic
+        joins:
+          - table: financialPlannedIndicator
+            alias:  fpi
+            left: guid
+            right: guid
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidTargetImpl
+            expr: $guidTargetImpl
+          - field: guidBaseIndicator
+            expr: $guidBaseIndicator
+          - field: name
+            expr: $name
+          - field: dateStart
+            expr: $dateStart
+          - field: dateEnd
+            expr: $dateEnd
+          - field: plannedValue
+            expr: $plannedValue
+          - field: unit
+            expr: $unit
+          - field: indicator
+            expr: $indicator
+          - field: capacityFinansical
+            expr: $fpi.capacityFinansical
+    index:
+      - guid
+  - name: targetIndicator
+    caption: >-
+      Данные о целевых показателях
+    load:
+      - source: indicatorAll
+        joins:
+          - table: plannedIndicator
+            alias:  pi
+            left: guid
+            right: guidTargetImpl
+          - table: financialTargetImplementation
+            alias:  fti
+            left: guid
+            right: guid
+        filter:
+          and:
+            - nempty:
+              - $pi.dateStart
+            - nempty:
+              - $pi.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidTargetImpl
+            expr: $guidTargetImpl
+          - field: guidBaseIndicator
+            expr: $pi.guidBaseIndicator
+          - field: guidProj
+            expr: $guidProj
+          - field: name
+            expr: $name
+          - field: nameObj
+            expr: $nameObj
+          - field: dateStart
+            expr: $pi.dateStart
+          - field: dateEnd
+            expr: $pi.dateEnd
+          - field: plannedValue
+            expr: $pi.plannedValue
+          - field: unit
+            expr: $pi.unit
+          - field: indicator
+            expr: $pi.indicator
+          - field: budgetType
+            expr: $fti.budgetType
+          - field: measureType
+            expr: $fti.measureType
+          - field: capacityFinansical
+            expr: $pi.capacityFinansical
+          - field: planObj
+            expr: $planObj
+          - field: factObj
+            expr: $factObj
+    index:
+      - guid
+  - name: basicBudgetJoin
+    caption: >-
+      Данные о учетных объектах и их бюджете
+    load:
+      - source: basicObject
+        joins:
+          - table: targetIndicator
+            alias:  ti
+            left: guidProj
+            right: guidProj
+        filter:
+          and:
+            - nempty:
+              - $ti.guidProj
+            - nempty:
+              - $ti.budgetType
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameObj
+            expr: $nameObj
+          # start
+          - field: guidObj
+            expr: $basicbud.guidObj
+          - field: finSource
+            expr: $basicbud.finSource
+          - field: estimatedCostsValue
+            expr: $basicbud.estimatedCostsValue
+          - field: estimatedCostsDate
+            expr: $basicbud.estimatedCostsDate
+          # end
+      - source: basicObject
+        joins:
+          - table: basicBudget
+            alias:  basicbud
+            left: guidObj
+            right: guidObj
+        filter:
+          nempty:
+            - $basicbud.guidObj
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameObj
+            expr: 'Bсе блоки мероприятий/задач'
+          - field: finSource
+            expr: $basicbud.finSource
+          - field: estimatedCostsValue
+            expr: $basicbud.estimatedCostsValue
+          - field: estimatedCostsDate
+            expr: $basicbud.estimatedCostsDate
+    index:
+      - guidProj
+  - name: statusResults
+    caption: >-
+      Данные о статусах
+    index:
+      - code
+      - guid
+    load:
+      - source: statusProject
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidParent
+            expr: $guidParent
+          - field: nameProj
+            expr: $nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: ownOrgEvent
+            expr: $ownOrgEvent
+          - field: datePlannedStart
+            expr: $dateStartObj
+          - field: datePlannedEnd
+            expr: $dateEndObj
+          - field: status
+            expr: $status
+          - field: stakeholdersProj
+            expr: $stakeholdersProj
+          - field: ownerEvent
+            expr: $ownerEvent
+          - field: administratorProj
+            expr: $administratorProj
+          - field: headProj
+            expr: $headProj
+          - field: curatorProj
+            expr: $curatorProj
+  - name: roadmapResults
+    caption: >-
+      Данные о планах мероприятий
+    index:
+      - code
+      - guid
+    load:
+      - source: basicProjectCode
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidParent
+            expr: $guidParent
+          - field: nameObj
+            expr: $name
+          - field: nameProj
+            expr:
+              if:
+                - nempty:
+                  - $projectJoin.nameProj
+                - $projectJoin.nameProj
+                - 'Мероприятия без проекта'
+          - field: projectCode
+            expr: $projectCode
+          - field: ownerObj
+            expr: $ownerObj
+          - field: dateStartObj
+            expr: $dateStartObj
+          - field: dateEndObj
+            expr: $dateEndObj
+          - field: planObj
+            expr: $planObj
+          - field: factObj
+            expr: $factObj
+  - name: roadmapSource
+    caption: Данные о планах мероприятий
+    index:
+      - guid
+    load:
+      - source: roadmapResults
+        hierarchyBy:
+          id: guid
+          parent: guidParent
+          level: objLevel
+          order: objOrder
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidParent
+            expr: $guidParent
+          - field: nameObj
+            expr: $nameObj
+          - field: nameProj
+            expr: $nameProj
+          - field: ownerObj
+            expr: $ownerObj
+          - field: dateStartObj
+            expr: $dateStartObj
+          - field: dateEndObj
+            expr: $dateEndObj
+          - field: planObj
+            expr: $planObj
+          - field: factObj
+            expr: $factObj
+          - field: objLevel
+            expr: $objLevel
+          - field: objOrder
+            expr: $objOrder
+  - name: participantSource
+    caption: >-
+      Данные о составе участников
+    load:
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicobj1
+            left: guidProj
+            right: guidObj1
+          - table: basicObject
+            alias:  basicobj2
+            left: guidProj
+            right: guidObj2
+          - table: basicObject
+            alias:  basicobj3
+            left: guidProj
+            right: guidObj3
+        filter:
+          or:
+            - nempty:
+              - $basicobj1.ownerEvent
+            - nempty:
+              - $basicobj2.ownerEvent
+            - nempty:
+              - $basicobj3.ownerEvent
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.guidObj
+                - if:
+                  - eq:
+                    - $basicobj1.guidObj
+                    - $basicobj2.idActive
+                  - $basicobj2.guidObj
+                  - $basicobj1.guidObj
+          - field: guidObj1
+            expr: $basicobj1.guidObj
+          - field: guidObj2
+            expr:
+              if:
+                - eq:
+                  - $basicobj1.guidObj
+                  - $basicobj2.idActive
+                - $basicobj2.guidObj
+                - null
+          - field: guidObj3
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.guidObj
+                - null
+          - field: numObj
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.numObj
+                - if:
+                  - eq:
+                    - $basicproj.guidObj
+                    - $basicobj2.idActive
+                  - $basicobj2.numObj
+                  - $basicobj1.numObj
+          - field: numLevelObj
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - 3
+                - eq:
+                  - $basicobj1.guidObj
+                  - $basicobj2.idActive
+                - 2
+                - 1
+          - field: nameObj
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.nameObjList
+                - eq:
+                  - $basicobj1.guidObj
+                  - $basicobj2.idActive
+                - $basicobj2.nameObjList
+                - eq:
+                  - $basicproj.guidObj
+                  - $guidProj
+                - $basicproj.nameObj
+                - $basicobj1.nameObjList
+          - field: typePart
+            expr: 'Оператор активности'
+          - field: namePart
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.ownerEvent
+                - eq:
+                  - $basicobj1.guidObj
+                  - $basicobj2.idActive
+                - $basicobj2.ownerEvent
+                - eq:
+                  - $basicproj.guidObj
+                  - $guidProj
+                - $basicproj.nameObj
+                - $basicobj1.ownerEvent
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicobj1
+            left: guidProj
+            right: guidObj1
+          - table: basicObject
+            alias:  basicobj2
+            left: guidProj
+            right: guidObj2
+          - table: basicObject
+            alias:  basicobj3
+            left: guidProj
+            right: guidObj3
+        filter:
+          or:
+            - nempty:
+              - $basicobj1.ownOrgEvent
+            - nempty:
+              - $basicobj2.ownOrgEvent
+            - nempty:
+              - $basicobj3.ownOrgEvent
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.guidObj
+                - if:
+                  - eq:
+                    - $basicobj1.guidObj
+                    - $basicobj2.idActive
+                  - $basicobj2.guidObj
+                  - $basicobj1.guidObj
+          - field: guidObj1
+            expr: $basicobj1.guidObj
+          - field: guidObj2
+            expr:
+              if:
+                - eq:
+                  - $basicobj1.guidObj
+                  - $basicobj2.idActive
+                - $basicobj2.guidObj
+                - null
+          - field: guidObj3
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.guidObj
+                - null
+          - field: numObj
+            expr:
+              if:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.numObj
+                - if:
+                  - eq:
+                    - $basicproj.guidObj
+                    - $basicobj2.idActive
+                  - $basicobj2.numObj
+                  - $basicobj1.numObj
+          - field: numLevelObj
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - 3
+                - eq:
+                    - $basicobj1.guidObj
+                    - $basicobj2.idActive
+                - 2
+                - 1
+          - field: nameObj
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.nameObjList
+                - eq:
+                    - $basicobj1.guidObj
+                    - $basicobj2.idActive
+                - $basicobj2.nameObjList
+                - eq:
+                    - $basicproj.guidObj
+                    - $guidProj
+                - $basicproj.nameObj
+                - $basicobj1.nameObjList
+          - field: typePart
+            expr: 'Ответственный ОИВ/СП'
+          - field: namePart
+            expr:
+              case:
+                - eq:
+                  - $basicobj2.guidObj
+                  - $basicobj3.idActive
+                - $basicobj3.ownOrgEvent
+                - eq:
+                    - $basicobj1.guidObj
+                    - $basicobj2.idActive
+                - $basicobj2.ownOrgEvent
+                - eq:
+                    - $basicproj.guidObj
+                    - $guidProj
+                - $basicproj.nameObj
+                - $basicobj1.ownOrgEvent
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+                - $basicproj.curatorProj
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Куратор проекта'
+          - field: namePart
+            expr: $basicproj.curatorProj
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+                - $basicproj.headProj
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Руководитель проекта'
+          - field: namePart
+            expr: $basicproj.headProj
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+                - $basicproj.administratorProj
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Администратор проекта'
+          - field: namePart
+            expr: $basicproj.administratorProj
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+            - $basicproj.stakeholdersProj
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Заинтересованные стороны в реализации проекта'
+          - field: namePart
+            expr: $basicproj.stakeholdersProj
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+                - $basicproj.ownOrgEvent
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Ответственный ОИВ/СП'
+          - field: namePart
+            expr: $basicproj.ownOrgEvent
+      - source: basicProject
+        joins:
+          - table: basicObject
+            alias:  basicproj
+            left: guidProj
+            right: guidObj
+        filter:
+          nempty:
+                - $basicproj.ownerEvent
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: guidObj
+            expr: $basicproj.guidObj
+          - field: numLevelObj
+            expr: 0
+          - field: nameObj
+            expr: ''
+          - field: typePart
+            expr: 'Оператор активности'
+          - field: namePart
+            expr: $basicproj.ownerEvent
+    index:
+      - guidObj
+      - guidProj
+  - name: allIndicatorWaitResult
+    caption: >-
+      Данные о показателях проекта и мероприятий для ожидаемых результатов
+    load:
+      - source: eventBasicIndicator
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            - nempty:
+              - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidProj
+            expr: $projectJoin.guidProj
+          - field: nameProj
+            expr: $projectJoin.nameProj
+          - field: descriptProj
+            expr: $projectJoin.descriptProj
+          - field: planProj
+            expr: $planEvent
+          - field: descrOperProj
+            expr: $projectJoin.descrOperProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateStart
+            expr: $valueJoin.dateStart
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr: $valueJoin.plannedValue
+          - field: value
+            expr: $valueJoin.indicator
+          - field: indicatorValueId
+            expr: $valueJoin.guid
+          - field: indicatorId
+            expr: $indicatorId
+          - field: nameInd
+            expr: $indicatorName
+          - field: nameValueInd
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+      - source: projBasicIndicator
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            - nempty:
+              - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: guidProj
+            expr: $projectJoin.guidProj
+          - field: nameProj
+            expr: $projectJoin.nameProj
+          - field: descriptProj
+            expr: $projectJoin.descriptProj
+          - field: planProj
+            expr: $projectJoin.planProj
+          - field: descrOperProj
+            expr: $projectJoin.descrOperProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateStart
+            expr: $valueJoin.dateStart
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr: $valueJoin.plannedValue
+          - field: value
+            expr: $valueJoin.indicator
+          - field: indicatorValueId
+            expr: $valueJoin.guid
+          - field: indicatorId
+            expr: $indicatorId
+          - field: nameInd
+            expr: $indicatorName
+          - field: nameValueInd
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+  - name: projIndicatorDouble
+    # дублирование показателя в рамках проекта
+    caption: >-
+      Данные об ожидаемых результатах реализации
+    load:
+      - source: indicatorValueBasic
+        joins:
+          - table: allIndicatorWaitResult
+            alias: doubleJoin
+            left: guid
+            right: indicatorValueId
+        filter:
+            nempty:
+              - $doubleJoin.indicatorValueId
+        results:
+          - field: guid
+            expr: $guid
+          - field: countId
+            expr:
+              count:
+                - $doubleJoin.indicatorValueId
+  - name: waitResultSource
+    caption: >-
+      Данные об ожидаемых результатах реализации
+    load:
+      - source: allIndicatorWaitResult
+        joins:
+          - table: projIndicatorDouble
+            alias: doubleJoin
+            left: indicatorValueId
+            right: guid
+        filter:
+          and:
+            - nempty:
+              - $doubleJoin.guid
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: descriptProj
+            expr: $descriptProj
+          - field: planProj
+            expr: $planProj
+          - field: descrOperProj
+            expr: $descrOperProj
+          - field: plan
+            expr:
+              sum:
+                - div:
+                  - $plan
+                  - $doubleJoin.countId
+          - field: nameInd
+            expr: $nameInd
+          - field: nameValueInd
+            expr: $nameValueInd
+          - field: valueDateStart
+            expr: $valueDateStart
+          - field: valueDateEnd
+            expr: $valueDateEnd
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+      - source: allIndicatorWaitResult
+        joins:
+          - table: projIndicatorDouble
+            alias: doubleJoin
+            left: indicatorValueId
+            right: guid
+        filter:
+          and:
+            - empty:
+              - $doubleJoin.guid
+        results:
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: descriptProj
+            expr: $descriptProj
+          - field: planProj
+            expr: $planProj
+          - field: descrOperProj
+            expr: $descrOperProj
+          - field: plan
+            expr:
+              sum:
+                - $plan
+          - field: nameInd
+            expr: $nameInd
+          - field: nameValueInd
+            expr: $nameValueInd
+          - field: valueDateStart
+            expr: $valueDateStart
+          - field: valueDateEnd
+            expr: $valueDateEnd
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+      # - source: basicProject
+      #   joins:
+      #     - table: targetIndicator
+      #       alias:  ti
+      #       left: guidProj
+      #       right: guidProj
+      #   filter:
+      #     and:
+      #       - nempty:
+      #         - $ti.guidProj
+      #   results:
+    #       - field: guidProj
+    #         expr: $guidProj
+    #       - field: nameProj
+    #         expr: $nameProj
+    #       - field: descriptProj
+    #         expr: $descriptProj
+    #       - field: planProj
+    #         expr: $ti.planObj
+    #       - field: descrOperProj
+    #         expr: $descrOperProj
+    #       - field: finSource
+    #         expr: $ti.budgetType
+    #       - field: nameObj
+    #         expr: $ti.nameObj
+    #       - field: nameInd
+    #         expr: $ti.name
+    #       - field: nameValueInd
+    #         expr: $ti.unit
+    #       - field: v2017
+    #         expr:
+    #           if:
+    #             - and:
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateStart
+    #                     - 10
+    #                     - h
+    #                 - 2017
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateEnd
+    #                     - 10
+    #                     - h
+    #                 - 2017
+    #             - $ti.plannedValue
+    #             - null
+    #       - field: v2018
+    #         expr:
+    #           if:
+    #             - and:
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateStart
+    #                     - 10
+    #                     - h
+    #                 - 2018
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateEnd
+    #                     - 10
+    #                     - h
+    #                 - 2018
+    #             - $ti.plannedValue
+    #             - null
+    #       - field: v2019
+    #         expr:
+    #           if:
+    #             - and:
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateStart
+    #                     - 10
+    #                     - h
+    #                 - 2019
+    #               - eq:
+    #                 - year:
+    #                   - dateAdd:
+    #                     - $ti.dateEnd
+    #                     - 10
+    #                     - h
+    #                 - 2019
+    #             - $ti.plannedValue
+    #             - null
+    # index:
+    #   - guidInd
+  - name: finProjSource
+    caption: >-
+      Данные о финансировании проектов
+    load:
+      - source: basicProject
+        joins:
+          - table: basicBudgetJoin
+            alias:  basicbud
+            left: guidProj
+            right: guidProj
+        filter:
+          and:
+            - nempty:
+              - $basicbud.guidProj
+            - nempty:
+              - $basicbud.estimatedCostsDate
+        results:
+          - field: guidObj
+            expr: $basicbud.guidObj
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: nameObj
+            expr: $basicbud.nameObj
+          - field: finSource
+            expr: $basicbud.finSource
+          - field: v2017
+            expr:
+              if:
+                - eq:
+                  - year:
+                    - $basicbud.estimatedCostsDate
+                  - 2017
+                - $basicbud.estimatedCostsValue
+                - null
+          - field: v2018
+            expr:
+              if:
+                - eq:
+                  - year:
+                    - $basicbud.estimatedCostsDate
+                  - 2018
+                - $basicbud.estimatedCostsValue
+                - null
+          - field: v2019
+            expr:
+              if:
+                - eq:
+                  - year:
+                    - $basicbud.estimatedCostsDate
+                  - 2019
+                - $basicbud.estimatedCostsValue
+                - null
+    index:
+      - guidProj
+  - name: finResourceProject
+    caption: >-
+      Данные о финансовом обеспечении проекта
+    index:
+      - indicatorId
+    load:
+      - className: project
+        filter:
+          ne:
+            - $indicatorBudget.measureUnit.nacionalCodeBukObozn
+            - null
+        results:
+          - field: numEvent
+            expr: $indicatorBudget.obj.numEvent
+          - field: indicatorId
+            expr: $indicatorBudget.id
+          - field: guidProj
+            expr: $guid
+          - field: nameProj
+            expr: $name
+          - field: nameObj
+            expr: $indicatorBudget.obj.name
+          - field: measureUnit
+            expr: $indicatorBudget.measureUnit.nacionalCodeBukObozn
+          - field: finSource
+            expr:
+              case:
+                - eq:
+                  - $indicatorBudget.budgetType
+                  - munic
+                - ' Местные бюджеты'
+                - eq:
+                  - $indicatorBudget.budgetType
+                  - krai
+                - ' Областной бюджет'
+                - eq:
+                  - $indicatorBudget.budgetType
+                  - federal
+                - ' Федеральный бюджет'
+                - eq:
+                  - $indicatorBudget.budgetType
+                  - vnebudgetFond
+                - ' Бюджеты государственных внебюджетных фондов'
+                - eq:
+                  - $indicatorBudget.budgetType
+                  - vnebudget
+                - ' Внебюджетные источники'
+                - ''
+  - name: finResourceSource
+    caption: >-
+      Данные о финансовом обеспечении
+    index:
+      - guidProj
+    load:
+      - source: finResourceProject
+        joins:
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          ne:
+            - $valueJoin.guidTargetImpl
+            - null
+        results:
+          - field: numEvent
+            expr: $numEvent
+          - field: guidProj
+            expr: $guidProj
+          - field: nameProj
+            expr: $nameProj
+          - field: measureUnit
+            expr: $measureUnit
+          - field: finSource
+            expr: $finSource
+          - field: dateYear
+            expr:
+              year:
+                - dateAdd:
+                  - $valueJoin.dateStart
+                  - 10
+                  - h
+          - field: factYear
+            expr:
+              sum:
+                - $valueJoin.indicator
+          - field: planYear
+            expr:
+              sum:
+                - $valueJoin.plannedValue
+          - field: valueYear
+            expr:
+              sum:
+                - $valueJoin.desiredValue
+  - name: finResourceSource2
+    caption: >-
+      Данные о финансовом обеспечении
+    index:
+      - guid
+    load:
+      - className: project
+        filter:
+          and:
+            - ne:
+              - $indicatorBudget.measureUnit.nacionalCodeBukObozn
+              - null
+            - ne:
+              - $indicatorBudget.id
+              - null
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr: $name
+          - field: year
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorBudget.indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: fact
+            expr:
+              sum:
+                - $indicatorBudget.indicatorValueBasic.value
+          - field: plan
+            expr:
+              sum:
+                - $indicatorBudget.indicatorValueBasic.plannedValue
+          - field: desired
+            expr:
+              sum:
+                - $indicatorBudget.indicatorValueBasic.desiredValue
+  - name: finProgramLimSource
+    caption: >-
+      Данные об ограничениях программ
+    index:
+      - guid
+    load:
+      - className: program
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr:
+              concat:
+                - $name
+                - ' - '
+                - $code
+          - field: year
+            expr:
+              year:
+                - dateAdd:
+                  - $indicatorLimBudget.indicatorValueBasic.dateStart
+                  - 10
+                  - h
+          - field: fact
+            expr:
+              sum:
+                - $indicatorLimBudget.indicatorValueBasic.value
+          - field: plan
+            expr:
+              sum:
+                - $indicatorLimBudget.indicatorValueBasic.plannedValue
+          - field: desired
+            expr:
+              sum:
+                - $indicatorLimBudget.indicatorValueBasic.desiredValue
+  - name: finProgramSource
+    caption: >-
+      Данные о бюджете программ
+    index:
+      - guidProj
+    load:
+      - source: programProject
+        joins:
+          - table: finResourceSource2
+            alias: valueJoin
+            left: guidProj
+            right: guid
+        results:
+          - field: nameProgram
+            expr: $name
+          - field: nameProj
+            expr: $nameProj
+          - field: year
+            expr: $valueJoin.year
+          - field: fact
+            expr: $valueJoin.fact
+          - field: plan
+            expr: $valueJoin.plan
+          - field: desired
+            expr: $valueJoin.desired
+      - source: finProgramLimSource
+        results:
+          - field: nameProgram
+            expr: $name
+          - field: nameProj
+            expr: 'Ограничение'
+          - field: year
+            expr: $year
+          - field: fact
+            expr: $fact
+          - field: plan
+            expr: $plan
+          - field: desired
+            expr: $desired
+  - name: finProgramGosSource
+    caption: >-
+      Данные о сводном бюджете госпрограммы
+    index:
+      - guidProj
+    load:
+      - source: programGosProgramProject
+        joins:
+          - table: finResourceSource2
+            alias: valueJoin
+            left: guidProj
+            right: guid
+        results:
+          - field: nameProgramGos
+            expr: $name
+          - field: nameProgram
+            expr: $nameProgram
+          - field: nameProj
+            expr: $nameProj
+          - field: year
+            expr: $valueJoin.year
+          - field: fact
+            expr: $valueJoin.fact
+          - field: plan
+            expr: $valueJoin.plan
+          - field: desired
+            expr: $valueJoin.desired
+  - name: finBriefcaseSource
+    caption: >-
+      Данные о сводном бюджете портфеля
+    index:
+      - guidProj
+    load:
+      - source: briefcaseProgramProject
+        joins:
+          - table: finResourceSource2
+            alias: valueJoin
+            left: guidProj
+            right: guid
+        results:
+          - field: nameBriefcase
+            expr: $name
+          - field: nameProgram
+            expr: $nameProgram
+          - field: nameProj
+            expr: $nameProj
+          - field: year
+            expr: $valueJoin.year
+          - field: fact
+            expr: $valueJoin.fact
+          - field: plan
+            expr: $valueJoin.plan
+          - field: desired
+            expr: $valueJoin.desired
+  - name: totalKTSource
+    caption: Данные о показателях проекта и мероприятий
+    index:
+      - guid
+      - projectCode
+    load:
+      - source: eventBasicIndicator
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            # - nempty:
+            #   - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr: $valueJoin.plannedValue
+          - field: value
+            expr: $valueJoin.indicator
+          - field: name
+            expr: $name
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: ownerObj
+            expr: $ownerObj
+          - field: planEvent
+            expr: $planEvent
+          - field: factEvent
+            expr: $factEvent
+          - field: progress
+            expr: $progress
+          - field: nonfulfillment
+            expr: $nonfulfillment
+      - source: projBasicIndicator
+        joins:
+          - table: basicProject
+            alias: projectJoin
+            left: projectCode
+            right: projectCode
+          - table: indicatorValueBasic
+            alias: valueJoin
+            left: indicatorId
+            right: guidTargetImpl
+        filter:
+          and:
+            - nempty:
+              - $projectJoin.projectCode
+            - nempty:
+              - $valueJoin.guidTargetImpl
+            # - nempty:
+            #   - $valueJoin.dateEnd
+        results:
+          - field: guid
+            expr: $guid
+          - field: projectName
+            expr: $projectJoin.nameProj
+          - field: projectCode
+            expr: $projectCode
+          - field: valueDateEnd
+            expr: $valueJoin.dateEnd
+          - field: plan
+            expr: $valueJoin.plannedValue
+          - field: value
+            expr: $valueJoin.indicator
+          - field: name
+            expr: $name
+          - field: indicatorId
+            expr: $indicatorId
+          - field: indicatorName
+            expr: $indicatorName
+          - field: indicatorMeasureUnit
+            expr: $indicatorMeasureUnit
+          - field: indicatorDateStart
+            expr: $indicatorDateStart
+          - field: indicatorDateEnd
+            expr: $indicatorDateEnd
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: ownerObj
+            expr: $ownerObj
+          - field: planEvent
+            expr: $planEvent
+          - field: factEvent
+            expr: $factEvent
+          - field: progress
+            expr: $progress
+          - field: nonfulfillment
+            expr: $nonfulfillment
+  - name: eventAll
+    caption: Мероприятия
+    load:
+      - className: eventBasic
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: archive
+            expr: $archive
+          - field: projectCode
+            expr: $project_code
+          - field: guidParent
+            expr: $basicObj.guid
+          - field: project
+            expr:
+              ifNull:
+                - $project.name
+                - 'Нет проекта'
+          - field: name
+            expr: $name
+          - field: ownerObj
+            expr: $coexec_eval
+          - field: ownOrgEvent
+            expr: $ownOrg.name
+          - field: dateStartObj
+            expr: $datePlannedStart
+          - field: dateEndObj
+            expr: $datePlannedEnd
+          - field: planObj
+            expr:
+              ifNull:
+                - $plan
+                - '-'
+          - field: factObj
+            expr:
+              ifNull:
+                - $fact
+                - $result.fact
+  - name: eventControlAll
+    caption: Контрольные точки
+    load:
+      - className: eventControl
+        filter:
+          ne:
+            - $archive
+            - true
+        results:
+          - field: guid
+            expr: $guid
+          - field: name
+            expr: $name
+          - field: archive
+            expr: $archive
+          - field: project
+            expr:
+              ifNull:
+                - $project.name
+                - 'Нет проекта'
+          - field: datePlannedEnd
+            expr: $datePlannedEnd
+          - field: state
+            expr:
+              if:
+                - eq:
+                  - $state
+                  - new
+                - 'Планирование'
+                - if:
+                  - eq:
+                    - $state
+                    - work
+                  - 'В работе'
+                  - if:
+                    - eq:
+                      - $state
+                      - planningHead
+                    - 'Утверждение руководителем'
+                    - if:
+                      - eq:
+                        - $state
+                        - planningCurator
+                      - 'Утверждение куратором'
+                      - if:
+                        - eq:
+                          - $state
+                          - inaccepted
+                        - 'Утверждена'
+                        - if:
+                          - eq:
+                            - $state
+                            - fin
+                          - 'Закрыта'
+                          - ''
+          - field: plan
+            expr: $plan
+          - field: fact
+            expr: $fact
+    index:
+      - guid
+reports:
+  - name: assignmentReport
+    caption: Выполненные поручения
+    sheets:
+      - name: assignmentReport
+        caption: >-
+          Выполненные поручения
+        type: aggregation
+        needFilterMessage: Выберите проект/мероприятие
+        source: assignment
+        fetch:
+          basicObj: $basicObj
+          name: $name
+          dateStart: $dateStart
+          dateEnd: $dateEnd
+          discript: $discript
+          owner: $owner
+          head: $head
+          responsible: $responsible
+          answ: $answ
+        sort:
+          basicObj: asc
+        columns:
+          - field: basicObj
+            caption: Проект/мероприятие
+            format: string
+          - field: name
+            caption: Тема поручения
+            format: string
+          - field: dateStart
+            caption: >-
+              Дата инициации
+            format: date
+          - field: dateEnd
+            caption: >-
+              Дата выполнения
+            format: date
+          - field: discript
+            caption: >-
+              Полная формулировка
+            format: string
+          - field: owner
+            caption: >-
+              Модератор
+            format: string
+          - field: head
+            caption: >-
+              Инициатор
+            format: string
+          - field: responsible
+            caption: >-
+              Ответственный
+            format: string
+          - field: answ
+            caption: >-
+              Результат
+            format: string
+        groups:
+          fields:
+            - project
+  - name: statusProj
+    caption: Список проектов и статусов
+    sheets:
+      - name: statusProj
+        caption: >-
+          Список проектов и статусов
+        type: aggregation
+        source: statusResults
+        fetch:
+          datePlannedStart: $datePlannedStart
+          datePlannedEnd: $datePlannedEnd
+          guidObj: $guidObj
+          guidProj: $guidProj
+          nameProj: $nameProj
+          status: $status
+          ownOrgEvent: $ownOrgEvent
+          stakeholdersProj: $stakeholdersProj
+          ownerEvent: $ownerEvent
+          administratorProj: $administratorProj
+          headProj: $headProj
+          curatorProj: $curatorProj
+        params:
+          intervalStart:
+            format: date
+            caption: Период с
+            # default: $monthStart
+          intervalEnd:
+            format: date
+            caption: по
+            # default: $monthEnd
+        sort:
+          nameProj: asc
+        filter:
+          and:
+            - gte:
+              - $datePlannedStart
+              - ':intervalStart'
+            - lte:
+              - $datePlannedEnd
+              - ':intervalEnd'
+        columns:
+          - field: nameProj
+            caption: >-
+              Наименование проекта
+            format: string
+          - field: datePlannedStart
+            caption: >-
+              Дата начала плановая
+            format: date
+          - field: datePlannedEnd
+            caption: >-
+              Дата завершения плановая
+            format: date
+          - field: status
+            caption: Статус
+            format: string
+            filter: true
+          - field: curatorProj
+            caption: Куратор
+            format: string
+          - field: headProj
+            caption: Руководитель
+            format: string
+          - field: administratorProj
+            caption: Администратор
+            format: string
+          - field: ownerEvent
+            caption: Ответственный
+            format: string
+          - field: ownOrgEvent
+            caption: Ответственное ведомство
+            format: string
+          - field: stakeholdersProj
+            caption: Участники
+            format: string
+            filter: true
+        groups:
+          fields:
+            - nameProj
+            - datePlannedStart
+            - datePlannedEnd
+            - status
+            - curatorProj
+            - headProj
+            - administratorProj
+            - ownerEvent
+            - ownOrgEvent
+  - name: roadmap
+    caption: План мероприятий приоритетного проекта
+    sheets:
+      - name: roadmap
+        caption: >-
+          План мероприятий приоритетного проекта
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: roadmapSource
+        fetch:
+          dateEndObj: $dateEndObj
+          dateStartObj: $dateStartObj
+          factObj: $factObj
+          guidObj: $guidObj
+          guidProj: $guidProj
+          nameObj: $nameObj
+          nameProj: $nameProj
+          ownerObj: $ownerObj
+          planObj: $planObj
+          objLevel: $objLevel
+          objOrder: $objOrder
+        params:
+          intervalStart:
+            format: date
+            caption: Период с
+            default: $monthStart
+          intervalEnd:
+            format: date
+            caption: по
+            default: $monthEnd
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: roadmapSource
+              field: nameProj
+              sort:
+                nameProj: asc
+        styles:
+          objLevel:
+            '1': hlevel-1
+            '2': hlevel-2
+            '3': hlevel-3
+            '4': hlevel-4
+            '5': hlevel-5
+            '6': hlevel-6
+        sort:
+          nameProj: asc
+          objOrder: asc
+        filter:
+          and:
+            - or:
+              - and:
+                - gte:
+                  - $dateStartObj
+                  - ':intervalStart'
+                - lte:
+                  - $dateStartObj
+                  - ':intervalEnd'
+              - and:
+                - gte:
+                  - $dateEndObj
+                  - ':intervalStart'
+                - lte:
+                  - $dateEndObj
+                  - ':intervalEnd'
+              - and:
+                - lte:
+                  - $dateStartObj
+                  - ':intervalStart'
+                - gte:
+                  - $dateEndObj
+                  - ':intervalEnd'
+            - eq:
+              - $nameProj
+              - ':nameProjFilter'
+        columns:
+          - field: nameObj
+            caption: >-
+              Наименование блока мероприятий/задачи/мероприятия
+            format: string
+          - field: ownerObj
+            caption: Ответственный
+            format: string
+          - field: dateStartObj
+            caption: >-
+              Дата начала выполнения блока мероприятий (задачи,
+              мероприятия)
+            format: date
+          - field: dateEndObj
+            caption: >-
+              Дата завершения выполнения блока мероприятий (задачи,
+              мероприятия)
+            format: date
+          - field: planObj
+            caption: >-
+              Ожидаемый управленческий результат/ ключевое
+              событие
+            format: string
+          - field: factObj
+            caption: >-
+              Фактически достигнутый результат / ключевое событие
+            format: string
+  - name: eventAllReport
+    caption: Мероприятия
+    sheets:
+      - name: eventAllReport
+        caption: >-
+          Мероприятия
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: eventAll
+        fetch:
+          project: $project
+          dateEndObj: $dateEndObj
+          dateStartObj: $dateStartObj
+          factObj: $factObj
+          guidObj: $guidObj
+          guidProj: $guidProj
+          name: $name
+          ownerObj: $ownerObj
+          planObj: $planObj
+          objLevel: $objLevel
+          objOrder: $objOrder
+        sort:
+          project: asc
+        columns:
+          - field: project
+            caption: Проект
+            format: string
+            filter:
+              source: eventAll
+              field: project
+              sort:
+                nameObj: asc
+          - field: name
+            caption: Наименование блока мероприятий/задачи/мероприятия
+            format: string
+          - field: dateStartObj
+            caption: >-
+              Дата начала
+            format: date
+          - field: dateEndObj
+            caption: >-
+              Дата завершения
+            format: date
+          - field: planObj
+            caption: >-
+              Ожидаемый результат
+              событие
+            format: string
+          - field: factObj
+            caption: >-
+              Фактически достигнутый результат
+            format: string
+        groups:
+          fields:
+            - project
+  - name: eventControlAllReport
+    caption: Контрольные точки
+    sheets:
+      - name: eventControlAllReport
+        caption: Контрольные точки
+        needFilterMessage: Выберите контрольную точку
+        type: aggregation
+        source: eventControlAll
+        fetch:
+          id: $guid
+          project: $project
+          name: $name
+          datePlannedEnd: $datePlannedEnd
+          state: $state
+          plan: $plan
+          fact: $fact
+        sort:
+          project: asc
+        columns:
+          - field: project
+            caption: Проект
+            format: string
+            filter:
+              source: eventControlAll
+              field: project
+              sort:
+                name: asc
+          - field: name
+            caption: Контрольная точка
+            format: string
+          - field: datePlannedEnd
+            caption: Дата КТ
+            format: date
+          - field: state
+            caption: Статус
+            format: string
+          - field: plan
+            caption: Ожидаемый результат
+            format: string
+          - field: fact
+            caption: Фактически достигнутый результат
+            format: string
+        groups:
+          fields:
+            - project
+  - name: participant
+    caption: Состав участников
+    sheets:
+      - name: participant
+        caption: >-
+          Состав участников
+        type: aggregation
+        needFilterSet: true
+        needFilterMessage: Выберите проект
+        source: participantSource
+        fetch:
+          guidObj: $guidObj
+          numLevelObj: $numLevelObj
+          numObj: $numObj
+          guidObj1: $guidObj1
+          guidObj2: $guidObj2
+          guidObj3: $guidObj3
+          guidProj: $guidProj
+          nameProj: $nameProj
+          nameObj: $nameObj
+          typePart: $typePart
+          namePart: $namePart
+        filter:
+          or:
+            - and:
+              - nempty:
+                - $guidObj3
+              - nempty:
+                - $guidObj2
+              - nempty:
+                - $guidObj1
+              - nempty:
+                - $guidProj
+            - and:
+              - empty:
+                - $guidObj3
+              - nempty:
+                - $guidObj2
+              - nempty:
+                - $guidObj1
+              - nempty:
+                - $guidProj
+            - and:
+              - empty:
+                - $guidObj3
+              - empty:
+                - $guidObj2
+              - nempty:
+                - $guidObj1
+              - nempty:
+                - $guidProj
+            - and:
+              - empty:
+                - $guidObj3
+              - empty:
+                - $guidObj2
+              - empty:
+                - $guidObj1
+              - nempty:
+                - $guidProj
+        sort:
+          nameProj: asc
+          numLevelObj: asc
+          numObj: asc
+          typePart: asc
+          namePart: asc
+        columns:
+          - field: nameProj
+            caption: Проект
+            format: string
+            filter:
+              source: participantSource
+              field: nameProj
+              sort:
+                nameProj: asc
+          - field: nameObj
+            caption: >-
+              Наименование блока мероприятий/задачи/мероприятия
+            format: string
+          - caption: Состав участников
+            columns:
+              - field: typePart
+                caption: >-
+                  Вид деятельности
+                format: string
+              - field: namePart
+                caption: >-
+                  Наименование
+                format: string
+        groups:
+          fields:
+            - guidProj
+            - nameProj
+            - guidObj1
+            - guidObj2
+            - guidObj3
+            - nameObj
+            - typePart
+  - name: waitResult
+    caption: 'Ожидаемые результаты реализации проекта'
+    sheets:
+      - name: waitResult
+        caption: >-
+          Ожидаемые результаты реализации проекта
+        type: pivot
+        source: waitResultSource
+        fetch:
+          # guidProj: $guidProj
+          nameProj: $nameProj
+          descriptProj:
+            ifNull:
+              - $descriptProj
+              - '-'
+          planProj:
+            ifNull:
+              - $planProj
+              - '-'
+          descrOperProj:
+            ifNull:
+              - $descrOperProj
+              - '-'
+          nameInd:
+            ifNull:
+              - $nameInd
+              - '-'
+          nameValueInd:
+            ifNull:
+              - $nameValueInd
+              - '-'
+          date:
+            year:
+              - dateAdd:
+                - $valueDateStart
+                - 10
+                - h
+          plan: $plan
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: waitResultSource
+              field: nameProj
+              sort:
+                nameProj: asc
+        sort:
+          nameProj: asc
+          nameInd: asc
+        filter:
+          eq:
+            - $nameProj
+            - ':nameProjFilter'
+        data:
+          - plan
+        aggregations:
+          - sum
+        customizable: false
+        rows:
+          - nameInd
+          - nameValueInd
+        columns:
+          - descriptProj
+          - planProj
+          - descrOperProj
+          - date
+          # - date
+        captions:
+          descriptProj: 'Цель проекта'
+          descrOperProj: 'Описание модели функционирования результатов проекта'
+          planProj: 'Результаты проекта/блока мероприятий'
+          nameInd: 'Показатель'
+          nameValueInd: 'Базовое значение'
+          date: 'Период, год'
+          plan: 'Значение показателя'
+
+      #   type: aggregation
+      #   source: waitResultSource
+      #   fetch:
+      #     guidProj: $guidProj
+      #     nameProj: $nameProj
+      #     descriptProj: $descriptProj
+      #     planProj: $planProj
+      #     descrOperProj: $descrOperProj
+      #     nameInd: $nameInd
+      #     nameValueInd: $nameValueInd
+      #     v2017:
+      #       sum:
+      #         - if:
+      #           - eq:
+      #             - year:
+      #               - dateAdd:
+      #                 - $valueDateStart
+      #                 - 10
+      #                 - h
+      #             - 2017
+      #           - $plan
+      #           - 0
+      #     v2018:
+      #       sum:
+      #         - if:
+      #           - eq:
+      #             - year:
+      #               - dateAdd:
+      #                 - $valueDateStart
+      #                 - 10
+      #                 - h
+      #             - 2018
+      #           - $plan
+      #           - 0
+      #     v2019:
+      #       sum:
+      #         - if:
+      #           - eq:
+      #             - year:
+      #               - dateAdd:
+      #                 - $valueDateStart
+      #                 - 10
+      #                 - h
+      #             - 2019
+      #           - $plan
+      #           - 0
+      #   params:
+      #     nameProjFilter:
+      #       caption: Проект
+      #       selectQuery:
+      #         source: waitResultSource
+      #         field: nameProj
+      #         sort:
+      #           nameProj: asc
+      #   sort:
+      #     nameProj: asc
+      #     nameInd: asc
+      #   filter:
+      #     and:
+      #       - eq:
+      #         - $nameProj
+      #         - ':nameProjFilter'
+      #   columns:
+      #     - field: descriptProj
+      #       caption: >-
+      #         Цель проекта
+      #       format: string
+      #     - field: descrOperProj
+      #       caption: >-
+      #         Описание модели функционирования
+      #         результатов проекта
+      #       format: string
+      #     - field: planProj
+      #       caption: >-
+      #         Результаты проекта/блока
+      #         мероприятий
+      #       format: string
+      #     - field: nameInd
+      #       caption: >-
+      #         Наименование показателя
+      #       format: string
+      #     - field: nameValueInd
+      #       caption: Единица изменения
+      #       format: string
+      #     - caption: Значение показателя
+      #       columns:
+      #         - field: v2017
+      #           caption: 2017 г.
+      #           format: string
+      #         - field: v2018
+      #           caption: 2018 г.
+      #           format: string
+      #         - field: v2019
+      #           caption: 2019 г.
+      #           format: string
+      #   groups:
+      #     fields:
+      #       - nameProj
+      #       - descriptProj
+      #       - descrOperProj
+      #       - planProj
+  - name: allIndicators
+    caption: Показатели проекта
+    sheets:
+      - name: allIndicators
+        caption: >-
+          Показатели проекта
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: allIndicatorsSource
+        fetch:
+          projectName: $projectName
+          name: $name
+          indicatorFullName:
+            concat:
+              - $indicatorName
+              - ' ('
+              - $indicatorMeasureUnit
+              - ')'
+          plan:
+            sum:
+              - $plan
+          value:
+            sum:
+              - $value
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: allIndicatorsSource
+              field: projectName
+              sort:
+                projectName: asc
+        sort:
+          projectName: asc
+          name: asc
+          indicatorFullName: asc
+        filter:
+          and:
+            # - gte:
+            #   - $dateStartObj
+            #   - ':intervalStart'
+            # - lte:
+            #   - $dateStartObj
+            #   - ':intervalEnd'
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $name
+        columns:
+          - field: name
+            caption: >-
+              Проект/Мероприятие
+            format: string
+          - field: indicatorFullName
+            caption: Показатель
+            format: string
+          - field: plan
+            caption: План
+            format: string
+          - field: value
+            caption: Утвержденный факт
+            format: string
+  - name: curIndicators
+    caption: Текущие показатели проекта
+    sheets:
+      - name: curIndicators
+        caption: >-
+          Текущие показатели проекта
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: curIndicatorsSource
+        fetch:
+          projectName: $projectName
+          name: $name
+          state: $state
+          valueDateEnd: $valueDateEnd
+          indicatorFullName:
+            concat:
+              - $indicatorName
+              - ' ('
+              - $indicatorMeasureUnit
+              - ')'
+          plan: $plan
+          value: $value
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: curIndicatorsSource
+              field: projectName
+              sort:
+                projectName: asc
+        sort:
+          projectName: asc
+          name: asc
+          indicatorName: asc
+          valueDateEnd: desc
+        filter:
+          and:
+            # - gte:
+            #   - $dateStartObj
+            #   - ':intervalStart'
+            # - lte:
+            #   - $dateStartObj
+            #   - ':intervalEnd'
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $name
+        columns:
+          # - field: name
+          #   caption: >-
+          #     Мероприятие
+          #   format: string
+          #   filter: true
+          - field: indicatorFullName
+            caption: Показатель
+            format: string
+          - field: valueDateEnd
+            caption: Значение на дату
+            format: date
+          - field: plan
+            caption: План
+            format: string
+          - field: value
+            caption: Утвержденный факт
+            format: string
+  - name: risk
+    caption: Управление рисками
+    sheets:
+      - name: risk
+        caption: >-
+          Управление рисками
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: riskSource
+        fetch:
+          projectName: $projectName
+          riskName: $riskName
+          effect: $effect
+          eventResp: $eventResp
+          probability: $probability
+          level: $level
+          period: $period
+          riskPerson: $riskPerson
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: riskSource
+              field: projectName
+              sort:
+                projectName: asc
+        sort:
+          projectName: asc
+          riskName: asc
+        filter:
+          and:
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $riskName
+        columns:
+          # - field: name
+          #   caption: >-
+          #     Мероприятие
+          #   format: string
+          #   filter: true
+          - field: riskName
+            caption: Наименование риска
+            format: string
+          - field: effect
+            caption: Ожидаемые эффекты
+            format: string
+          - field: eventResp
+            caption: Мероприятия по реагированию
+            format: string
+          - field: probability
+            caption: Вероятность
+            format: string
+          - field: level
+            caption: Уровень влияния
+            format: string
+          - field: period
+            caption: Периодичность мониторинга
+            format: string
+          - field: riskPerson
+            caption: Ответственный за управление риском
+            format: string
+        groups:
+          fields:
+            - riskName
+            - effect
+            - probability
+            - level
+            - period
+            - riskPerson
+  - name: opportunity
+    caption: Управление возможностями
+    sheets:
+      - name: opportunity
+        caption: >-
+          Управление возможностями
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: opportunitySource
+        fetch:
+          projectName: $projectName
+          opportunityName: $opportunityName
+          effect: $effect
+          eventResp: $eventResp
+          probability: $probability
+          level: $level
+          period: $period
+          opportunityPerson: $opportunityPerson
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: opportunitySource
+              field: projectName
+              sort:
+                projectName: asc
+        sort:
+          projectName: asc
+          opportunityName: asc
+        filter:
+          and:
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $opportunityName
+        columns:
+          - field: opportunityName
+            caption: Наименование возможности
+            format: string
+          - field: effect
+            caption: Ожидаемые эффекты
+            format: string
+          - field: eventResp
+            caption: Мероприятия по реагированию
+            format: string
+          - field: probability
+            caption: Вероятность
+            format: string
+          - field: level
+            caption: Уровень влияния
+            format: string
+          - field: period
+            caption: Периодичность мониторинга
+            format: string
+          - field: opportunityPerson
+            caption: Ответственный за управление достижением возможности
+            format: string
+        groups:
+          fields:
+            - opportunityName
+            - effect
+            - probability
+            - level
+            - period
+            - opportunityPerson
+  - name: infoTransfer
+    caption: План коммуникаций
+    sheets:
+      - name: infoTransfer
+        caption: >-
+          План коммуникаций
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: infoTransferSource
+        fetch:
+          projectName: $projectName
+          typeInfo: $typeInfo
+          fromInfo: $fromInfo
+          toInfo: $toInfo
+          channelInfo: $channelInfo
+          dateTransfer: $dateTransfer
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: infoTransferSource
+              field: projectName
+              sort:
+                projectName: asc
+        sort:
+          projectName: asc
+          typeInfo: asc
+        filter:
+          and:
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $typeInfo
+        columns:
+          - field: typeInfo
+            caption: Какая информация передается
+            format: string
+          - field: fromInfo
+            caption: Кто передает информацию
+            format: string
+          - field: toInfo
+            caption: Кому передается информация
+            format: string
+          - field: dateTransfer
+            caption: Когда передает информацию
+            format: string
+          - field: channelInfo
+            caption: Как передается информация
+            format: string
+  - name: totalKT
+    caption: Итог КТ
+    sheets:
+      - name: totalKT
+        caption: >-
+          Итог КТ
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: totalKTSource
+        fetch:
+          projectName: $projectName
+          name: $name
+          indicatorName: $indicatorName
+          ownerObj: $ownerObj
+          datePlannedEnd: $datePlannedEnd
+          factEvent: $factEvent
+          planEvent: $planEvent
+          nonfulfillment: $nonfulfillment
+          progress: $progress
+          planSum:
+            sum:
+              - if:
+                - eq:
+                  - year:
+                    - dateAdd:
+                      - $indicatorDateEnd
+                      - 10
+                      - h
+                  - ':planParam'
+                - $plan
+                - 0
+          factSum:
+            sum:
+              - if:
+                - eq:
+                  - year:
+                    - dateAdd:
+                      - $indicatorDateEnd
+                      - 10
+                      - h
+                  - ':factParam'
+                - $value
+                - 0
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: allIndicatorsSource
+              field: projectName
+              sort:
+                projectName: asc
+          factParam:
+            format: int
+            caption: 'Факт (год)'
+          planParam:
+            format: int
+            caption: 'План на (год)'
+        sort:
+          projectName: asc
+          name: asc
+          indicatorFullName: asc
+        filter:
+          and:
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - nempty:
+              - $name
+            # - eq:
+            #   - year:
+            #     - dateAdd:
+            #       - $datePlannedEnd
+            #       - 10
+            #       - h
+            #   - ':planParam'
+            # - eq:
+            #   - year:
+            #     - dateAdd:
+            #       - $datePlannedEnd
+            #       - 10
+            #       - h
+            #   - ':factParam'
+        columns:
+          - field: name
+            caption: >-
+              Контрольная точка (мероприятие)
+            format: string
+            filter: true
+          - field: indicatorName
+            caption: >-
+              Показатель
+            format: string
+            filter: true
+          - field: ownerObj
+            caption: Ответственный
+            format: string
+          - field: datePlannedEnd
+            caption: Контрольный срок исполнения
+            format: date
+          - field: factSum
+            caption: 'Факт {$factParam} год'
+            format: string
+          - field: planSum
+            caption: 'План на {$planParam} год'
+            format: string
+          - field: factEvent
+            caption: 'Фактический срок исполнения, фактически достигнутый результат с описанием качественных характеристик полученного результата'
+            format: string
+          - field: progressFix
+            caption: 'Степень достижения/процент выполнения, %'
+            format: string
+          - field: planEvent
+            caption: 'Прогноз выполнения до конца года с описанием качественных характеристик полученного результата'
+            format: string
+          - field: nonfulfillment
+            caption: 'Обоснование отклонения от запланированных результатов'
+            format: string
+        groups:
+          fields:
+            - name
+            - datePlannedEnd
+            - ownerObj
+            - factEvent
+            - planEvent
+            - nonfulfillment
+            - progress
+        process:
+          progressFix: 'round($progress, 2)'
+  - name: teamActive
+    caption: Оценка деятельности команды
+    sheets:
+      - name: teamActive
+        caption: >-
+          Оценка деятельности команды
+        type: aggregation
+        needFilterMessage: Выберите проект
+        source: teamActiveSource
+        fetch:
+          projectName: $projectName
+          fio: $fio
+          position: $position
+          role: $role
+          mark: $mark
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: teamActiveSource
+              field: projectName
+              sort:
+                projectName: asc
+          evalTypeFilter:
+            caption: Тип оценки
+            selectQuery:
+              source: teamActiveSource
+              field: evalType
+              sort:
+                evalType: asc
+        sort:
+          fio: asc
+          # typeInfo: asc
+        filter:
+          and:
+            - eq:
+              - $projectName
+              - ':nameProjFilter'
+            - eq:
+              - $evalType
+              - ':evalTypeFilter'
+            # - nempty:
+            #   - $typeInfo
+        columns:
+          - field: fio
+            caption: ФИО
+            format: string
+          - field: position
+            caption: Должность
+            format: string
+          - field: role
+            caption: Роль в проекте
+            format: string
+          - field: mark
+            caption: Оценка деятельности
+            format: string
+  - name: finResource
+    caption: Финансовое обеспечение реализации регионального проекта
+    sheets:
+      - name: finResource
+        caption: >-
+          Финансовое обеспечение реализации регионального проекта
+        type: pivot
+        source: finResourceSource
+        fetch:
+          finSource: $finSource
+          measureUnit: $measureUnit
+          dateYear: $dateYear
+          valueYear: $valueYear
+        params:
+          nameProjFilter:
+            caption: Проект
+            selectQuery:
+              source: finResourceSource
+              field: nameProj
+              sort:
+                nameProj: asc
+          measureUnitFilter:
+            caption: Единица изменения
+            selectQuery:
+              source: finResourceSource
+              field: measureUnit
+              sort:
+                measureUnit: asc
+        filter:
+          and:
+            - ne:
+              - $finSource
+              - null
+            - eq:
+              - $nameProj
+              - ':nameProjFilter'
+            - eq:
+              - $measureUnit
+              - ':measureUnitFilter'
+        sort:
+          finSource: desc
+        data:
+          - valueYear
+        customizable: false
+        aggregations:
+          - sum
+        rows:
+          - finSource
+        columns:
+          - dateYear
+        captions:
+          finSource: 'Наименование результата и источники финансирования'
+          dateYear: 'Оценка расходов по годам'
+          valueYear: 'Расходы'
+        formating:
+          replaceNulls: "-"
+        # columns:
+        #   - field: nameProj
+        #     caption: Список проектов в Портфеле
+        #     format: string
+        #   - caption: '{$yearFilter}'
+        #     columns:
+        #       - field: planYearF
+        #         caption: План
+        #         format: string
+        #       - field: factYearF
+        #         caption: Факт
+        #         format: string
+        #       - field: valueYearF
+        #         caption: Прогноз
+        #         format: string
+        #   - caption: '{$yearFilter2}'
+        #     columns:
+        #       - field: planYear2F
+        #         caption: План
+        #         format: string
+        #       - field: factYear2F
+        #         caption: Факт
+        #         format: string
+        #       - field: valueYear2F
+        #         caption: Прогноз
+        #         format: string
+        #   - caption: '{$yearFilter3}'
+        #     columns:
+        #       - field: planYear3F
+        #         caption: План
+        #         format: string
+        #       - field: factYear3F
+        #         caption: Факт
+        #         format: string
+        #       - field: valueYear3F
+        #         caption: Прогноз
+        #         format: string
+        # groups:
+        #   fields:
+        #     - guidProgram
+        # process:
+        #   planYearF:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $planYear
+        #   factYearF:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $factYear
+        #   valueYearF:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $valueYear
+        #   planYear2F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $planYear2
+        #   factYear2F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $factYear2
+        #   valueYear2F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $valueYear2
+        #   planYear3F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $planYear3
+        #   factYear3F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $factYear3
+        #   valueYear3F:
+        #     if:
+        #       - or:
+        #         - eq:
+        #           - $num
+        #           - 16
+        #         - eq:
+        #           - $numProgram
+        #           - 10
+        #       - '-'
+        #       - $valueYear3
+  - name: finProgram
+    caption: 'Сводный бюджет программы (тыс. руб.)'
+    sheets:
+      - name: finProgram
+        caption: >-
+          Сводный бюджет программы (тыс. руб.)
+        type: pivot
+        source: finProgramSource
+        fetch:
+          nameProj: $nameProj
+          year: $year
+          fact: $fact
+          plan: $plan
+          desired: $desired
+        params:
+          nameFilter:
+            caption: Программа
+            selectQuery:
+              source: finProgramSource
+              field: nameProgram
+              sort:
+                nameProgram: asc
+        filter:
+          and:
+            - eq:
+              - $nameProgram
+              - ':nameFilter'
+            - nempty:
+              - $year
+            - nempty:
+              - $nameProj
+        data:
+          - plan
+          - fact
+          - desired
+        aggregations:
+          - sum
+        customizable: false
+        pivotHideColTotals: false
+        pivotHideRowTotals: false
+        rows:
+          - nameProj
+        columns:
+          - year
+        captions:
+          nameProj: 'Список проектов'
+          year: 'Год'
+          fact: 'Факт'
+          plan: 'План'
+          desired: 'Прогноз'
+        sort:
+          nameProj: asc,
+          year: asc
+        formating:
+          replaceNulls: "-"
+  - name: finBriefcase
+    caption: 'Сводный бюджет портфеля (тыс. руб.)'
+    sheets:
+      - name: finBriefcase
+        caption: >-
+          Сводный бюджет портфеля (тыс. руб.)
+        type: pivot
+        source: finBriefcaseSource
+        fetch:
+          nameProgram: $nameProgram
+          nameProj: $nameProj
+          year: $year
+          fact: $fact
+          plan: $plan
+          desired: $desired
+        params:
+          nameFilter:
+            caption: Портфель
+            selectQuery:
+              source: finBriefcaseSource
+              field: nameBriefcase
+              sort:
+                nameBriefcase: asc
+        filter:
+          and:
+            - eq:
+              - $nameBriefcase
+              - ':nameFilter'
+            - nempty:
+              - $year
+            - nempty:
+              - $nameProj
+        data:
+          - plan
+          - fact
+          - desired
+        aggregations:
+          - sum
+        customizable: false
+        pivotHideColTotals: false
+        pivotHideRowTotals: false
+        rows:
+          - nameProgram
+          - nameProj
+        columns:
+          - year
+        captions:
+          nameProgram: 'Список программ'
+          nameProj: 'Список проектов'
+          year: 'Год'
+          fact: 'Факт'
+          plan: 'План'
+          desired: 'Прогноз'
+        sort:
+          nameProgram: asc
+          nameProj: asc,
+          year: asc
+        formating:
+          replaceNulls: "-"
+  - name: finProgramGos
+    caption: 'Сводный бюджет гос.программы (тыс. руб.)'
+    sheets:
+      - name: finProgramGos
+        caption: 'Сводный бюджет гос.программы (тыс. руб.)'
+        type: pivot
+        source: finProgramGosSource
+        fetch:
+          nameProgram: $nameProgram
+          nameProj: $nameProj
+          year: $year
+          fact: $fact
+          plan: $plan
+          desired: $desired
+        params:
+          nameFilter:
+            caption: Госпрограмма
+            selectQuery:
+              source: finProgramGosSource
+              field: nameProgramGos
+              sort:
+                nameProgramGos: asc
+        filter:
+          and:
+            - eq:
+              - $nameProgramGos
+              - ':nameFilter'
+            - nempty:
+              - $year
+            - nempty:
+              - $nameProj
+        data:
+          - plan
+          - fact
+          - desired
+        aggregations:
+          - sum
+        customizable: false
+        pivotHideColTotals: false
+        pivotHideRowTotals: false
+        rows:
+          - nameProgram
+          - nameProj
+        columns:
+          - year
+        captions:
+          nameProgram: 'Список программ'
+          nameProj: 'Список проектов'
+          year: 'Год'
+          fact: 'Факт'
+          plan: 'План'
+          desired: 'Прогноз'
+        sort:
+          nameProgram: asc
+          nameProj: asc,
+          year: asc
+        formating:
+          replaceNulls: "-"

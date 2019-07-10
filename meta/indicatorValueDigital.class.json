@@ -1,0 +1,21 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "value|[|plannedValue|](|dateStart|-|dateEnd|)",
+  "name": "indicatorValueDigital",
+  "version": "",
+  "caption": "Значения показателей на период (цифровые)",
+  "ancestor": "indicatorValueBasic",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+
+  ],
+  "metaVersion": "2.0.61"
+}

@@ -1,0 +1,16 @@
+{
+  "code": "dictionary.measureType", 
+  "container": null, 
+  "pathChains": [], 
+  "title": "", 
+  "orderNumber": 30, 
+  "type": 1, 
+  "hint": null, 
+  "collection": null, 
+  "classname": "measureType", 
+  "caption": "Классификатор показателей", 
+  "sorting": [], 
+  "url": null, 
+  "metaVersion": "2.0.61", 
+  "conditions": []
+}

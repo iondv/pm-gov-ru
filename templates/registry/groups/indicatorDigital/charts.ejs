@@ -1,0 +1,181 @@
+<!-- pm-gov-ru\templates\registry\groups\indicatroDigital/charts -->
+<%
+
+%>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% stylesheet(`${module}/app-vendor/highcharts/css/highcharts.css`) -%>
+<% script(`${module}/app-static/js/highcharts.js`) -%>
+
+<div class="row chart-row" style="display: none">
+  <div class="col-md-4">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <div class="attr-content">
+          <div class="attr-content-title">
+            Достижение
+          </div>
+          <div class="pie-chart form-attr-project-chart"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-8">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <div class="attr-content">
+          <div class="attr-content-title">
+            Динамика
+          </div>
+          <div class="column-chart form-attr-project-chart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    var DATE_ATTR = 'dateStart';
+    var $row = $('.chart-row');
+    var $form = $row.closest('form');
+    var options = $form.data('options');
+    var listUrl = `registry/api/indicatorBasic@pm-gov-ru/${options.id}/indicatorValueBasic`;
+
+    $.post(listUrl, {
+      draw: 1,
+      eagerLoading: ["state"],
+      start: 0,
+      length: 0
+    }).done(function (data) {
+      var items = data && data.data;
+      if (items instanceof Array && items.length) {
+        $row.show();
+        items = sortByDate(items);
+        initPieChart(items);
+        initColumnChart(items);
+      }
+    });
+
+    function sortByDate (items) {
+      return items.sort((a, b)=> (new Date(b[DATE_ATTR])).getDate() - (new Date(a[DATE_ATTR])).getDate());
+    }
+
+    function filterByValue (items) {
+      return items.filter(item => item.value !== null);
+    }
+
+    function initPieChart (items) {
+      var $chart = $row.find('.pie-chart');
+      var valueT = 0;
+      var valueF = 0;
+      for (var i = 0; i < items.length; ++i) {
+        if (items[i].endProgress === true) {
+          valueT++;
+        } else {
+          valueF++;
+        }
+      }
+      Highcharts.chart($chart.get(0), {
+        credits: false,
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          //margin: [0,0,-50,-150],
+          spacing: [0,0,0,0],
+          type: 'pie'
+        },
+        title: false,
+        tooltip: {
+          pointFormat: '<b>{point.y}</b>',
+          headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        legend: {
+          align: 'right',
+          verticalAlign: 'top',
+          layout: 'vertical',
+          x: 0,
+          y: 0
+        },
+        series: [{
+          name: 'Name',
+          colorByPoint: true,
+          data: [{
+            name: 'Достигнут',
+            y: valueT,
+            colorIndex: 2
+          },{
+            name: 'Не достигнут',
+            y: valueF,
+            colorIndex: 4
+          }]
+        }]
+      });
+    }
+
+    function initColumnChart (items) {
+      var $chart = $row.find('.column-chart');
+      items = filterByValue(items).slice(0, 20);
+      var categories = [], valueData = [], plannedData = [];
+      items.forEach(item => {
+        categories.push(moment(item[DATE_ATTR]).format('DD.MM.YY'));
+        valueData.push(item.value);
+        plannedData.push(item.plannedValue);
+      });
+      Highcharts.chart($chart.get(0), {
+        credits: false,
+        chart: {
+          spacing: [8,0,0,0],
+          type: 'column'
+        },
+        title: false,
+        xAxis: {
+          categories,
+          labels: {
+            style: {
+              fontSize: '12px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        },
+        yAxis: {
+          min: 0,
+          maxPadding: 0,
+          //tickPixelInterval: 20,
+          title: {
+            enabled: false,
+            text: ''
+          }
+        },
+        legend: {
+          enabled: true
+        },
+        tooltip: {
+          pointFormat: 'Значение: <b>{point.y}</b>',
+          headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>'
+        },
+        series: [{
+          name: 'Фактическое',
+          data: valueData,
+          colorIndex: 2
+        },{
+          name: 'Планируемое',
+          data: plannedData,
+          colorIndex: 4
+        }]
+      });
+    }
+  });
+</script>

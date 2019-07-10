@@ -1,0 +1,92 @@
+{
+    "tabs": [{
+      "caption": "",
+      "fullFields": [{
+        "caption": "Участник",
+        "type": 5,
+        "property": "participant",
+        "size": 2,
+        "maskName": null,
+        "mask": null,
+        "mode": null,
+        "fields": [],
+        "columns": [],
+        "actions": null,
+        "commands": null,
+        "orderNumber": 20,
+        "required": false,
+        "visibility": null,
+        "enablement": null,
+        "obligation": null,
+        "readonly": false,
+        "selectionPaginated": true,
+        "validators": null,
+        "hint": "",
+        "historyDisplayMode": 0,
+        "tags": null,
+        "selConditions": [],
+        "selSorting": []
+      },
+      {
+        "caption": "Занятость участника (%)",
+        "type": 14,
+        "property": "occupationEmployee",
+        "size": 2,
+        "maskName": null,
+        "mask": null,
+        "mode": null,
+        "fields": [],
+        "columns": [],
+        "actions": null,
+        "commands": null,
+        "orderNumber": 50,
+        "required": false,
+        "visibility": null,
+        "enablement": null,
+        "obligation": null,
+        "readonly": false,
+        "selectionPaginated": true,
+        "validators": null,
+        "hint": "",
+        "historyDisplayMode": 0,
+        "tags": null,
+        "options": {
+          "min": 0,
+          "max": 100
+        },
+        "selConditions": [],
+        "selSorting": []
+      }],
+      "shortFields": []
+    }],
+    "actions": null,
+    "siblingFixBy": null,
+    "siblingNavigateBy": null,
+    "historyDisplayMode": 0,
+    "collectionFilters": null,
+    "version": null,
+    "overrideMode": 1,
+    "commands": [
+      {
+        "id": "SAVE",
+        "caption": "Создать",
+        "visibilityCondition": null,
+        "enableCondition": null,
+        "needSelectedItem": false,
+        "signBefore": false,
+        "signAfter": false,
+        "isBulk": false
+      },
+      {
+        "id": "SAVEANDCLOSE",
+        "caption": "Создать и закрыть",
+        "visibilityCondition": null,
+        "enableCondition": null,
+        "needSelectedItem": false,
+        "signBefore": false,
+        "signAfter": false,
+        "isBulk": false
+      }
+    ],
+    "metaVersion": "2.0.61.18033"
+  }

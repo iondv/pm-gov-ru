@@ -1,0 +1,135 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "Ограничения по бюджету",
+  "name": "indicatorLimBudget",
+  "version": "",
+  "caption": "Показатели (ограничения по бюджету)",
+  "ancestor": "indicatorFinancial",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [{
+      "orderNumber": 200,
+      "name": "indicatorValueBasic",
+      "caption": "Ограничения по бюджету по периодам",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorValueLimBudget",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": null,
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "measureUnit",
+      "caption": "Единица измерения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "384",
+      "refClass": "measureUnit",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 120,
+      "name": "periodType",
+      "caption": "Тип периодичности",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "year",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [{
+            "key": "year",
+            "value": "Ежегодный"
+          },
+          {
+            "key": "halfyear",
+            "value": "Полугодие"
+          },
+          {
+            "key": "quarter",
+            "value": "Квартал"
+          },
+          {
+            "key": "month",
+            "value": "Ежемесячный"
+          },
+          {
+            "key": "week",
+            "value": "Еженедельный"
+          },
+          {
+            "key": "one",
+            "value": "Разовый"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

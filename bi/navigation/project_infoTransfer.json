@@ -1,0 +1,9 @@
+{
+  "code": "project_infoTransfer",
+  "caption": "План коммуникаций",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "infoTransfer",
+  "namespace": "pm-gov-ru",
+  "order": 8
+}

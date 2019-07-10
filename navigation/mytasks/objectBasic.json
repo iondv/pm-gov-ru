@@ -1,0 +1,15 @@
+{
+  "code": "myObjectBasic",
+  "orderNumber": 160,
+  "type": 1,
+  "title": "",
+  "caption": "Объекты",
+  "classname": "objectBasic",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [],
+  "sorting": [],
+  "pathChains": []
+}

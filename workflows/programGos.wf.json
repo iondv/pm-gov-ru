@@ -1,0 +1,153 @@
+{
+  "name": "programGos",
+  "caption": "Государственные программы",
+  "wfClass": "programGos",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Создана",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "work",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "edit",
+      "caption": "Корректировка",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "close",
+      "caption": "Закрыта",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "nowToWork",
+      "caption": "В работу",
+      "startState": "new",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inWork"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "name": "cancelToClose",
+      "caption": "В архив",
+      "startState": "work",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "close"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": []
+    },
+    {
+      "name": "workToEdit",
+      "caption": "Корректировка",
+      "startState": "work",
+      "finishState": "edit",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "rework"
+        }
+      ],
+      "conditions": [
+        {
+          "property": null,
+          "operation": 1,
+          "value": null,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "operator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "operator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        } 
+      ]
+    },
+    {
+      "name": "editToWork",
+      "caption": "В работу",
+      "startState": "edit",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "inWork"
+        }
+      ],
+      "conditions": []
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

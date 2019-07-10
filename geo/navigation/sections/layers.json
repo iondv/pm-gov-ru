@@ -1,0 +1,10 @@
+{
+  "title": "Геоданные",
+  "code": "layers",
+  "nodes": [
+    "eventObject"
+  ],
+  "template" : null,
+  "panel" : "navFloat",
+  "view": "layers"
+}

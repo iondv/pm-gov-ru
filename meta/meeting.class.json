@@ -1,0 +1,49 @@
+{
+  "isStruct": false,
+  "key": [
+    "guid"
+  ],
+  "semantic": "name",
+  "name": "meeting",
+  "version": "31",
+  "caption": "Совещание",
+  "ancestor": "meetingBasic",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 86,
+      "name": "instructions",
+      "caption": "Поручения",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "assignment",
+      "backRef": "meeting",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

@@ -1,0 +1,172 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "name",
+  "name": "indicatorFinancial",
+  "version": "",
+  "caption": "Показатели (финансовые)",
+  "ancestor": "indicatorBasic",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 35,
+      "name": "increasing",
+      "caption": "Приход(true)/Раcход(false)",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": false,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "measureUnit",
+      "caption": "Единица измерения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "measureUnit",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 70,
+      "name": "budgetType",
+      "caption": "Источник бюджетных поступлений (если классифицировать как тип - то надо вводить, атрибут доход/расход",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "munic",
+            "value": "Местные бюджеты"
+          },
+          {
+            "key": "krai",
+            "value": "Областной бюджет"
+          },
+          {
+            "key": "federal",
+            "value": "Федеральный бюджет"
+          },
+          {
+            "key": "vnebudgetFond",
+            "value": "Бюджеты государственных внебюджетных фондов"
+          },
+          {
+            "key": "vnebudget",
+            "value": "Внебюджетные источники"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 200,
+      "name": "indicatorValueBasic",
+      "caption": "Финансовые показатели по периодам",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorValueFinancial",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "state",
+          "operation": 1,
+          "value": [
+            "archive"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

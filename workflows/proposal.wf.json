@@ -1,0 +1,626 @@
+{
+  "name": "proposal",
+  "caption": "Проектное предложение",
+  "wfClass": "proposal",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Создан",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "approvalVPO",
+      "caption": "Согласование в ВПО",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "approvalHead",
+      "caption": "Согласование с руководителем",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "approvalAdmin",
+      "caption": "Согласование с администратором",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "approvalCurator",
+      "caption": "Согласование с куратором",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "approvalPO",
+      "caption": "Согласование проектным офисом",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "accept",
+      "caption": "Утвержден",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "cancel",
+      "caption": "Отклонен",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "nowToVPO",
+      "caption": "Согласовать в ведомственном проектном офисе",
+      "startState": "new",
+      "finishState": "approvalVPO",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalVPO"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "approvalVPOInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "approvalVPO",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approvalVPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "VPOToAdmin",
+      "caption": "Согласовать и отправить администратору",
+      "startState": "approvalVPO",
+      "finishState": "approvalAdmin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalAdmin"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalVPO"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "ownOrg.vedomstveniyPO.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "ownOrg.vedomstveniyPO.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "approvalAdminInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "approvalAdmin",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approvalAdmin"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "newToAdmin",
+      "caption": "Согласовать у администратора",
+      "startState": "new",
+      "finishState": "approvalAdmin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalAdmin"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "internal",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "approvalHeadInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "approvalHead",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approvalHead"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "adminToHead",
+      "caption": "Согласовать и отправить руководителю",
+      "startState": "approvalAdmin",
+      "finishState": "approvalHead",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalHead"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "administrator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "administrator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalAdmin"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "headToCurator",
+      "caption": "Согласовать и отправить куратору",
+      "startState": "approvalHead",
+      "finishState": "approvalCurator",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalCurator"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalHead"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "approvalCuratorInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "approvalCurator",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approvalCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorToPO",
+      "caption": "Согласовать в проектном офисе",
+      "startState": "approvalCurator",
+      "finishState": "approvalPO",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "approvalPO"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalCurator"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "approvalPOInRework",
+      "caption": "Вернуть исполнителю",
+      "startState": "approvalPO",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "new"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "approvalPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "POToAccept",
+      "caption": "Утвердить",
+      "startState": "approvalPO",
+      "finishState": "accept",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "accept"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "POToCancel",
+      "caption": "Отклонить",
+      "startState": "approvalPO",
+      "finishState": "cancel",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "cancel"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 0,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalPO"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorToAccept",
+      "caption": "Утвердить",
+      "startState": "approvalCurator",
+      "finishState": "accept",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "accept"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "curatorToCancel",
+      "caption": "Отклонить",
+      "startState": "approvalCurator",
+      "finishState": "cancel",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "cancel"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "interdepartmental",
+          "operation": 1,
+          "value": [true],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "curator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "approvalCurator"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

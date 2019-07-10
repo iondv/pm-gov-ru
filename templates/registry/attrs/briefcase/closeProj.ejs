@@ -1,0 +1,56 @@
+<!-- pm-gov-ru\templates\registry\attrs\briefcase\closeProj -->
+<%
+let basic = item.property('projects');
+let url = item.getItemId() ? `${module}/api/${item.getClassName()}/${item.getItemId()}/${basic.getName()}` : '';
+let value = prop.getValue() || [0, 0];
+if (typeof value === 'string') {
+  value = value.split(' / ');
+  value[0] = parseInt(value[0]) || 0;
+  value[1] = parseInt(value[1]) || 0;
+}
+%>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% script(`${module}/app-static/js/common.js`) -%>
+
+<div class="form-group <%= cssFromTags(field) %>">
+  <div class="col-sm-12">
+    <div class="attr-content">
+      <div class="attr-content-title">
+        <%= field.caption %>
+      </div>
+      <div class="form-attr-project-events">
+        <div id="<%- id %>" class="text">
+          <%= value[0] %> из <%= value[1] %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $(document.getElementById('<%- id %>')).each(function () {
+      var items = [];
+      var $container = $(this);
+      var url = $container.data('url');
+      if (!url) {
+        return;
+      }
+      cooperativeAjax('post', url, {
+        start:0,
+        length:100,
+        eagerLoading: ["vidProject.name"]
+      }, function (data) {
+        items = data.data || [];
+        var closed = 0;
+        for (var i = 0; i < items.length; ++i) {
+          if (items[i].stage === 'after') {
+            closed += 1;
+          }
+        }
+        $container.html(closed + ' из '+ items.length);
+      });
+    });
+  });
+</script>

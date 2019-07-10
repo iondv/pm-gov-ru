@@ -1,0 +1,59 @@
+<!-- pm-gov-ru\templates\registry\attrs\risk\ -->
+<div class="form-group <%= cssFromTags(field) %>"
+     style="" data-type="select"
+     data-sp="<%= JSON.stringify(prop.meta.selectionProvider) %>"
+     data-prop="<%= JSON.stringify(field) %>">
+    <label for="<%= id %>" class="col-md-4 col-sm-3 control-label"><%= field.caption %></label>
+    <div class="col-md-8 col-sm-9">
+        <div class="overlay overlay-select"><i class="fa fa-refresh fa-spin"></i></div>
+        <select id="<%= id %>" name="<%= prop.getName() %>" class="form-control attr-value" <% if (field.readonly) { %>disabled<% } %>>
+            <%
+              if (prop.isNullable()) {
+                %><option value="" <% if (prop.getValue() === null) {%>selected<%} %>></option><%
+              }
+            var sel = prop.getSelection();
+            if (Array.isArray(sel)) {
+              for (var i = 0; i < sel.length; i++) {
+            %>
+              <option value="<%= sel[i].key %>" <% if (prop.selectionKeyMatch(sel[i].key)) {%>selected<%} %>> 
+                <%= sel[i].value %>
+              </option>
+            <%
+              }
+            }%>
+        </select>
+        <p class="error-block"></p>
+    </div>
+    <script>
+      $(function(){
+        var colors = {
+          'Низкая': '#47e0a8',
+          'Низкое': '#47e0a8',
+          'Средняя': '#ffb34a',
+          'Среднее': '#ffb34a',
+          'Высокая': '#fd695a',
+          'Высокое': '#fd695a'
+        };        
+        $('select#'+'<%= id %>'.replace(/@/gi, '\\@')).select2({
+          minimumResultsForSearch: -1,
+          escapeMarkup: function (m) {
+            return m;
+          },
+          templateResult: function (option) {
+            if (!option.id) { return '<span style="visibility: hidden;">-</span>'; }
+            return option.text + '<svg width="15" height="15" style="float:right; margin-top:1px;">'+
+              '<rect fill="' + colors[(option.text || '').trim()] + '" x="5" y="-5" width="10" height="10" transform="rotate(45)" />'+
+              '</svg>';
+          },
+          templateSelection: function rhombTemplate(option) {
+            if (option.id.length > 0 ) {
+              return option.text + '<svg width="15" height="15" style="float:right; margin-top:9px;">'+
+                '<rect fill="' + colors[(option.text || '').trim()] + '" x="5" y="-5" width="10" height="10" transform="rotate(45)" />'+
+                '</svg>';
+            }
+            return option.text;
+          }
+        });
+      })
+    </script>
+</div>

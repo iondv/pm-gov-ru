@@ -1,0 +1,9 @@
+{
+  "code": "project_allIndicators",
+  "caption": "Показатели проекта",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "allIndicators",
+  "namespace": "pm-gov-ru",
+  "order": 4
+}

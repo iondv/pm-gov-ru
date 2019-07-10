@@ -1,0 +1,226 @@
+{
+  "name": "assignmentBasic",
+  "caption": "Поручения",
+  "wfClass": "assignmentBasic",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Новое",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "assig",
+      "caption": "Назначено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "work",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "result",
+      "caption": "Итоги",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "fin",
+      "caption": "Закрыто",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "assig",
+      "caption": "Назначить исполнителю",
+      "startState": "new",
+      "finishState": "assig",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "assig"
+        },
+        {
+          "key": "dateStart",
+          "value": "now()"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "work",
+      "caption": "В работу",
+      "startState": "assig",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "work"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "assig"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "result",
+      "caption": "Выполнено",
+      "startState": "work",
+      "finishState": "result",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "result"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "toKT",
+      "caption": "Преобразовать в КТ",
+      "startState": "work",
+      "finishState": "fin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "fin"
+        },
+        {
+          "key": "dateEnd",
+          "value": "now()"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "fin",
+      "caption": "Закрыть",
+      "startState": "result",
+      "finishState": "fin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "fin"
+        },
+        {
+          "key": "dateEnd",
+          "value": "now()"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "result"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "notfin",
+      "caption": "Вернуть",
+      "startState": "result",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "work"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "result"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

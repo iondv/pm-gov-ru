@@ -1,0 +1,594 @@
+<!-- dt-object-list -->
+<%if (!attrPermissions || attrPermissions.read) {%>
+<%let tid = id.replace('@', '_');%>
+<%
+  let budgetTypes = prop.meta._refClass.getPropertyMeta('budgetType').selectionProvider.getSelection();
+  budgetTypes = budgetTypes.map(function (v) {
+    return {id: v.key, text: v.value};
+  });
+%>
+<% let isReadonly = !(item.get('status') === 'create' || item.get('status') === 'rework' || item.get('status') === 'inaccepted'); %>
+<div id="<%=id%>" class="form-group budget-control loading <%=cssFromTags(field)%>"
+     style="position:relative;border-width: 2px;border-style: solid;border-color: silver;">
+  <div id="<%=tid%>" class="table-container"></div>
+  <div class="toolbar" style="display:none;">
+  <% if (!isReadonly) { %>
+    <button type="button" class="add" title="Добавить статью"><span class="glyphicon glyphicon-plus-sign"></span>
+    </button>
+    <button type="button" class="apply" style="display:none;" title="Применить"><span
+        class="glyphicon glyphicon-check"></span></button>
+    <button type="button" class="cancel" style="display:none;" title="Отмена"><span
+        class="glyphicon glyphicon-remove"></span></button>
+  <% } %>
+    <button type="button" class="refresh" title="Обновить список"><span class="fa fa-refresh"></span></button>
+  </div>
+  <div class="loader" style="display:none;"><span class="fa fa-refresh fa-spin"></span></div>
+  <p class="error-block"></p>
+</div>
+<style>
+
+  .budget-control .toolbar {
+    overflow: visible;
+    height: 0px;
+    text-align: right;
+    padding: 0px;
+  }
+
+  .budget-control .loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+  }
+
+  .budget-control .loader span {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 24pt;
+  }
+
+  .budget-control .toolbar button {
+    border: none;
+    margin-top: 3px;
+  }
+
+  .budget-control .toolbar button.add {
+    background-color: #e3fcef;
+    color: #080;
+  }
+
+  .budget-control .toolbar button.apply {
+    background-color: #e3fcef;
+    color: #080;
+  }
+
+  .budget-control .toolbar button.cancel {
+    background-color: #fddeb2;
+    color: #a80;
+  }
+
+  .budget-control .toolbar button.refresh {
+    background-color: #ececec;
+    color: gray;
+  }
+
+  .budget-control p.error-block {
+    color: red;
+    margin-right: 200px;
+  }
+
+  div#<%=tid%> {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    /* margin-left: 600px; */
+  }
+
+  table.budget {
+    border-collapse: separate;
+    border-style: none;
+    border-spacing: 0px;
+  }
+
+  table.budget button.delete {
+    display: none;
+    color: #800;
+    background-color: #fddede;
+    border: none;
+    padding: 2px;
+  }
+
+  table.budget button.open {
+    display: none;
+    color: #004;
+    background-color: #7070ff;
+    border: none;
+    padding: 2px;
+  }
+
+  table.budget tr:hover button.delete {
+    display: block;
+  }
+
+  table.budget tr:hover button.open {
+    display: block;
+  }
+
+  table.budget th, table.budget td {
+    border-width: 1px;
+    border-left-width: 0px;
+    border-top-width: 0px;
+    border-style: solid;
+    border-color: silver;
+    padding: 5px;
+    min-width: 80px;
+  }
+
+  table.budget th {
+    text-align: center;
+    font-size: 10pt;
+  }
+
+  table.budget td {
+    background-color: #efefef;
+    height: 30px;
+  }
+
+  table.budget td.input {
+    background-color: white;
+  }
+
+  table.budget td.input input {
+    width: 100%;
+    height: 100%;
+    border-style: none;
+    display: block;
+  }
+
+  table.budget td.select select {
+    width: 100%;
+    border-style: none;
+    display: block;
+  }
+
+  table.budget td.fixed {
+    font-size: 9pt;
+  }
+
+  table.budget .fixed {
+    min-width: 150px;
+    max-width: 150px;
+    position: relative;
+    background-color: white;
+  }
+
+  table.budget td.fixed.ctrl, table.budget th.fixed.ctrl {
+    font-size: 9pt;
+    min-width: 30px !important;
+    max-width: 30px !important;
+  }
+</style>
+<script>
+  $(function () {
+    var $tc = $("div#<%=tid%>");
+    $tc.scroll(function (event) {
+      var sc = $(this);
+      sc.find('.fixed').each(
+        function () {
+          var e = $(this);
+          e.css('left', sc.scrollLeft() + 'px');
+        }
+      );
+    });
+
+    var selectionLists = {
+      budgetType: <%-JSON.stringify(budgetTypes)%>
+    };
+
+    var $toolBar = $("div#<%=tid%>").next();
+    var $loader = $toolBar.next();
+    var $error = $loader.next();
+    var $createBtn = $toolBar.find('button.add');
+    var $applyBtn = $toolBar.find('button.apply');
+    var $cancelBtn = $toolBar.find('button.cancel');
+    var $refreshBtn = $toolBar.find('button.refresh');
+
+    var dummy = {};
+
+    $refreshBtn.click(function () {
+      load();
+    });
+
+<% if (!isReadonly) { %>
+
+    function selectAppendInit (valueCb, dataCb, changeCb, openCb) {
+      return function (i, e) {
+        var td = $(this);
+        var caption = td.children('span');
+        var attr = td.data('itemattr');
+        var v = valueCb(td);
+        var input = $('<select><option value="' + (v || "") + '" selected>' + (caption.text() || "") + '</option></select>');
+        input.appendTo(td).select2({
+          data: selectionLists.hasOwnProperty(attr) ? selectionLists[attr] : null,
+          ajax: selectionLists.hasOwnProperty(attr) ? null : {
+            type: 'POST',
+            dataType: 'json',
+            url: '/<%=module%>/api/indicatorBudget@pm-gov-ru/' + attr + '/selection',
+            delay: 250,
+            data: function (params) {
+              return dataCb(td, params);
+            },
+            processResults: function (data, params) {
+              var res = [];
+              for (var i = 0; i < data.data.length; i++) {
+                res.push({id: data.data[i]._id, text: data.data[i].__string, object: data.data[i]});
+              }
+              params.page = params.page || 1;
+              return {
+                results: res,
+                pagination: {
+                  more: (params.page * 10) < data.recordsTotal
+                }
+              };
+            }
+          },
+          width: '100%'
+        });
+        var s2 = input.next('.select2');
+        s2.hide();
+        input.on('change', function () {
+          changeCb(td, input, function (text) {
+            caption.text(text);
+          });
+        }).on('select2:close', function (e) {
+          caption.show();
+          s2.hide();
+        });
+        td.click(function (e) {
+          e.stopPropagation();
+          caption.hide();
+          s2.show();
+          input.select2('open');
+          openCb && openCb(td);
+        });
+      };
+    }
+
+    $createBtn.click(function () {
+      $error.text('');
+      var psd = $('input.attr-value[name="datePlannedStart"]').val();
+      if (psd) {
+        psd = moment(psd, DATE_FORMAT).format();
+      } else {
+        $error.text('Не заполнена Плановая дата начала');
+        return;
+      }
+      var ped = $('input.attr-value[name="datePlannedEnd"]').val();
+      if (ped) {
+        ped = moment(ped, DATE_FORMAT).format();
+      } else {
+        $error.text('Не заполнена Плановая дата завершения');
+        return;
+      }
+
+      dummy = {
+        dateStart: psd,
+        dateEnd: ped,
+        basicObj: '<%-item.getItemId()%>',
+        project_code: '<%-item.get('project_code')%>'
+      };
+      $createBtn.hide();
+      $refreshBtn.hide();
+      $applyBtn.show();
+      $cancelBtn.show();
+      $tc.find('table.budget').find('tbody')
+        .append('<tr><td class="fixed ctrl"></td>' +
+          '<td class="fixed select-new" data-itemattr="obj"><span></span></td>' +
+          '<td class="fixed select-new" data-itemattr="budgetType"><span></span></td>' +
+          '<td class="fixed select-new" data-itemattr="grbs"><span></span></td></tr>');
+
+      $tc.find('td.select-new').each(
+        selectAppendInit (
+          function (td) {
+            return dummy[td.data('itemattr')];
+          },
+          function (td, params) {
+            return {
+              search: {value: params.term},
+              start: ((params.page || 1) - 1) * 10,
+              updates: dummy,
+              length: 10
+            };
+          },
+          function (td, input, textCb) {
+            var data = input.select2('data')[0];
+            if (td.data('itemattr') === 'obj') {
+              if (data) {
+                dummy['datePlannedStart'] = data.object.dateStart;
+                dummy['datePlannedEnd'] = data.object.dateEnd;
+              }
+            }
+            dummy[td.data('itemattr')] = input.val();
+            textCb(data.text);
+          }));
+    });
+
+    $applyBtn.click(function () {
+      if (dummy.budgetType) {
+        $applyBtn.hide();
+        $cancelBtn.hide();
+        dummy['$action'] = 'SAVE';
+        dummy['basicObj'] = '<%-item.getItemId()%>';
+        dummy['$masterClass'] = '<%-item.getClassName()%>';
+        delete dummy.project_code;
+        dummy['$masterId'] = '<%-item.getItemId()%>';
+        dummy['$masterProperty'] = '<%=prop.getName()%>';
+        $loader.show();
+        $.post(
+          '/<%=`${module}/api/${node}/indicatorBudget@pm-gov-ru`%>/do',
+          dummy
+        ).done(
+          function () {
+            delete dummy.budgetType;
+            delete dummy.obj;
+            delete dummy.grbs;
+            load();
+            $createBtn.show();
+            $refreshBtn.show();
+            $error.text('');
+          }
+        ).fail(
+          function (jqXHR, status, message) {
+            console.log(jqXHR);
+            $error.text(jqXHR.responseJSON.msg || message);
+            $createBtn.show();
+            $refreshBtn.show();
+            $tc.find('table').find('tbody tr:last').remove();
+          }
+        );
+      }
+    });
+
+    $cancelBtn.click(function () {
+      $applyBtn.hide();
+      $cancelBtn.hide();
+      $createBtn.show();
+      $refreshBtn.show();
+      $tc.find('table').find('tbody tr:last').remove();
+      $error.text('');
+    });
+
+    <% } %>
+
+    function load() {
+      $loader.show();
+      $toolBar.hide();
+      $.post(
+        '<%=`${module}/api/${item.getClassName()}/${item.getItemId()}/${prop.getName()}`%>',
+        {
+          eagerLoading: [
+            "obj",
+            "grbs",
+            "budgetType",
+            "measureUnit",
+            "indicatorValueBasic"
+          ]
+        }
+      ).done(
+        function (data) {
+          var rows = '';
+          var i, j, indicator, obj, t, m;
+
+          var header = [];
+          var objs = [];
+          var totals = {};
+
+          for (i = 0; i < data.data.length; i++) {
+            indicator = data.data[i];
+            if (indicator.id) {
+              obj = {
+                id: indicator.id,
+                stage_val: indicator.obj_str,
+                stage: indicator.obj_str,
+                grbs_val: indicator.grbs,
+                grbs: indicator.grbs_str,
+                budgetType_val: indicator.budgetType,
+                budgetType: indicator.budgetType_str
+              };
+              if (indicator.indicatorValueBasic) {
+                for (j = 0; j < indicator.indicatorValueBasic.length; j++) {
+                  m = moment(indicator.indicatorValueBasic[j].dateStart);
+                  header.push(m);
+                  obj[m.format('YYYY')] = [
+                    indicator.indicatorValueBasic[j]._id,
+                    indicator.indicatorValueBasic[j].plannedValue || '',
+                    indicator.indicatorValueBasic[j].value || '',
+                    indicator.indicatorValueBasic[j].desiredValue || ''
+                  ];
+                }
+              }
+              objs.push(obj);
+            }
+          }
+
+          var hchck = {};
+
+          header = header.filter(function (v, i, a) {
+            var chck = v.format('YYYY');
+            if (hchck.hasOwnProperty(chck)) {
+              return false;
+            }
+            hchck[chck] = true;
+            return true;
+          }).sort(function (a, b) {
+            return a.isAfter(b) ? 1 : -1;
+          });
+
+          for (i = 0; i < objs.length; i++) {
+            indicator = objs[i];
+            rows = rows +
+              '<tr><td class="fixed ctrl" data-itemid="' + indicator.id + '">' +
+              '<button type="button" class="open"><span class="glyphicon glyphicon-edit"></span></button>' +
+        <% if (!isReadonly) { %>
+              '<button type="button" class="delete"><span class="glyphicon glyphicon-trash"></span></button></td>' +
+        <% } %>
+              '<td class="fixed select" data-itemid="' + indicator.id + '" data-itemattr="obj" data-value="' + indicator.stage_val + '"><span>' + indicator.stage +
+              '</span></td><td class="fixed select" data-itemid="' + indicator.id + '" data-itemattr="budgetType" data-value="' + indicator.budgetType_val + '"><span>' + indicator.budgetType +
+              '</span></td><td class="fixed select" data-itemid="' + indicator.id + '" data-itemattr="grbs" data-value="' + indicator.grbs_val + '"><span>' + indicator.grbs + '</span></td>';
+            for (j = 0; j < header.length; j++) {
+              m = header[j].format('YYYY');
+              rows = rows +
+                '<td' +
+                (indicator[m] ? ' class="input" data-itemid="' + indicator[m][0] + '" data-itemattr="plannedValue"' : '') +
+                '>' + (indicator[m] ? indicator[m][1] : '') +
+                '</td><td' +
+                (indicator[m] ? ' class="input" data-itemid="' + indicator[m][0] + '" data-itemattr="value"' : '') +
+                '>' + (indicator[m] ? indicator[m][2] : '') +
+                '</td><td' +
+                (indicator[m] ? ' class="input" data-itemid="' + indicator[m][0] + '" data-itemattr="desiredValue"' : '') +
+                '>' + (indicator[m] ? indicator[m][3] : '') + '</td>';
+
+              if (!totals[m]) {
+                totals[m] = [0, 0, 0];
+              }
+
+              totals[m][0] = totals[m][0] + (indicator[m] ? (indicator[m][1] || 0) : 0);
+              totals[m][1] = totals[m][1] + (indicator[m] ? (indicator[m][2] || 0) : 0);
+              totals[m][2] = totals[m][2] + (indicator[m] ? (indicator[m][3] || 0) : 0);
+            }
+            rows = rows + '</tr>';
+          }
+
+          var head = '<tr><th class="fixed ctrl" rowspan="2"></th><th class="fixed" rowspan="2">Этап</th><th class="fixed" rowspan="2">Источник финансирования</th><th class="fixed" rowspan="2">ГРБС</th>';
+          var hr2 = '<tr>';
+          for (i = 0; i < header.length; i++) {
+            head = head + '<th colspan="3">' + header[i].format('YYYY') + '</th>';
+            hr2 = hr2 + '<th>План</th><th>Факт</th><th>Прогноз</th>';
+          }
+          head = head + '</tr>' + hr2 + '</tr>';
+
+          var total_row = '<tr><td class="fixed" colspan="4">Итог</td>';
+          for (i = 0; i < header.length; i++) {
+            m = header[i].format('YYYY');
+            total_row = total_row + '<td>' + (totals[m] ? totals[m][0] : '') +
+              '</td><td>' + (totals[m] ? totals[m][1] : '') +
+              '</td><td>' + (totals[m] ? totals[m][2] : '') + '</td>';
+          }
+          total_row = total_row + '</tr>';
+
+          $tc.html('<table class="budget"><thead>' + head + '</thead><tbody>' + rows + '</tbody><tfoot>' + total_row + '</tfoot></table>');
+
+          $tc.find('button.open').click(function () {
+            var btn = $(this);
+            var td = btn.parent();
+            imodal.load('/<%=`${module}/${node}/view/indicatorBudget@pm-gov-ru`%>/' + td.data('itemid') +
+                '?modal=on' + '<%- isReadonly ? '&readonly=on' : '' %>');
+          });
+
+        <% if (!isReadonly) { %>
+          $tc.find('button.delete').click(function () {
+            var btn = $(this);
+            var td = btn.parent();
+            if (confirm('Удалить запись финансового обеспечения ? Все введенные данные будут утеряны.')) {
+              btn.hide();
+              $.post(
+                '/<%=`${module}/api/${node}/indicatorBudget@pm-gov-ru`%>/' + td.data('itemid') + '/do',
+                {
+                  $action: 'DELETE'
+                }
+              ).done(function (data) {
+                load();
+              }).fail(
+                function (jqXHR, status, message) {
+                  console.error(jqXHR);
+                  $error.text(jqXHR.responseJSON.msg || message);
+                }
+              );
+            }
+          });
+
+          $tc.find('td.input').click(function () {
+            $error.text('');
+            var td = $(this);
+            var data = td.text();
+            td.html('<input type="text" value="' + data + '" />');
+            var input = td.find('input').focus();
+            input.click(function (e) {
+              e.stopPropagation();
+            }).on('blur', function () {
+              var params = {'$action': 'SAVE'};
+              params[td.data('itemattr')] = input.val();
+              $.post('/<%=`${module}/api/${node}/indicatorValueBudget@pm-gov-ru`%>/' + td.data('itemid') + '/do', params).done(
+                function () {
+                  var $totalCell = $tc.find('tfoot tr td:eq(' + (td[0].cellIndex - 3) + ')');
+                  var sum = $totalCell.text() ? parseFloat($totalCell.text()) : 0;
+                  var sub = data ? parseFloat(data) : 0;
+                  var add = input.val() ? parseFloat(input.val()) : 0;
+                  td.text(input.val());
+                  $totalCell.text(sum - sub + add);
+                  $error.text('');
+                }
+              ).fail(
+                function (jqXHR, status, message) {
+                  console.error(jqXHR);
+                  $error.text(jqXHR.responseJSON.msg || message);
+                  td.text(data);
+                }
+              );
+            });
+          });
+
+          $tc.find('td.select').each(
+            selectAppendInit (
+              function (td) {
+                return td.data('value');
+              },
+              function (td, params) {
+                return {
+                  search: {value: params.term},
+                  start: ((params.page || 1) - 1) * 10,
+                  length: 10,
+                  itemId: td.data('itemid'),
+                  itemClass: 'indicatorBudget@pm-gov-ru',
+                  updates: {}
+                };
+              },
+              function (td, input, textCb) {
+                var params = {'$action': 'SAVE'};
+                params[td.data('itemattr')] = input.val();
+                $.post('/<%=`${module}/api/${node}/indicatorBudget@pm-gov-ru`%>/' + td.data('itemid') + '/do', params).done(function () {
+                  $error.text('');
+                  td.data('value', input.val());
+                  textCb(input.select2('data')[0].text);
+                }).fail(function (jqXHR, status, message) {
+                  console.log(jqXHR);
+                  $error.text(jqXHR.responseJSON.msg || message);
+                });
+              },
+              function (td) {
+                $error.text('');
+              }
+            )
+          );
+        <% } %>
+          $toolBar.show();
+          $loader.hide();
+          $error.text('');
+        }
+      ).fail(
+        function (jqXHR, status, message) {
+          $loader.hide();
+          $toolBar.show();
+          console.log(jqXHR);
+          $error.text(jqXHR.responseJSON.msg || message);
+        }
+      );
+    }
+
+    load();
+  });
+</script>
+<%}%>

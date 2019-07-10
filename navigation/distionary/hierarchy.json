@@ -1,0 +1,16 @@
+{
+  "code": "hierarchy",
+  "orderNumber": 30,
+  "type": 0,
+  "title": "",
+  "caption": "Орг.структура",
+  "classname": null,
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": "Иерархия организационной структуры",
+  "conditions": [],
+  "sorting": [],
+  "pathChains": [],
+  "metaVersion": "2.0.61.18033"
+}

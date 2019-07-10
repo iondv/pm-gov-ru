@@ -1,0 +1,12 @@
+{
+  "type": "data",
+  "order": 4,
+  "code": "eventObject.objectBasic",
+  "parent": "eventObject",
+  "caption": "Мероприятия по объектам",
+  "hint": "Мероприятия по развитию объектов",
+  "layers": [
+    "objectBasic"
+  ],
+  "filter": []
+}

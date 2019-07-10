@@ -1,0 +1,51 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\duration -->
+<%
+let start = item.property('datePlannedStart');
+if (!start) {
+  console.error('Не найдено свойство datePlannedStart.project');
+}
+let end = item.property('datePlannedEnd');
+if (!end) {
+  console.error('Не найдено свойство datePlannedEnd.project');
+}
+let duration, rest, percent;
+if (start && end) {
+  start = moment(start.getValue());
+  end = moment(end.getValue());
+  duration = end.diff(start, 'days');
+}
+if (duration) {
+  rest = end.diff(moment(), 'days');
+  percent = parseInt((duration - rest) * 100 / duration);
+  if (percent > 100) {
+    percent = 100;
+  }
+}
+let progressColor = percent > 80 ? 'danger' : percent > 50 ? 'warning' : 'success';
+%>
+<% if (duration) { %>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+
+<div class="form-group <%= cssFromTags(field)%>"
+     style="<%= styleFromTags(field) %>" data-type="text" data-prop="<%= JSON.stringify(field) %>">
+  <label for="<%= id %>" class="col-md-2 col-sm-3 control-label"><%= field.caption %></label>
+  <div class="col-md-10 col-sm-9">
+    <div class="form-attr-project-card form-control-static">
+      <div class="form-attr-project-card-title green">
+        <%= duration %> дн.
+      </div>
+      <div class="form-attr-project-card-text">
+        Время до планового завершения <%= rest %> дн.
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-<%= progressColor %> progress-bar-striped active"
+             style="width: <%= percent %>%">
+            <%= percent %>%
+        </div>
+      </div>
+    </div>
+    <p class="error-block"></p>
+  </div>
+</div>
+<% } %>

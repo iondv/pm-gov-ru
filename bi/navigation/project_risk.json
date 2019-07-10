@@ -1,0 +1,9 @@
+{
+  "code": "project_risk",
+  "caption": "Управление рисками",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "risk",
+  "namespace": "pm-gov-ru",
+  "order": 6
+}

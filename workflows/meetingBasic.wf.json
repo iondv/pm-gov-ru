@@ -1,0 +1,93 @@
+{
+    "name": "meetingBasic",
+    "caption": "Совещание",
+    "wfClass": "meeting",
+    "startState": "new",
+    "states": [
+      {
+        "name": "new",
+        "caption": "Инициировано",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "result",
+        "caption": "Проведено",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      },
+      {
+        "name": "close",
+        "caption": "Закрыто",
+        "maxPeriod": null,
+        "conditions": [],
+        "itemPermissions": [],
+        "propertyPermissions": [],
+        "selectionProviders": []
+      }
+    ],
+    "transitions": [
+      {
+        "name": "theResult",
+        "caption": "Провести",
+        "startState": "new",
+        "finishState": "result",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "state",
+            "value": "result"
+          },
+          {
+            "key": "archive",
+            "value": "true"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "state",
+            "operation": 0,
+            "value": [
+              "new"
+            ],
+            "nestedConditions": []
+          }
+        ]
+      },
+      {
+        "name": "theClose",
+        "caption": "Закрыть",
+        "startState": "result",
+        "finishState": "close",
+        "signBefore": false,
+        "signAfter": false,
+        "roles": [],
+        "assignments": [
+          {
+            "key": "state",
+            "value": "close"
+          }
+        ],
+        "conditions": [
+          {
+            "property": "state",
+            "operation": 0,
+            "value": [
+              "result"
+            ],
+            "nestedConditions": []
+          }
+        ]
+      }
+    ],
+    "metaVersion": "2.0.7"
+  }
+  

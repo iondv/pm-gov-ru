@@ -1,0 +1,16 @@
+{
+  "code": "classification",
+  "orderNumber": 20,
+  "type": 0,
+  "title": "",
+  "caption": "Справочники и классификаторы",
+  "classname": null,
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [],
+  "sorting": [],
+  "pathChains": [],
+  "metaVersion": "2.0.61.18033"
+}

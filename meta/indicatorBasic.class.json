@@ -1,0 +1,1838 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "name",
+  "name": "indicatorBasic",
+  "abstract": true,
+  "version": "",
+  "caption": "Показатели",
+  "ancestor": null,
+  "container": null,
+  "creationTracker": "createDatet",
+  "changeTracker": "modifeDate",
+  "creatorTracker": "creator",
+  "editorTracker": "editor",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [
+    {
+      "orderNumber": 10,
+      "name": "id",
+      "caption": "Идентификатор",
+      "type": 12,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": true,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 20,
+      "name": "name",
+      "caption": "Название показателя",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "about",
+      "caption": "Описание",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "measureUnit",
+      "caption": "Единица измерения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "measureUnit",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 20,
+      "name": "typeIndicator",
+      "caption": "Тип показателя",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "typeIndicator",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 20,
+      "name": "typeIndicatorprint",
+      "caption": "Тип показателя (кеш)",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": {
+        "concat": [
+          "$typeIndicator.nameType"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 20,
+      "name": "featureIndicator",
+      "caption": "Характеристика показателя",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": true,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "increasing",
+            "value": "Возрастающий"
+          },
+          {
+            "key": "decreasing",
+            "value": "Убывающий"
+          },
+          {
+            "key": "fixed",
+            "value": "Фиксированный"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 41,
+      "name": "unitType",
+      "caption": "Единица измерения - Тип",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "concat": [
+          "$measureUnit.unitType"
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 50,
+      "name": "measureType",
+      "caption": "Классификатор измерений",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "measureType",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "sector",
+          "operation": 0,
+          "value": [
+            "$unitType"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 60,
+      "name": "objectBasic",
+      "caption": "Объект показателя",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "objectBasic",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 90,
+      "name": "valueType",
+      "caption": "Тип значения (изменение за период или фактическое/нарастающим итогом) - заменен на featureIndicator",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "true",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 90,
+      "name": "endProgress",
+      "caption": "Достижение показателя",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 100,
+      "name": "dateStart",
+      "caption": "Дата начала сбора данных",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 110,
+      "name": "dateEnd",
+      "caption": "Дата окончания сбора данных",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 120,
+      "name": "periodType",
+      "caption": "Тип периодичности",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "month",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "year",
+            "value": "Ежегодный"
+          },
+          {
+            "key": "halfyear",
+            "value": "Полугодие"
+          },
+          {
+            "key": "quarter",
+            "value": "Квартал"
+          },
+          {
+            "key": "month",
+            "value": "Ежемесячный"
+          },
+          {
+            "key": "week",
+            "value": "Еженедельный"
+          },
+          {
+            "key": "one",
+            "value": "Разовый"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 200,
+      "name": "indicatorValueBasic",
+      "caption": "Показатели по периодам",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "indicatorValueBasic",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "state",
+          "operation": 1,
+          "value": [
+            "archive"
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 300,
+      "name": "owner",
+      "caption": "Ответственный за ведение показателя",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "$$employee",
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 310,
+      "name": "head",
+      "caption": "Нормоконтролер",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 320,
+      "name": "ownerValue",
+      "caption": "Ответственный за ввод значений",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": "$$employee",
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 330,
+      "name": "headValue",
+      "caption": "Утверждающий значения",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "employee",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 340,
+      "name": "confirm",
+      "caption": "Согласующая значения организация",
+      "type": 13,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "governmentPower",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+
+    {
+      "orderNumber": 400,
+      "name": "needSign",
+      "caption": "Необходима цифровая подпись",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 450,
+      "name": "skipPlanned",
+      "caption": "Показатель не требует планирования",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "defPlanValue",
+      "caption": "Базовое значение",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 110,
+      "name": "datebasicValue",
+      "caption": "Дата базового значения",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 500,
+      "name": "active",
+      "caption": "Активности, использующие показатель",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "basicObj",
+      "backRef": "",
+      "backColl": "indicatorBasic",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [
+        {
+          "property": "archive",
+          "operation": 1,
+          "value": [
+            true
+          ],
+          "nestedConditions": []
+        }
+      ],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 600,
+      "name": "status",
+      "caption": "Статус показателя в БП",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": "edit",
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": {
+        "type": "SIMPLE",
+        "list": [
+          {
+            "key": "edit",
+            "value": "Редактируется"
+          },
+          {
+            "key": "onapprov",
+            "value": "На утверждении"
+          },
+          {
+            "key": "approv",
+            "value": "Утвержден"
+          },
+          {
+            "key": "correct",
+            "value": "Коррекция"
+          },
+          {
+            "key": "archive",
+            "value": "Архив"
+          }
+        ],
+        "matrix": [],
+        "parameters": [],
+        "hq": ""
+      },
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 400,
+      "name": "remark",
+      "caption": "Подтверждение",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "resReporting",
+      "backRef": "indicatorBasic",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 60,
+      "name": "createDatet",
+      "caption": "Метка времени создания объекта",
+      "type": 9,
+      "size": null,
+      "decimals": 0,
+      "nullable": false,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "selConditions": [],
+      "selSorting": [],
+      "selection_provider": null,
+      "indexSearch": false,
+      "eagerLoading": false
+    },
+    {
+      "orderNumber": 70,
+      "name": "modifeDate",
+      "caption": "Метка времени изменения объекта",
+      "type": 9,
+      "size": null,
+      "decimals": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "selConditions": [],
+      "selSorting": [],
+      "selection_provider": null,
+      "indexSearch": false,
+      "eagerLoading": false
+    },
+    {
+      "orderNumber": 20,
+      "name": "creator",
+      "caption": "Метка пользователя, создавшего объект",
+      "type": 18,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "hint": "",
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "editor",
+      "caption": "Метка пользователя, изменившего объект",
+      "type": 18,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": true,
+      "hint": "",
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "calcMethod",
+      "caption": "Методика расчета",
+      "type": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "dataSource",
+      "caption": "Источник данных",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "agregationLevel",
+      "caption": "Уровень агрегации информации",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 40,
+      "name": "baseDatePrint",
+      "caption": "Дата базового значения для ПФ",
+      "type": 9,
+      "mode": 2,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "max": [
+          "$indicatorValueBasic",
+          "dateStart",
+          {
+            "&nempty": [
+              "$value"
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "baseValuePrint",
+      "caption": "Базовое значение для ПФ",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "value",
+          {
+            "&eq": [
+              "$dateStart",
+              "$indicatorBasic.baseDatePrint"
+            ]
+          }
+        ]
+      },
+      "cached": false
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY0",
+      "caption": "Суммарное значение для ПФ - 0 лет от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$indicatorBasic.dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": false
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY1",
+      "caption": "Суммарное значение для ПФ - 1 год от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY2",
+      "caption": "Суммарное значение для ПФ - 2 года от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  2
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY3",
+      "caption": "Суммарное значение для ПФ - 3 года от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  3
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY4",
+      "caption": "Суммарное значение для ПФ - 4 года от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  4
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY5",
+      "caption": "Суммарное значение для ПФ - 5 лет от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  5
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY6",
+      "caption": "Суммарное значение для ПФ - 6 лет от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  6
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 41,
+      "name": "sumValuePrintY7",
+      "caption": "Суммарное значение для ПФ - 7 лет от даты начала",
+      "type": 0,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": null,
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": true,
+      "formula": {
+        "sum": [
+          "$indicatorValueBasic",
+          "plannedValue",
+          {
+            "&eq": [
+              {
+                "year": [
+                  {
+                    "dateAdd": [
+                      "$dateStart",
+                      10,
+                      "h"
+                    ]
+                  }
+                ]
+              },
+              {
+                "add": [
+                  {
+                    "year": [
+                      {
+                        "dateAdd": [
+                          "$indicatorBasic.dateStart",
+                          10,
+                          "h"
+                        ]
+                      }
+                    ]
+                  },
+                  7
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "cached": true
+    },
+    {
+      "orderNumber": 30,
+      "name": "addInformation",
+      "caption": "Дополнительная информация",
+      "type": 1,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 30,
+      "name": "files",
+      "caption": "Файлы",
+      "type": 14,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": null,
+      "refClass": "",
+      "itemsClass": "fileCol@pm-gov-ru",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    },
+    {
+      "orderNumber": 160,
+      "name": "archive",
+      "caption": "Архив",
+      "type": 10,
+      "size": null,
+      "decimals": 0,
+      "allowedFileTypes": null,
+      "maxFileCount": 0,
+      "nullable": true,
+      "readonly": false,
+      "indexed": false,
+      "unique": false,
+      "autoassigned": false,
+      "hint": null,
+      "defaultValue": false,
+      "refClass": "",
+      "itemsClass": "",
+      "backRef": "",
+      "backColl": "",
+      "binding": "",
+      "semantic": null,
+      "selConditions": [],
+      "selSorting": [],
+      "selectionProvider": null,
+      "indexSearch": false,
+      "eagerLoading": false,
+      "formula": null
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

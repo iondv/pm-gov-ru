@@ -1,0 +1,120 @@
+<!-- templates\registry\attrs\project\expiringEvents -->
+<%
+let projectCode =  item.property('project_code');
+if (projectCode) {
+  projectCode = projectCode.getValue();
+}
+const params = {
+  locale
+};
+%>
+<div class="row">
+  <label class="col-sm-12">
+    <%= field.caption %>
+  </label>
+  <div class="col-sm-12">
+    <div class="table-loading-container">
+      <div class="table-loading">
+        <div class="fa fa-refresh fa-spin table-loader"></div>
+      </div>
+      <table id="<%- id %>" class="list-data-table table table-striped table-bordered"
+             data-params="<%= JSON.stringify(params) %>">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+<% script(`${module}/app-static/js/list-data-table.js`) -%>
+
+<script>
+  $(document.getElementById('<%- id %>')).each(function () {
+    $.extend(true, $(this).data('params'), {
+      dataTable: {
+        ajax: {
+          url: 'registry/api/eventBasic@pm-gov-ru'
+        },
+        columns: [{
+          name: "__class",
+          title: "Тип",
+          render: function (column, data, type, row) {
+            if (!data || type !== 'display') {
+              return data;
+            }
+            var css = data.indexOf('eventControl') === 0 ? 'control-event-type' : '';
+            return '<div class="event-type '+ css +'" title="'+ row.__classTitle +'"></div>';
+          }
+        }, {
+          name: "name",
+          title: "Наименование",
+          orderable: true
+        }, {
+          name: "datePlannedEnd",
+          title: "Дата окончания",
+          orderable: true,
+          type: 'date'
+        }, {
+          name: "progress",
+          title: "Прогресс выполнения",
+          render: function (column, data, type) {
+            if (type !== 'display') {
+              return data;
+            }
+            data = parseInt(data) || 0;
+            var css = '';
+            if (data === 0) {
+              css = 'cell-progress-empty';
+            } else if (data === 100) {
+              css = 'cell-progress-full';
+            }
+            return '<div class="cell-progress '+ css
+              +'"><div class="cell-progress-bar" style="width:'+ data
+              +'%"></div><div class="text">'+ data +'%</div></div>';
+          }
+        }],
+        rowCallback: function (row, data) {
+          if (moment(data.datePlannedEnd).valueOf() < Date.now()) {
+            $(row).addClass('bg-danger');
+          }
+        },
+        order: [] // [[1, 'asc']]
+      },
+      node: 'pm-gov-ru@eventBasic',
+      prepareAjaxData: function (data) {
+        data.filter = [{
+          property: 'archive',
+          operation: 1,
+          value: [true],
+          nestedConditions: []
+        },{
+          property: 'state',
+          operation: 1,
+          value: ["inaccepted"],
+          nestedConditions: []
+        },{
+          property: 'project_code',
+          operation: 0,
+          value: ['<%=projectCode%>'],
+          nestedConditions: []
+        },{
+          property: 'state',
+          operation: 1,
+          value: ['fin'],
+          nestedConditions: []
+        },{
+          property: 'datePlannedEnd',
+          operation: 7,
+          value: null,
+          nestedConditions: [{
+            property: null,
+            operation: 9,
+            value: ['$$now', 8]
+          }]
+        }];
+      }
+    });
+  });
+</script>

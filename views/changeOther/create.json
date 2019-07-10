@@ -1,0 +1,62 @@
+{
+  "tabs": [{
+    "caption": "",
+    "fullFields": [
+      {
+        "caption": "Причины и обоснование необходимости изменений, анализ изменений и их влияние на параметры проекта и иные проекты",
+        "type": 7,
+        "property": "descript",
+        "size": 2,
+        "maskName": null,
+        "mask": null,
+        "mode": null,
+        "fields": [],
+        "hierarchyAttributes": null,
+        "columns": [],
+        "actions": null,
+        "commands": null,
+        "orderNumber": 15,
+        "required": false,
+        "visibility": null,
+        "enablement": null,
+        "obligation": null,
+        "readonly": false,
+        "selectionPaginated": true,
+        "validators": null,
+        "hint": null,
+        "historyDisplayMode": 0,
+        "tags": null
+      }
+    ],
+    "shortFields": []
+  }],
+  "actions": null,
+  "siblingFixBy": null,
+  "siblingNavigateBy": null,
+  "historyDisplayMode": 0,
+  "collectionFilters": null,
+  "version": "31",
+  "overrideMode": 1,
+  "commands": [{
+      "id": "SAVE",
+      "caption": "Создать",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    },
+    {
+      "id": "SAVEANDCLOSE",
+      "caption": "Создать и закрыть",
+      "visibilityCondition": null,
+      "enableCondition": null,
+      "needSelectedItem": false,
+      "signBefore": false,
+      "signAfter": false,
+      "isBulk": false
+    }
+  ],
+  "metaVersion": "2.0.7"
+}

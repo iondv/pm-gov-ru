@@ -1,0 +1,15 @@
+<!-- pm-gov-ru\templates\registry\list\risk\rang -->
+
+<% stylesheet(`${module}/app-static/css/styles.css`) -%>
+
+<script>
+  $('#list-manager').data('<%= column.property %>_render', function (data, type){
+    if (type === 'display' && data) {
+      var value = parseFloat(data) || 0;
+      var bg = value > 0.6 ? 'red' : value > 0.3 ? 'yellow' : 'green';
+      return '<div class="list-attr-risk-rang bg-lt-'
+        + bg + '"><span>' + value + '</span></div>';
+    }
+    return data;
+  });
+</script>

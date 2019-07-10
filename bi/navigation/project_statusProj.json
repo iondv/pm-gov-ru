@@ -1,0 +1,10 @@
+{
+    "code": "project_statusProj",
+    "caption": "Список проектов и статусов",
+    "parent": "project",
+    "mine": "pm-gov-ru@projects",
+    "report": "statusProj",
+    "namespace": "pm-gov-ru",
+    "order": 0
+  }
+  

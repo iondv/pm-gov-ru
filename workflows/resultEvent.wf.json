@@ -1,0 +1,213 @@
+{
+  "name": "resultEvent",
+  "caption": "Результаты мероприятия",
+  "wfClass": "resultEvent",
+  "startState": "new",
+  "states": [
+    {
+      "name": "new",
+      "caption": "Создан",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "work",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "headAprove",
+      "caption": "Согласование у руководителя",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "aprove",
+      "caption": "Согласован",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "newInwork",
+      "caption": "В работу",
+      "startState": "new",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "work"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "workInhead",
+      "caption": "Согласовать у руководителя",
+      "startState": "work",
+      "finishState": "headAprove",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "headAprove"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "headInAprove",
+      "caption": "Согласовать",
+      "startState": "headAprove",
+      "finishState": "aprove",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "status",
+          "value": "aprove"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "status",
+          "operation": 0,
+          "value": [
+            "headAprove"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "project.head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "project.head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "eventBasic.head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "eventBasic.head.curator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "notclose",
+      "caption": "Вернуть",
+      "startState": "headAprove",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [{
+        "key": "status",
+        "value": "work"
+      }],
+      "conditions": [{
+        "property": "status",
+        "operation": 0,
+        "value": [
+          "headAprove"
+        ],
+        "nestedConditions": []
+      },
+      {
+        "operation": 1,
+        "nestedConditions": [
+          {
+            "property": "project.head.person.user",
+            "operation": 0,
+            "value": [
+              "$$uid"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "property": "project.head.id",
+            "operation": 9,
+            "value": [
+              "$substitution"
+            ]
+          },
+          {
+            "property": "eventBasic.head.person.user",
+            "operation": 0,
+            "value": [
+              "$$uid"
+            ],
+            "nestedConditions": []
+          },
+          {
+            "property": "eventBasic.head.curator.id",
+            "operation": 9,
+            "value": [
+              "$substitution"
+            ]
+          }
+        ]
+      }]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

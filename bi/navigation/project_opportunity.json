@@ -1,0 +1,9 @@
+{
+  "code": "project_opportunity",
+  "caption": "Управление возможностями",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "opportunity",
+  "namespace": "pm-gov-ru",
+  "order": 7
+}

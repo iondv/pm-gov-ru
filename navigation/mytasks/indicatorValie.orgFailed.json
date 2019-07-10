@@ -1,0 +1,58 @@
+{
+  "code": "indicatorValue.orgFailed",
+  "orderNumber": 50,
+  "type": 1,
+  "title": "",
+  "caption": "Просроченный ввод значений показателей по организации",
+  "classname": "indicatorValueBasic",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": "Красным цветом выделены значения показателя у которых заполнена дата окончания",
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "indicatorBasic.ownerValue.organization.id",
+          "operation": 0,
+          "value": [
+            "$organization"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "indicatorBasic.ownerValue.organization.id",
+          "operation": 9,
+          "value": [
+            "$substOrgs"
+          ]
+        }
+      ]
+    },
+    {
+      "property": "state",
+      "operation": 0,
+      "value": [
+        "edit"
+      ],
+      "nestedConditions": []
+    },
+    {
+      "property": "dateEnd",
+      "operation": 5,
+      "value": [
+        "$$now"
+      ],
+      "nestedConditions": []
+    },
+    {
+      "property": "indicatorStatus",
+      "operation": 1,
+      "value": ["archive"],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

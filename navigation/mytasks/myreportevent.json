@@ -1,0 +1,154 @@
+{
+    "code": "myreportevent",
+    "orderNumber": 50,
+    "type": 1,
+    "title": "",
+    "caption": "Согласование результатов по мероприятиям",
+    "classname": "resultEvent",
+    "container": null,
+    "collection": null,
+    "url": null,
+    "hint": null,
+    "conditions": [
+      {
+        "operation": 1,
+        "nestedConditions": [
+          {
+            "operation": 0,
+            "nestedConditions": [
+              {
+                "property": "$displayMode",
+                "operation": 0,
+                "value": [
+                  "manager"
+                ]
+              },
+              {
+                "property": "status",
+                "operation": 0,
+                "value": [
+                  "headAprove"
+                ]
+              },
+              {
+                "operation": 1,
+                "nestedConditions": [
+                  {
+                    "property": "eventBasic.head.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "eventBasic.head.id",
+                    "operation": 9,
+                    "value": [
+                      "$substitution"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "operation": 0,
+            "nestedConditions": [
+              {
+                "operation": 1,
+                "nestedConditions": [
+                  {
+                    "property": "$displayMode",
+                    "operation": 0,
+                    "value": [
+                      "all"
+                    ]
+                  },
+                  {
+                    "property": "$displayMode",
+                    "operation": 0,
+                    "value": [
+                      "curator"
+                    ]
+                  },
+                  {
+                    "property": "$displayMode",
+                    "operation": 0,
+                    "value": [
+                      "admin"
+                    ]
+                  },
+                  {
+                    "property": "$displayMode",
+                    "operation": 0,
+                    "value": [
+                      "executor"
+                    ]
+                  },
+                  {
+                    "property": "$displayMode",
+                    "operation": 2,
+                    "value": []
+                  }
+                ]
+              },
+              {
+                "operation": 1,
+                "nestedConditions": [
+                  {
+                    "property": "eventBasic.curator.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "eventBasic.curator.id",
+                    "operation": 9,
+                    "value": [
+                      "$substitution"
+                    ]
+                  },
+                  {
+                    "property": "eventBasic.owner.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "eventBasic.owner.id",
+                    "operation": 9,
+                    "value": [
+                      "$substitution"
+                    ]
+                  },
+                  {
+                    "property": "eventBasic.head.person.user",
+                    "operation": 0,
+                    "value": [
+                      "$$uid"
+                    ],
+                    "nestedConditions": []
+                  },
+                  {
+                    "property": "eventBasic.head.id",
+                    "operation": 9,
+                    "value": [
+                      "$substitution"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "sorting": [],
+    "pathChains": [],
+    "metaVersion": "2.0.61.18033"
+  }

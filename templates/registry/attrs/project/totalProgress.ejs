@@ -1,0 +1,20 @@
+<!-- pm-gov-ru\templates\registry\attrs\project\totalProgress -->
+<%
+let value = parseInt(item.property('progress').getValue()) || 0;
+value = value < 0 ? 0 : value > 100 ? 100 : value;
+let text = value === 100 ? 'Готов' : `${value}%`;
+let css =  value === 100 ? 'ready' : ``;
+%>
+
+<div class="form-group mb30 <%= cssFromTags(field) %>">
+  <div class="col-sm-12">
+    <div class="attr-content">
+      <div class="center-progress <%- css %>">
+        <div class="center-progress-bar" style="width: <%- value %>%"></div>
+        <div class="center-progress-text">
+          <%- text %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

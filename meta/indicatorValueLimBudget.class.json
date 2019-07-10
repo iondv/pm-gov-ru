@@ -1,0 +1,19 @@
+{
+  "isStruct": false,
+  "key": [
+    "id"
+  ],
+  "semantic": "(|dateStart[0,10]|-|dateEnd[0,10]|) План - |plannedValue| Факт - |value| Прогноз - |desiredValue",
+  "name": "indicatorValueLimBudget",
+  "version": "",
+  "caption": "Значения показателей на период (ограничения по бюджету)",
+  "ancestor": "indicatorValueFinancial",
+  "container": null,
+  "creationTracker": "",
+  "changeTracker": "",
+  "history": 0,
+  "journaling": true,
+  "compositeIndexes": null,
+  "properties": [],
+  "metaVersion": "2.0.61"
+}

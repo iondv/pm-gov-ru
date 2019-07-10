@@ -1,0 +1,494 @@
+{
+  "name": "indicatorValueBasic",
+  "caption": "Согласование шаблона показателей",
+  "wfClass": "indicatorValueBasic",
+  "startState": "plan",
+  "states": [
+    {
+      "name": "plan",
+      "caption": "Планирование",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "wait",
+      "caption": "Ожидание срока",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "correct",
+      "caption": "Коррекция",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "edit",
+      "caption": "Ввод значений",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "onapp",
+      "caption": "На утверждении",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "app",
+      "caption": "Утверждено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "conf",
+      "caption": "Подтверждено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "archive",
+      "caption": "Архив",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "needPlan",
+      "caption": "Запланировано",
+      "startState": "plan",
+      "finishState": "wait",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "wait"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "$__class",
+          "operation": 1,
+          "value": [
+            "indicatorValueBudget@pm-gov-ru"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "plan"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "indicatorBasic.owner.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "toCorrect",
+      "caption": "Внести корректировки",
+      "startState": "wait",
+      "finishState": "correct",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "correct"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "wait"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.head.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.head.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    }, {
+      "name": "appCorr",
+      "caption": "Утвердить корректировку",
+      "startState": "correct",
+      "finishState": "wait",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "wait"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "correct"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "needWait",
+      "caption": "Ввести значения",
+      "startState": "wait",
+      "finishState": "edit",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "edit"
+        },
+        {
+          "key": "endProgress",
+          "value": false
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "wait"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "needAppTrs",
+      "caption": "На утверждение",
+      "startState": "edit",
+      "finishState": "onapp",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "onapp"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "edit"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.ownerValue.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.ownerValue.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "notAppTrs",
+      "caption": "Вернуть на редактирование",
+      "startState": "onapp",
+      "finishState": "edit",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "edit"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "onapp"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.headValue.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.headValue.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "appTrs",
+      "caption": "Утвердить",
+      "startState": "onapp",
+      "finishState": "app",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "app"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "onapp"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.headValue.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ]
+            },
+            {
+              "property": "indicatorBasic.headValue.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confTrs",
+      "caption": "Подтвердить",
+      "startState": "app",
+      "finishState": "conf",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "conf"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "app"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "indicatorBasic.confirm.id",
+              "operation": 0,
+              "value": [
+                "$organization"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "indicatorBasic.confirm.id",
+              "operation": 9,
+              "value": [
+                "$substOrgs"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "confInArchive",
+      "caption": "В архив",
+      "startState": "conf",
+      "finishState": "archive",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "archive"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "conf"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "appInArchive",
+      "caption": "В архив",
+      "startState": "app",
+      "finishState": "archive",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "archive"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "app"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.61"
+}

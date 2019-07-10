@@ -1,0 +1,50 @@
+{
+  "code": "indicatorValue.verify",
+  "orderNumber": 30,
+  "type": 1,
+  "title": "",
+  "caption": "Утверждение",
+  "classname": "indicatorValueBasic",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "indicatorBasic.headValue.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "indicatorBasic.headValue.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        }
+      ]
+    },
+    {
+      "property": "state",
+      "operation": 0,
+      "value": [
+        "onapp"
+      ],
+      "nestedConditions": []
+    },
+    {
+      "property": "indicatorStatus",
+      "operation": 1,
+      "value": ["archive"],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

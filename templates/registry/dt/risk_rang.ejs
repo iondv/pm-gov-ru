@@ -1,0 +1,27 @@
+<script>
+  $('.list-manager').data('<%= column.property %>_render', function(data, type, row, meta){
+    if (type === 'display' && data) {
+      var rangClass = 'rang-red';
+      if (data <= 0.3) {
+        rangClass = 'rang-green';
+      } else if (data < 0.6) {
+        rangClass = 'rang-yellow';
+      }
+      return '<div class="rang-wrapper '+ rangClass +'">'+data+'</div>'
+    }
+    return data;
+  });
+
+  $('.list-manager').data('<%= column.property %>_customize', function($table) {
+    $table.find('.rang-wrapper').each(function(){
+      var $this = $(this);
+      var classes = $this.attr('class').split(' ');
+      $this.parent().addClass(classes.filter(function (cl) {
+        if (cl !== 'rang-wrapper') {
+          return true;
+        }
+        return false;
+      }).join(' '));
+    });
+  });
+</script>

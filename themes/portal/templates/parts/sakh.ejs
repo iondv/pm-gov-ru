@@ -1,0 +1,47 @@
+<!-- sakh -->
+<%
+let mod = `/${module}/${portal}`;
+%>
+<div class="place" data-id="sakh">
+
+    <div class="view-menu clearfix">
+        <div class="view-item" data-id="info">
+            <div class="view-item-body">
+                <div class="view-item-img" style="background-image: url('<%= mod %>/images/placeholder03.jpg')"></div>
+                <div class="view-item-title">
+                    Информация по объектам
+                </div>
+            </div>
+        </div>
+        <div class="view-item" data-id="indicators">
+            <div class="view-item-body">
+                <div class="view-item-img"
+                     style="background-image: url('<%= mod %>/images/placeholder-indicators.jpg')"></div>
+                <div class="view-item-title">
+                    Показатели проектов
+                </div>
+            </div>
+        </div>
+        <div class="view-item" data-id="currentIndicators">
+            <div class="view-item-body">
+                <div class="view-item-img"
+                     style="background-image: url('<%= mod %>/images/placeholder-current-indicat.jpg')"></div>
+                <div class="view-item-title">
+                    Текущие показатели проектов
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-pane place-pane" data-id="info">
+        <%- partial('../parts/sakh-info') %>
+    </div>
+
+    <div class="graph-pane place-pane image-pane" data-id="indicators">
+        <%- partial('../parts/sakh-indicators') %>
+    </div>
+
+    <div class="progress-pane place-pane image-pane" data-id="currentIndicators">
+        <%- partial('../parts/sakh-current-indicators') %>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+{
+  "code": "myproposal.close",
+  "orderNumber": 40,
+  "type": 1,
+  "title": "",
+  "caption": "Отклоненные",
+  "classname": "proposal",
+  "container": null,
+  "collection": null,
+  "url": null,
+  "hint": null,
+  "conditions": [
+    {
+      "operation": 1,
+      "nestedConditions": [
+        {
+          "property": "curator.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "curator.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "head.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "head.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "administrator.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "administrator.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "owner.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "owner.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "participant.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "participant.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        },
+        {
+          "property": "initiator.person.user",
+          "operation": 0,
+          "value": [
+            "$$uid"
+          ],
+          "nestedConditions": []
+        },
+        {
+          "property": "initiator.id",
+          "operation": 9,
+          "value": [
+            "$substitution"
+          ]
+        }
+      ]
+    },
+		{
+      "property": "state",
+      "operation": 0,
+      "value": ["cancel"],
+      "nestedConditions": []
+    }
+  ],
+  "sorting": [],
+  "pathChains": []
+}

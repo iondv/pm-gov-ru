@@ -1,0 +1,700 @@
+{
+    "isStruct": false,
+    "key": [
+      "guid"
+    ],
+    "semantic": "",
+    "name": "changeParticipants",
+    "version": "31",
+    "caption": "Изменение участников проекта",
+    "ancestor": "change",
+    "container": null,
+    "creationTracker": "",
+    "changeTracker": "",
+    "history": 0,
+    "journaling": true,
+    "compositeIndexes": null,
+    "properties": [
+      {
+        "orderNumber": 190,
+        "name": "personCheck",
+        "caption": "Изменение данных о должностном лице",
+        "type": 10,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": false,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 190,
+        "name": "organisationCheck",
+        "caption": "Изменение данных об организации",
+        "type": 10,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": false,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 40,
+        "name": "person",
+        "caption": "Персона",
+        "type": 0,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": {
+          "type": "SIMPLE",
+          "list": [
+            {
+              "key": "curator",
+              "value": "Куратор проекта"
+            },
+            {
+              "key": "rukovoditel",
+              "value": "Руководитель проекта"
+            },
+            {
+              "key": "admin",
+              "value": "Администратор проекта"
+            },
+            {
+              "key": "operator",
+              "value": "Оператор проекта"
+            }
+          ],
+          "matrix": [],
+          "parameters": [],
+          "hq": ""
+        },  
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 40,
+        "name": "organization",
+        "caption": "Организация",
+        "type": 0,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": {
+          "type": "SIMPLE",
+          "list": [
+            {
+              "key": "otvetstvenOrg",
+              "value": "Ответственная организация"
+            },
+            {
+              "key": "zainterisovLica",
+              "value": "Заинтересованные лица"
+            }
+          ],
+          "matrix": [],
+          "parameters": [],
+          "hq": ""
+        },  
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 140,
+        "name": "employeeRef",
+        "caption": "Персона",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "employee",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 140,
+        "name": "organizationRef",
+        "caption": "Ответственная организация",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "organization",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 86,
+        "name": "organizationCol",
+        "caption": "Заинтересованные лица",
+        "type": 14,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "organization",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 140,
+        "name": "employeeRefNew",
+        "caption": "Персона",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "employee",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 140,
+        "name": "organizationRefNew",
+        "caption": "Ответственная организация",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "organization",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 86,
+        "name": "organizationColNew",
+        "caption": "Заинтересованные лица",
+        "type": 14,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "organization",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 140,
+        "name": "changeParticipbasicObj",
+        "caption": "Запрос",
+        "type": 13,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": true,
+        "readonly": false,
+        "indexed": false,
+        "unique": false,
+        "autoassigned": false,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "changeReq",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 30,
+        "name": "project_code",
+        "caption": "project_code [вычислимое, храним код проекта]",
+        "type": 0,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": true,
+        "hint": null,
+        "defaultValue": {"if": ["$changeParticipbasicObj", "$changeParticipbasicObj.project_code", ""]},
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": null
+      },
+      {
+        "orderNumber": 30,
+        "name": "participantsFact",
+        "caption": "Действующая редакция [вычислимое]",
+        "type": 0,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": true,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "if": [
+            {
+              "eq": [
+                "$personCheck",
+                true
+              ]
+            },
+            {
+              "concat": [
+                {
+                  "if": [
+                    {
+                      "eq": [
+                        "$person",
+                        "curator"
+                      ]
+                    },
+                    "Куратор",
+                    {
+                      "if": [
+                        {
+                          "eq": [
+                            "$person",
+                            "rukovoditel"
+                          ]
+                        },
+                        "Руководитель",
+                        {
+                          "if": [
+                            {
+                              "eq": [
+                                "$person",
+                                "admin"
+                              ]
+                            },
+                            "Администратор",
+                            {
+                              "if": [
+                                {
+                                  "eq": [
+                                    "$person",
+                                    "operator"
+                                  ]
+                                },
+                                "Оператор",
+                                ""
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                ": ",
+                "$employeeRef.personPosition"
+              ]
+            },
+            {
+              "if": [
+                {
+                  "eq": [
+                    "$organisationCheck",
+                    true
+                  ]
+                },
+                {
+                  "concat": [
+                    {
+                      "if": [
+                        {
+                          "eq": [
+                            "$organization",
+                            "otvetstvenOrg"
+                          ]
+                        },
+                        "Ответственная организация",
+                        {
+                          "if": [
+                            {
+                              "eq": [
+                                "$organization",
+                                "zainterisovLica"
+                              ]
+                            },
+                            "Заинтересованные лица",
+                            ""
+                          ]
+                        }
+                      ]
+                    },
+                    ": ",
+                    {
+                      "if": [
+                        {
+                          "nempty": [
+                            "$organizationRef"
+                          ]
+                        },
+                        "$organizationRef.name",
+                        {
+                          "merge": [
+                            "$organizationCol",
+                            "name",
+                            null,
+                            1,
+                            ", "
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                ""
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "orderNumber": 30,
+        "name": "participantsNew",
+        "caption": "Новая редакция [вычислимое]",
+        "type": 0,
+        "size": null,
+        "decimals": 0,
+        "allowedFileTypes": null,
+        "maxFileCount": 0,
+        "nullable": false,
+        "readonly": false,
+        "indexed": true,
+        "unique": false,
+        "autoassigned": true,
+        "hint": null,
+        "defaultValue": null,
+        "refClass": "",
+        "itemsClass": "",
+        "backRef": "",
+        "backColl": "",
+        "binding": "",
+        "semantic": null,
+        "selConditions": [],
+        "selSorting": [],
+        "selectionProvider": null,
+        "indexSearch": false,
+        "eagerLoading": false,
+        "formula": {
+          "if": [
+            {
+              "eq": [
+                "$personCheck",
+                true
+              ]
+            },
+            {
+              "concat": [
+                {
+                  "if": [
+                    {
+                      "eq": [
+                        "$person",
+                        "curator"
+                      ]
+                    },
+                    "Куратор",
+                    {
+                      "if": [
+                        {
+                          "eq": [
+                            "$person",
+                            "rukovoditel"
+                          ]
+                        },
+                        "Руководитель",
+                        {
+                          "if": [
+                            {
+                              "eq": [
+                                "$person",
+                                "admin"
+                              ]
+                            },
+                            "Администратор",
+                            {
+                              "if": [
+                                {
+                                  "eq": [
+                                    "$person",
+                                    "operator"
+                                  ]
+                                },
+                                "Оператор",
+                                ""
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                ": ",
+                "$employeeRefNew.personPosition"
+              ]
+            },
+            {
+              "if": [
+                {
+                  "eq": [
+                    "$organisationCheck",
+                    true
+                  ]
+                },
+                {
+                  "concat": [
+                    {
+                      "if": [
+                        {
+                          "eq": [
+                            "$organization",
+                            "otvetstvenOrg"
+                          ]
+                        },
+                        "Ответственная организация",
+                        {
+                          "if": [
+                            {
+                              "eq": [
+                                "$organization",
+                                "zainterisovLica"
+                              ]
+                            },
+                            "Заинтересованные лица",
+                            ""
+                          ]
+                        }
+                      ]
+                    },
+                    ": ",
+                    {
+                      "if": [
+                        {
+                          "nempty": [
+                            "$organizationRefNew"
+                          ]
+                        },
+                        "$organizationRefNew.name",
+                        {
+                          "merge": [
+                            "$organizationColNew",
+                            "name",
+                            null,
+                            1,
+                            ", "
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                ""
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "metaVersion": "2.0.61"
+  }

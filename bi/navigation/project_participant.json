@@ -1,0 +1,9 @@
+{
+  "code": "project_participant",
+  "caption": "Состав участников",
+  "parent": "project",
+  "mine": "pm-gov-ru@projects",
+  "report": "participant",
+  "namespace": "pm-gov-ru",
+  "order": 1
+}

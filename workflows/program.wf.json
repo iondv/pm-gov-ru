@@ -1,0 +1,491 @@
+{
+  "name": "program",
+  "caption": "Программы",
+  "wfClass": "program",
+  "startState": "new",
+  "states": [
+    {
+      "name": "limBudg",
+      "caption": "Фомирование бюджетных лимитов",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "new",
+      "caption": "Создана",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "work",
+      "caption": "В работе",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "edit",
+      "caption": "Корректировка",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "close",
+      "caption": "Архив",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    },
+    {
+      "name": "fin",
+      "caption": "Завершено",
+      "maxPeriod": null,
+      "conditions": [],
+      "itemPermissions": [],
+      "propertyPermissions": [],
+      "selectionProviders": []
+    }
+  ],
+  "transitions": [
+    {
+      "name": "nowToWork",
+      "caption": "Фомирование бюджетных лимитов",
+      "startState": "limBudg",
+      "finishState": "new",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "indicatorLimBudget.dateStart",
+          "value": "$datePlannedStart"
+        },
+        {
+          "key": "indicatorLimBudget.dateEnd",
+          "value": "$datePlannedEnd"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "indicatorLimBudget",
+          "operation": 3,
+          "value": null,
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "nowToWork",
+      "caption": "В работу",
+      "startState": "new",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "work"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "newToCancel",
+      "caption": "Отмена программы",
+      "startState": "new",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "close"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "new"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "workToEdit",
+      "caption": "Корректировка",
+      "startState": "work",
+      "finishState": "edit",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "edit"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "editToWork",
+      "caption": "В работу",
+      "startState": "edit",
+      "finishState": "work",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "work"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "edit"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "workToFin",
+      "caption": "Завершить",
+      "startState": "work",
+      "finishState": "fin",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "fin"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "work"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    },
+    {
+      "name": "finToClose",
+      "caption": "Закрыть",
+      "startState": "fin",
+      "finishState": "close",
+      "signBefore": false,
+      "signAfter": false,
+      "roles": [],
+      "assignments": [
+        {
+          "key": "state",
+          "value": "close"
+        },
+        {
+          "key": "archive",
+          "value": "true"
+        }
+      ],
+      "conditions": [
+        {
+          "operation": 1,
+          "nestedConditions": [
+            {
+              "property": "coordinator.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "coordinator.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            },
+            {
+              "property": "owner.person.user",
+              "operation": 0,
+              "value": [
+                "$$uid"
+              ],
+              "nestedConditions": []
+            },
+            {
+              "property": "owner.id",
+              "operation": 9,
+              "value": [
+                "$substitution"
+              ]
+            }
+          ]
+        },
+        {
+          "property": "state",
+          "operation": 0,
+          "value": [
+            "fin"
+          ],
+          "nestedConditions": []
+        }
+      ]
+    }
+  ],
+  "metaVersion": "2.0.7"
+}
