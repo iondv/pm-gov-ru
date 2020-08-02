@@ -78,7 +78,7 @@ Watch a brief [video](https://www.youtube.com/watch?v=AsY2D5quPQs&feature=youtu.
 
 Или установка и запуск в несколько строку под Linux с использованием установщика [iondv-app](https://github.com/iondv/iondv-app) (требуется локально node.js, MongoDB и Git). Дополнительно требуется nextcloud
 ```
-bash <(curl -sL https://raw.githubusercontent.com/iondv/iondv-app/master/iondv-app) -q -i -m localhost:27017 pm-gov-ru
+bash <(curl -sL https://raw.githubusercontent.com/iondv/iondv-app/master/iondv-app) -t git -q -i -m localhost:27017 pm-gov-ru
 ```
 Где вместо `localhost:27017` нужно указать адрес MongoDb. После запуска открыть ссылку 'http://localhost:8888', учетная запись бек офиса: **demo**, пароль: **ion-demo** с правами администратора. Второй пользователь с ограниченными правами оператора **operator** пароль **ion-demo**..
 
